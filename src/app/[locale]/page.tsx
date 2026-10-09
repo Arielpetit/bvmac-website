@@ -5,14 +5,13 @@ import {
   ArrowUpRight,
   BookOpen,
   Briefcase,
-  Building2,
+  BriefcaseBusiness,
+  CandlestickChart,
+  ReceiptText,
   CalendarDays,
   Check,
   Flame,
   Globe2,
-  Handshake,
-  Landmark,
-  ScrollText,
   FileDown,
   GraduationCap,
   LineChart,
@@ -53,7 +52,13 @@ const copy = {
     subtitle: "Cours officiels, avis du marché et sociétés cotées du Cameroun, de la Centrafrique, du Congo, du Gabon, de la Guinée équatoriale et du Tchad.",
     ctaA: "Voir les cours",
     ctaB: "Comment investir",
-    figures: ["Capitalisation actions (Md FCFA)", "Encours obligataire (Md FCFA)", "Lignes d’actions", "Lignes obligataires", "Sociétés de bourse", "Pays membres"],
+    figures: ["Capitalisation actions", "Encours obligataire", "Actions cotées", "Lignes obligataires", "Sociétés de bourse", "Pays membres"],
+    figUnit: "Md FCFA",
+    figSession: "Séance du",
+    figCapCta: "Voir le marché actions",
+    figBondCta: "Voir les obligations",
+    figBondSplit: "Lignes par pays émetteur",
+    figCapNote: "Évolution sur 120 séances",
     doEyebrow: "Par où commencer",
     doTitle: "Que souhaitez-vous faire ?",
     personas: [
@@ -115,7 +120,13 @@ const copy = {
     subtitle: "Official prices, market notices and listed companies from Cameroon, the Central African Republic, Congo, Gabon, Equatorial Guinea and Chad.",
     ctaA: "See prices",
     ctaB: "How to invest",
-    figures: ["Equity capitalisation (FCFA bn)", "Bonds outstanding (FCFA bn)", "Listed shares", "Listed bonds", "Licensed brokers", "Member countries"],
+    figures: ["Equity capitalisation", "Bonds outstanding", "Listed shares", "Listed bonds", "Licensed brokers", "Member countries"],
+    figUnit: "FCFA bn",
+    figSession: "Session of",
+    figCapCta: "See the equity market",
+    figBondCta: "See bonds",
+    figBondSplit: "Lines by issuer country",
+    figCapNote: "Last 120 sessions",
     doEyebrow: "Where to start",
     doTitle: "What would you like to do?",
     personas: [
@@ -177,7 +188,13 @@ const copy = {
     subtitle: "Cotizaciones oficiales, avisos del mercado y sociedades cotizadas de Camerún, Centroáfrica, Congo, Gabón, Guinea Ecuatorial y Chad.",
     ctaA: "Ver cotizaciones",
     ctaB: "Cómo invertir",
-    figures: ["Capitalización acciones (mil M FCFA)", "Saldo obligacionista (mil M FCFA)", "Acciones cotizadas", "Obligaciones cotizadas", "Sociedades de bolsa", "Países miembros"],
+    figures: ["Capitalización acciones", "Saldo obligacionista", "Acciones cotizadas", "Obligaciones cotizadas", "Sociedades de bolsa", "Países miembros"],
+    figUnit: "mil M FCFA",
+    figSession: "Sesión del",
+    figCapCta: "Ver el mercado de acciones",
+    figBondCta: "Ver obligaciones",
+    figBondSplit: "Líneas por país emisor",
+    figCapNote: "Últimas 120 sesiones",
     doEyebrow: "Por dónde empezar",
     doTitle: "¿Qué desea hacer?",
     personas: [
@@ -235,7 +252,8 @@ const copy = {
 };
 
 const personaIcons = [TrendingUp, Briefcase, LineChart, GraduationCap];
-const figureIcons = [PieChart, ScrollText, Building2, Landmark, Handshake, Globe2];
+const countIcons = [CandlestickChart, ReceiptText, BriefcaseBusiness, Globe2];
+const COUNTRY_TONES = ["#5a3412", "#8a6614", "#c9a23a", "#ead18a", "#b38a2a", "#3a2414"];
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale, dict } = await resolveLocale(params);
@@ -257,14 +275,13 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const heroRows = equities.slice().sort((a, b) => b.closePrice * (b.qtyTraded + 1) - a.closePrice * (a.qtyTraded + 1)).slice(0, 4);
   const marketNews = news.filter((n) => n.category !== "Recrutement");
 
-  const figures = [
-    { value: summary.equityCapitalisation, kind: "billions" as const },
-    { value: summary.bondOutstanding, kind: "billions" as const },
-    { value: KEY_FIGURES.listedEquities, kind: "number" as const },
-    { value: KEY_FIGURES.listedBonds, kind: "number" as const },
-    { value: KEY_FIGURES.brokers, kind: "number" as const },
-    { value: KEY_FIGURES.countries, kind: "number" as const },
+  const counts = [
+    { value: KEY_FIGURES.listedEquities, label: t.figures[2], href: "/marches/actions" },
+    { value: KEY_FIGURES.listedBonds, label: t.figures[3], href: "/marches/obligations" },
+    { value: KEY_FIGURES.brokers, label: t.figures[4], href: "/participants/societes-de-bourse" },
+    { value: KEY_FIGURES.countries, label: t.figures[5], href: "/la-bvmac" },
   ];
+  const bondSplit = COUNTRIES.map((c) => ({ code: c.code, count: bonds.filter((b) => b.country === c.code).length })).filter((b) => b.count > 0).sort((a, b) => b.count - a.count);
 
   return (
     <>
@@ -337,25 +354,84 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       {/* KEY FIGURES */}
-      <section aria-label={t.figures.join(", ")} className="relative border-b border-line bg-background py-14 md:py-16">
-        <div aria-hidden="true" className="dots absolute inset-0 opacity-60" />
-        <Stagger as="dl" className="container-site relative grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
-          {figures.map((f, i) => {
-            const Icon = figureIcons[i];
-            return (
-              <StaggerItem key={i} className="card-lift group relative overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface p-5 md:p-6">
-                <Icon aria-hidden="true" className="absolute -bottom-5 -right-5 size-28 text-accent-text opacity-[0.07] transition-transform duration-700 group-hover:-rotate-6 group-hover:scale-110" strokeWidth={1} />
-                <span className="relative flex size-10 items-center justify-center rounded-xl bg-accent-soft text-accent-text">
-                  <Icon aria-hidden="true" className="size-5" strokeWidth={1.6} />
-                </span>
-                <dd className="font-serif-display relative mt-6 text-[2.1rem] leading-none text-heading md:text-[2.4rem]">
-                  <CountUp value={f.value} kind={f.kind} />
-                </dd>
-                <dt className="relative mt-2.5 text-[0.8125rem] leading-snug text-muted">{t.figures[i]}</dt>
-              </StaggerItem>
-            );
-          })}
-        </Stagger>
+      <section aria-label={t.figures.join(", ")} className="relative bg-background pb-16 pt-12 md:pb-20 md:pt-14">
+        <div aria-hidden="true" className="dots absolute inset-x-0 top-0 h-72 opacity-50" />
+        <div className="container-site relative grid gap-4 lg:grid-cols-2">
+          {/* Equity capitalisation */}
+          <Reveal className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] border border-line bg-surface shadow-soft">
+            <div className="flex items-start justify-between gap-4 p-7 pb-0 md:p-8 md:pb-0">
+              <div>
+                <p className="text-sm text-muted">{t.figures[0]}</p>
+                <p className="mt-3 flex items-baseline gap-2">
+                  <span className="font-serif-display text-[2.75rem] leading-none sm:text-[3.25rem] text-heading md:text-6xl"><CountUp value={summary.equityCapitalisation} kind="billions" /></span>
+                  <span className="whitespace-nowrap text-sm font-medium text-accent-text">{t.figUnit}</span>
+                </p>
+              </div>
+              <span className="flex size-11 items-center justify-center rounded-2xl bg-accent-soft text-accent-text"><PieChart aria-hidden="true" className="size-5" strokeWidth={1.6} /></span>
+            </div>
+            <figure className="relative mt-4 h-28 px-2" aria-label={t.figCapNote}>
+              <MiniArea points={capHistory.map((pt) => pt.value)} id="cap-area" />
+            </figure>
+            <Link href={p("/marches/actions")} className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-line px-7 py-4 text-sm md:px-8">
+              <span className="text-muted">{t.figSession} {formatDate(summary.date, locale, "short")}<span className="hidden sm:inline"> · {t.figCapNote}</span></span>
+              <span className="inline-flex shrink-0 items-center gap-1.5 font-medium text-link">{t.figCapCta}<ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" /></span>
+            </Link>
+          </Reveal>
+
+          {/* Bonds outstanding */}
+          <Reveal delay={0.08} className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] bg-espresso text-brand-sand shadow-soft">
+            <span aria-hidden="true" className="grid-lines absolute inset-0 opacity-70" />
+            <span aria-hidden="true" className="absolute -right-24 -top-24 size-72 rounded-full bg-brand-gold/20 blur-[80px]" />
+            <div className="relative flex items-start justify-between gap-4 p-7 pb-0 md:p-8 md:pb-0">
+              <div>
+                <p className="text-sm text-brand-sand/70">{t.figures[1]}</p>
+                <p className="mt-3 flex items-baseline gap-2">
+                  <span className="font-serif-display text-[2.75rem] leading-none sm:text-[3.25rem] text-brand-ivory md:text-6xl"><CountUp value={summary.bondOutstanding} kind="billions" /></span>
+                  <span className="whitespace-nowrap text-sm font-medium text-brand-gold-light">{t.figUnit}</span>
+                </p>
+              </div>
+              <span className="flex size-11 items-center justify-center rounded-2xl bg-white/10 text-brand-gold-light"><ReceiptText aria-hidden="true" className="size-5" strokeWidth={1.6} /></span>
+            </div>
+            <div className="relative mt-6 px-7 pb-6 md:px-8">
+              <p className="text-xs uppercase tracking-[0.12em] text-brand-sand/55">{t.figBondSplit}</p>
+              <div className="mt-3 flex h-2.5 overflow-hidden rounded-full bg-white/10">
+                {bondSplit.map((b, k) => (
+                  <span key={b.code} className="h-full first:rounded-l-full last:rounded-r-full" style={{ width: `${(b.count / bonds.length) * 100}%`, background: COUNTRY_TONES[k % COUNTRY_TONES.length], marginRight: 2 }} />
+                ))}
+              </div>
+              <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-brand-sand/75">
+                {bondSplit.map((b) => (
+                  <li key={b.code} className="flex items-center gap-1.5"><Flag code={b.code} className="h-2.5 w-[15px]" />{COUNTRIES.find((c) => c.code === b.code)?.[locale]} <span className="figure text-brand-ivory">{b.count}</span></li>
+                ))}
+              </ul>
+            </div>
+            <Link href={p("/marches/obligations")} className="relative mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 px-7 py-4 text-sm md:px-8">
+              <span className="text-brand-sand/60">{t.figSession} {formatDate(summary.date, locale, "short")}</span>
+              <span className="inline-flex shrink-0 items-center gap-1.5 font-medium text-brand-gold-light">{t.figBondCta}<ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" /></span>
+            </Link>
+          </Reveal>
+
+          {/* Counts strip */}
+          <Reveal delay={0.12} className="lg:col-span-2">
+            <dl className="grid grid-cols-2 overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface md:grid-cols-4">
+              {counts.map((c, k) => {
+                const Icon = countIcons[k];
+                return (
+                  <Link key={c.href} href={p(c.href)} className={`group/c flex flex-col items-start gap-3 p-5 sm:flex-row sm:items-center sm:gap-4 transition-colors hover:bg-surface-alt md:p-6 border-line ${k % 2 ? "border-l" : ""} ${k > 0 ? "md:border-l" : ""} ${k > 1 ? "max-md:border-t" : ""}`}>
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-line text-accent-text transition-colors group-hover/c:border-transparent group-hover/c:bg-action group-hover/c:text-action-text">
+                      <Icon aria-hidden="true" className="size-5" strokeWidth={1.6} />
+                    </span>
+                    <span className="min-w-0">
+                      <dd className="font-serif-display text-3xl leading-none text-heading"><CountUp value={c.value} /></dd>
+                      <dt className="mt-1.5 text-sm leading-snug text-muted sm:truncate">{c.label}</dt>
+                    </span>
+                    <ArrowUpRight aria-hidden="true" className="ml-auto hidden size-4 shrink-0 text-muted opacity-0 sm:block transition-all group-hover/c:rotate-45 group-hover/c:opacity-100" />
+                  </Link>
+                );
+              })}
+            </dl>
+          </Reveal>
+        </div>
       </section>
 
       {/* PERSONAS — bento */}
@@ -479,16 +555,19 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </Section>
 
       {/* FEATURED STORY */}
-      <section aria-labelledby="story-title" className="relative isolate overflow-hidden bg-espresso text-brand-sand">
-        <ParallaxImage src="/photos/ceremony-trading-floor.webp" alt="" className="absolute inset-0 -z-10 opacity-45" strength={80} />
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-espresso via-espresso/85 to-espresso/20" />
-        <div className="container-site grid min-h-[78vh] items-center py-24">
-          <div className="max-w-2xl">
-            <Reveal><p className="eyebrow text-brand-gold-light!">{t.storyEyebrow}</p></Reveal>
-            <Reveal delay={0.1}>
-              <h2 id="story-title" className="text-h1 mt-5 text-brand-ivory!">{t.storyTitle}</h2>
+      <section aria-labelledby="story-title" className="grain relative isolate overflow-hidden bg-espresso text-brand-sand">
+        <div aria-hidden="true" className="grid-lines absolute inset-0 -z-10" />
+        <div aria-hidden="true" className="animate-orb absolute -right-40 top-10 -z-10 size-[560px] rounded-full bg-brand-gold/15 blur-[130px]" />
+        <div className="container-site grid items-center gap-14 py-24 md:py-32 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
+          <div>
+            <Reveal className="flex items-center gap-3">
+              <CompanyMark slug="bgfi-holding" size="md" />
+              <p className="eyebrow text-brand-gold-light!">{t.storyEyebrow}</p>
             </Reveal>
-            <Reveal delay={0.2}><p className="mt-6 text-lg text-brand-sand/80">{t.storyText}</p></Reveal>
+            <Reveal delay={0.1}>
+              <h2 id="story-title" className="text-h1 mt-6 text-brand-ivory!">{t.storyTitle}</h2>
+            </Reveal>
+            <Reveal delay={0.2}><p className="mt-6 max-w-xl text-lg text-brand-sand/80">{t.storyText}</p></Reveal>
             <Stagger as="dl" className="mt-10 grid grid-cols-3 gap-6 border-t border-white/15 pt-8">
               {t.storyStats.map(([value, label]) => (
                 <StaggerItem key={label}>
@@ -497,12 +576,31 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 </StaggerItem>
               ))}
             </Stagger>
-            <Reveal delay={0.3} className="mt-10">
+            <Reveal delay={0.3} className="mt-10 flex flex-wrap items-center gap-5">
               <ButtonLink href={p("/marches/actions/bgfi-holding")} variant="gold">
                 {t.storyCta} <ArrowRight aria-hidden="true" className="size-4" />
               </ButtonLink>
+              <span className="text-xs text-brand-sand/55">Visa COSUMAF N° COSUMAF-IPO1/25</span>
             </Reveal>
           </div>
+
+          <Reveal delay={0.15} className="relative">
+            <div className="relative aspect-[970/624] overflow-hidden rounded-[var(--radius-panel)] shadow-[0_60px_120px_-40px_rgb(0_0_0/0.9)] ring-1 ring-white/10">
+              <ParallaxImage src="/photos/bgfi-ipo-signing.webp" alt="Signature lors de l’introduction en bourse de BGFI Holding Corporation" className="absolute inset-0" strength={40} sizes="(min-width:1024px) 640px, 100vw" />
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-tr from-espresso/60 via-transparent to-transparent" />
+            </div>
+            <div className="absolute -bottom-6 left-5 flex items-center gap-3 rounded-2xl bg-espresso-2 px-4 py-3 shadow-2xl ring-1 ring-brand-gold/30 md:-left-8">
+              <CalendarDays aria-hidden="true" className="size-5 text-brand-gold-light" strokeWidth={1.6} />
+              <span className="text-sm">
+                <span className="block font-medium text-brand-ivory">{t.storyStats[0][0]}</span>
+                <span className="block text-xs text-brand-sand/65">Siège BVMAC, Douala</span>
+              </span>
+            </div>
+            <div className="absolute -top-5 right-5 flex items-center gap-2.5 rounded-full bg-brand-ivory py-2 pl-2 pr-4 text-espresso shadow-2xl md:-right-6">
+              <span className="flex size-7 items-center justify-center rounded-full bg-brand-gold text-espresso"><TrendingUp aria-hidden="true" className="size-4" /></span>
+              <span className="text-sm font-medium">{t.storyStats[1][0]}</span>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -687,5 +785,25 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
     </>
+  );
+}
+
+// Smooth gold area chart that draws itself in (decorative; values in the card text).
+function MiniArea({ points, id }: { points: number[]; id: string }) {
+  const min = Math.min(...points);
+  const max = Math.max(...points);
+  const xy = points.map((v, i) => [(i / (points.length - 1)) * 600, 104 - ((v - min) / (max - min || 1)) * 88] as const);
+  const line = xy.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`).join(" ");
+  return (
+    <svg viewBox="0 0 600 112" preserveAspectRatio="none" className="h-full w-full" aria-hidden="true">
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#c9a23a" stopOpacity="0.32" />
+          <stop offset="1" stopColor="#c9a23a" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={`${line} L600 112 L0 112 Z`} fill={`url(#${id})`} />
+      <path d={line} fill="none" stroke="var(--chart-price)" strokeWidth="2" vectorEffect="non-scaling-stroke" pathLength={1} className="animate-draw" />
+    </svg>
   );
 }

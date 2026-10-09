@@ -384,7 +384,23 @@
     stroke-dashoffset: 0;
   }
 }
+@keyframes draw-path {
+  from {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+}
+.animate-draw {
+  animation: draw-path 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
 @media (prefers-reduced-motion: reduce) {
+  .animate-draw {
+    animation: none;
+  }
   .animate-marquee,
   .animate-orb,
   .animate-live,
