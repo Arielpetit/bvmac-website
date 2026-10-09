@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BVMAC website (Next.js)
 
-## Getting Started
+Website for the Bourse des Valeurs Mobilières de l'Afrique Centrale, built for
+tender N°030/06/BVMAC/DG/DSI/07-26. It follows the "BVMAC Brand Guidelines v0.1"
+and the blueprint in `../docs/`.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000 (redirects to /fr)
+npm run build      # production build (265 prerendered pages)
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js 16 (App Router, Cache Components, Turbopack), React 19, TypeScript
+- Tailwind CSS 4 with brand tokens in `src/app/globals.css`
+- Recharts for charts, lucide-react for icons
+- Fonts (Montserrat, IBM Plex Sans, IBM Plex Mono) self-hosted by `next/font` at build time
+- No third-party scripts: no Google Analytics, Fonts, Maps or reCAPTCHA
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure
 
-## Learn More
+```
+src/
+  app/[locale]/        one folder per page; /fr, /en and /es are prerendered
+  app/globals.css      brand tokens (light and dark) and type scale
+  components/layout/   top bar, header + mega menu, ticker, footer, cookie consent, search
+  components/ui/       buttons, chips, flags, price change, cards, callouts, states
+  components/market/   charts, equity table, BOC archive, agenda, session timeline
+  components/content/  notices, documents, forms, legal page wrapper
+  components/school/   École de bourse hub, quiz, badges, simulator
+  data/                demonstration data (market, content, institution, school)
+  lib/api.ts           the only data access layer (replace with the real API)
+  i18n/                dictionaries (fr is the source) and provider
+  proxy.ts             redirects paths without a locale prefix
+public/brand/          logo files extracted from the brand guidelines PDF
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Home · Marchés (séance, actions, fiche valeur ×7, obligations, capitalisation, BOC,
+agenda, calendrier) · La BVMAC (présentation, histoire, organisation du marché,
+gouvernance, organigramme, actionnariat, produits et services, appels d'offres) ·
+Émetteurs (sociétés cotées, s'introduire en bourse, conditions, test d'éligibilité,
+commissions, fiscalité) · Investisseurs (comment investir, produits, protection,
+commissions, fiscalité) · Participants (sociétés de bourse, dépositaire, régulateur) ·
+École de bourse (hub, 14 leçons avec quiz, glossaire, portefeuille virtuel) ·
+Actualités (actualités, avis et communiqués, BVMAC TV, photothèque, espace presse) ·
+Documentation (textes, rapports, tarifs, données économiques) · Contact ·
+Mentions légales · Confidentialité · Accessibilité · Plan du site · sitemap.xml · robots.txt
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## What is demonstration content
 
-## Deploy on Vercel
+- Headline market figures for 8 Oct 2026 come from the current site; individual
+  prices, volumes and histories are illustrative (`src/data/market.ts`, `series.ts`).
+- Notice and news titles mirror the current site; numbers, sizes and some items are placeholders.
+- Board members, organigramme, fees, tax rates, press contact and legal texts are
+  placeholders marked "à confirmer" / "à publier" on the pages.
+- 12 of the 25 brokers are entered (names, licences and addresses from the current site).
+- Logos are cropped from the brand guidelines PDF; replace with the official SVG files.
+- English and Spanish cover navigation, interface and key pages; long institutional
+  texts show a "Content available in French" notice.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## To connect for production
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Replace `src/lib/api.ts` with calls to the market-data API and the headless CMS.
+2. Wire forms, newsletter and consent log to the API (`POST /v1/forms`, `/v1/consent`).
+3. Supply official charte graphique values (only `globals.css` tokens change).
+4. Add a strict Content-Security-Policy with nonces at the edge; the other security
+   headers are already set in `next.config.ts`.
+5. Confirm trading hours, holidays, fees and legal texts with BVMAC.
