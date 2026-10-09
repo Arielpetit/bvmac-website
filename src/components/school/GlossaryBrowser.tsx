@@ -27,7 +27,7 @@ export function GlossaryBrowser({ terms }: { terms: Term[] }) {
 
   return (
     <div>
-      <div className="glass sticky top-[125px] z-20 -mx-5 mb-10 border-b border-line px-5 py-4 md:-mx-8 md:px-8">
+      <div className="glass sticky top-[129px] z-20 -mx-5 mb-10 border-b border-line px-5 py-4 md:-mx-8 md:px-8">
         <div className="flex flex-wrap items-center gap-4">
           <div className="relative w-full max-w-sm">
             <label htmlFor="g-q" className="sr-only">Rechercher un terme</label>

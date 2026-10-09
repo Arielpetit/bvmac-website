@@ -14,6 +14,7 @@ export function PageHeader({
   breadcrumbLabel,
   meta,
   image,
+  leading,
   group,
   children,
 }: {
@@ -24,6 +25,7 @@ export function PageHeader({
   breadcrumbLabel: string;
   meta?: React.ReactNode;
   image?: string;
+  leading?: React.ReactNode;
   group?: NavGroupKey;
   children?: React.ReactNode;
 }) {
@@ -35,6 +37,7 @@ export function PageHeader({
         <div>
           <Breadcrumb items={breadcrumb} label={breadcrumbLabel} />
           <Reveal className="mt-8 max-w-3xl">
+            {leading && <div className="mb-6">{leading}</div>}
             {overline && <p className="eyebrow mb-4">{overline}</p>}
             <h1 className="text-h1">{title}</h1>
             {intro && <p className="mt-5 max-w-2xl text-lg text-muted">{intro}</p>}

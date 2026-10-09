@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
@@ -23,6 +24,7 @@ export default async function RegulatorPage({ params }: PageProps<"/[locale]/par
       <ul className="grid gap-4 md:grid-cols-2">
         {PARTNERS.map((p) => (
           <li key={p.name} className="card-lift rounded-[var(--radius-panel)] border border-line bg-surface p-8">
+            {p.logo && <span className="mb-5 flex h-24 w-fit items-center rounded-2xl bg-white p-3"><Image src={p.logo} alt={`Logo ${p.name}`} width={200} height={160} className="h-full w-auto object-contain" /></span>}
             <h2 className="font-serif-display text-4xl text-heading">{p.name}</h2>
             <p className="eyebrow mt-2">{p.desc}</p>
             <p className="mt-3 text-sm text-muted">{ROLES[p.name]}</p>

@@ -5,13 +5,13 @@ import { locales } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/provider";
 import { resolveLocale } from "@/lib/i18n-server";
 import { buildSearchIndex } from "@/lib/search-index";
-import { getEquities } from "@/lib/api";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ConsentProvider } from "@/components/layout/ConsentProvider";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
+import { NavigationProgress } from "@/components/layout/NavigationProgress";
 import { BackToTop } from "@/components/motion/BackToTop";
 
 // Self-hosted at build time by next/font (no request to Google from the browser).
@@ -45,7 +45,6 @@ const themeScript = `(function(){try{var t=localStorage.getItem('bvmac-theme');i
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[locale]">) {
   const { locale, dict } = await resolveLocale(params);
-  const quotes = (await getEquities()).map(({ slug, shortName, name, closePrice, change }) => ({ slug, shortName, name, closePrice, change }));
   return (
     <html lang={locale} data-theme="light" suppressHydrationWarning className={`${fraunces.variable} ${geist.variable} ${geistMono.variable} antialiased`}>
       <head>
@@ -62,7 +61,8 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[lo
                 {dict.a11y.skip}
               </a>
               <ScrollProgress />
-              <Header searchIndex={buildSearchIndex(dict)} quotes={quotes} />
+              <NavigationProgress />
+              <Header searchIndex={buildSearchIndex(dict)} />
               <main id="contenu" tabIndex={-1} className="flex-1 outline-none">
                 {children}
               </main>

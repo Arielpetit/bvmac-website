@@ -20,7 +20,7 @@ export function SectionSubnav({ group }: { group: NavGroupKey }) {
     .sort((a, b) => b.length - a.length)[0];
 
   return (
-    <nav aria-label={dict.nav[group]} className="glass sticky top-[72px] z-30 border-b border-line/70">
+    <nav aria-label={dict.nav[group]} className="glass sticky top-[76px] z-30 border-b border-line/70">
       <div className="container-site">
         <ul className="flex gap-1 overflow-x-auto py-2 [scrollbar-width:none]">
           {items.map((item) => {

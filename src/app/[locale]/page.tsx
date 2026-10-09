@@ -5,12 +5,18 @@ import {
   ArrowUpRight,
   BookOpen,
   Briefcase,
+  Building2,
   CalendarDays,
+  Check,
+  Flame,
+  Globe2,
+  Handshake,
+  Landmark,
+  ScrollText,
   FileDown,
   GraduationCap,
   LineChart,
   PieChart,
-  QrCode,
   Sparkles,
   TrendingUp,
 } from "lucide-react";
@@ -29,8 +35,11 @@ import { NoticeRow } from "@/components/content/NoticeRow";
 import { NewsCard } from "@/components/content/NewsCard";
 import { VideoCard } from "@/components/content/VideoCard";
 import { SessionChip } from "@/components/layout/SessionChip";
-import { Logo } from "@/components/layout/Logo";
 import { HeroMarketCard } from "@/components/home/HeroMarketCard";
+import { InvestArt, LearnArt, NoticesArt, RaiseArt } from "@/components/home/Illustrations";
+import { AppShowcase } from "@/components/home/AppShowcase";
+import { CompanyMark } from "@/components/brand/CompanyMark";
+import { QrCode, StoreBadge } from "@/components/brand/StoreBadges";
 import { Reveal, Stagger, StaggerItem, WordReveal } from "@/components/motion/Reveal";
 import { CountUp } from "@/components/motion/CountUp";
 import { ParallaxImage } from "@/components/motion/Parallax";
@@ -96,6 +105,8 @@ const copy = {
     appPoints: ["Cours et variations", "Alertes choisies", "École de bourse hors ligne"],
     qr: "Scannez pour télécharger",
     partners: "Institutions du marché financier régional",
+    partnersEyebrow: "Écosystème",
+    partnersVisit: "Site officiel",
   },
   en: {
     eyebrow: "Regional financial market · CEMAC",
@@ -156,6 +167,8 @@ const copy = {
     appPoints: ["Prices and moves", "Chosen alerts", "Offline Stock Market School"],
     qr: "Scan to download",
     partners: "Regional financial market institutions",
+    partnersEyebrow: "Ecosystem",
+    partnersVisit: "Official website",
   },
   es: {
     eyebrow: "Mercado financiero regional · CEMAC",
@@ -216,11 +229,13 @@ const copy = {
     appPoints: ["Cotizaciones y variaciones", "Alertas elegidas", "Escuela de bolsa sin conexión"],
     qr: "Escanee para descargar",
     partners: "Instituciones del mercado financiero regional",
+    partnersEyebrow: "Ecosistema",
+    partnersVisit: "Sitio oficial",
   },
 };
 
 const personaIcons = [TrendingUp, Briefcase, LineChart, GraduationCap];
-const personaImages = ["/photos/ceremony-audience.webp", "/photos/ceremony-speech.webp", null, "/photos/school-students.webp"];
+const figureIcons = [PieChart, ScrollText, Building2, Landmark, Handshake, Globe2];
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale, dict } = await resolveLocale(params);
@@ -322,16 +337,24 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       {/* KEY FIGURES */}
-      <section aria-label={t.figures.join(", ")} className="border-b border-line bg-surface">
-        <Stagger as="dl" className="container-site grid grid-cols-2 gap-px md:grid-cols-3 lg:grid-cols-6">
-          {figures.map((f, i) => (
-            <StaggerItem key={i} className="px-2 py-10 md:px-5">
-              <dd className="font-serif-display text-4xl text-heading md:text-[2.75rem]">
-                <CountUp value={f.value} kind={f.kind} />
-              </dd>
-              <dt className="mt-2 text-sm text-muted">{t.figures[i]}</dt>
-            </StaggerItem>
-          ))}
+      <section aria-label={t.figures.join(", ")} className="relative border-b border-line bg-background py-14 md:py-16">
+        <div aria-hidden="true" className="dots absolute inset-0 opacity-60" />
+        <Stagger as="dl" className="container-site relative grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
+          {figures.map((f, i) => {
+            const Icon = figureIcons[i];
+            return (
+              <StaggerItem key={i} className="card-lift group relative overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface p-5 md:p-6">
+                <Icon aria-hidden="true" className="absolute -bottom-5 -right-5 size-28 text-accent-text opacity-[0.07] transition-transform duration-700 group-hover:-rotate-6 group-hover:scale-110" strokeWidth={1} />
+                <span className="relative flex size-10 items-center justify-center rounded-xl bg-accent-soft text-accent-text">
+                  <Icon aria-hidden="true" className="size-5" strokeWidth={1.6} />
+                </span>
+                <dd className="font-serif-display relative mt-6 text-[2.1rem] leading-none text-heading md:text-[2.4rem]">
+                  <CountUp value={f.value} kind={f.kind} />
+                </dd>
+                <dt className="relative mt-2.5 text-[0.8125rem] leading-snug text-muted">{t.figures[i]}</dt>
+              </StaggerItem>
+            );
+          })}
         </Stagger>
       </section>
 
@@ -341,28 +364,37 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         <Stagger className="grid gap-5 md:grid-cols-2 lg:grid-cols-12">
           {t.personas.map((persona, i) => {
             const Icon = personaIcons[i];
-            const img = personaImages[i];
+            const Art = [InvestArt, RaiseArt, NoticesArt, LearnArt][i];
+            const theme = ["dark", "gold", "light", "dark"][i];
             const span = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"][i];
+            const dark = theme === "dark";
             return (
               <StaggerItem key={persona.title} className={span}>
                 <Link
                   href={p(persona.href)}
-                  className={`group relative flex h-full min-h-[300px] flex-col justify-end overflow-hidden rounded-[var(--radius-panel)] border p-7 transition-[border-color] duration-500 md:p-9 ${img ? "border-transparent bg-espresso text-brand-sand" : "border-line bg-surface hover:border-line-strong"}`}
+                  className={`card-lift group relative flex h-full min-h-[400px] flex-col justify-between overflow-hidden rounded-[var(--radius-panel)] border p-7 md:p-9 ${
+                    theme === "dark" ? "border-transparent bg-espresso text-brand-sand" : theme === "gold" ? "border-transparent bg-gradient-to-br from-[#f3e2b0] via-[#e9cf86] to-[#d4b25a] text-espresso" : "border-line bg-surface"
+                  }`}
                 >
-                  {img && (
-                    <>
-                      <Image src={img} alt="" fill sizes="(min-width:1024px) 60vw, 100vw" className="object-cover opacity-55 transition-transform duration-[1.4s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />
-                      <span className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/60 to-espresso/10" />
-                    </>
-                  )}
-                  <span className={`absolute right-7 top-7 flex size-12 items-center justify-center rounded-full border transition-colors md:right-9 md:top-9 ${img ? "border-white/20 text-brand-gold-light group-hover:bg-brand-gold group-hover:text-espresso" : "border-line text-accent-text group-hover:bg-action group-hover:text-action-text"}`}>
-                    <ArrowUpRight aria-hidden="true" className="size-5 transition-transform duration-300 group-hover:rotate-45" />
+                  {dark && <span aria-hidden="true" className="grid-lines absolute inset-0 opacity-70" />}
+                  {dark && <span aria-hidden="true" className="absolute -right-24 -top-24 size-72 rounded-full bg-brand-gold/20 blur-[80px] transition-opacity duration-700 group-hover:opacity-100 md:opacity-70" />}
+                  {theme === "light" && <span aria-hidden="true" className="dots absolute inset-0 opacity-70" />}
+                  <span className="relative flex items-start justify-between">
+                    <span className={`flex size-12 items-center justify-center rounded-2xl ${dark ? "bg-white/10 text-brand-gold-light" : theme === "gold" ? "bg-espresso/10 text-espresso" : "bg-accent-soft text-accent-text"}`}>
+                      <Icon aria-hidden="true" className="size-6" strokeWidth={1.5} />
+                    </span>
+                    <span className={`flex size-11 items-center justify-center rounded-full border transition-all duration-300 group-hover:rotate-45 ${dark ? "border-white/20 text-brand-gold-light group-hover:border-transparent group-hover:bg-brand-gold group-hover:text-espresso" : theme === "gold" ? "border-espresso/20 group-hover:bg-espresso group-hover:text-brand-gold-light" : "border-line text-accent-text group-hover:border-transparent group-hover:bg-action group-hover:text-action-text"}`}>
+                      <ArrowUpRight aria-hidden="true" className="size-5" />
+                    </span>
                   </span>
-                  <span className="relative">
-                    <Icon aria-hidden="true" className={`size-7 ${img ? "text-brand-gold-light" : "text-accent-text"}`} strokeWidth={1.5} />
-                    <span className={`mt-5 block font-serif-display text-3xl md:text-4xl ${img ? "text-brand-ivory" : "text-heading"}`}>{persona.title}</span>
-                    <span className={`mt-3 block max-w-md ${img ? "text-brand-sand/80" : "text-muted"}`}>{persona.text}</span>
-                    <span className={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium ${img ? "text-brand-gold-light" : "text-link"}`}>{persona.cta}</span>
+                  <Art className="pointer-events-none absolute right-5 top-20 w-[48%] max-w-[340px] transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.04] max-md:w-[60%] max-md:opacity-30 md:right-8" />
+                  <span className="relative max-w-[min(100%,22rem)] pt-36">
+                    <span className={`block font-serif-display text-3xl md:text-4xl ${dark ? "text-brand-ivory" : "text-heading"} ${theme === "gold" ? "!text-espresso" : ""}`}>{persona.title}</span>
+                    <span className={`mt-3 block ${dark ? "text-brand-sand/75" : theme === "gold" ? "text-espresso/75" : "text-muted"}`}>{persona.text}</span>
+                    <span className={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium ${dark ? "text-brand-gold-light" : theme === "gold" ? "text-espresso" : "text-link"}`}>
+                      {persona.cta}
+                      <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" />
+                    </span>
                   </span>
                 </Link>
               </StaggerItem>
@@ -398,10 +430,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   <tr key={e.slug} className="group transition-colors hover:bg-surface-alt/60">
                     <th scope="row" className="px-5 py-4 text-left font-normal">
                       <Link href={p(`/marches/actions/${e.slug}`)} className="flex items-center gap-3">
-                        <Flag code={e.country} className="h-3 w-[18px]" />
+                        <CompanyMark slug={e.slug} name={e.shortName} />
                         <span>
                           <span className="block font-medium text-heading group-hover:text-link">{e.shortName}</span>
-                          <span className="block text-xs text-muted">{e.sector}</span>
+                          <span className="flex items-center gap-1.5 text-xs text-muted"><Flag code={e.country} className="h-2.5 w-[15px]" />{e.sector}</span>
                         </span>
                       </Link>
                     </th>
@@ -448,7 +480,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
       {/* FEATURED STORY */}
       <section aria-labelledby="story-title" className="relative isolate overflow-hidden bg-espresso text-brand-sand">
-        <ParallaxImage src="/photos/ceremony-podium.webp" alt="" className="absolute inset-0 -z-10 opacity-45" strength={80} />
+        <ParallaxImage src="/photos/ceremony-trading-floor.webp" alt="" className="absolute inset-0 -z-10 opacity-45" strength={80} />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-espresso via-espresso/85 to-espresso/20" />
         <div className="container-site grid min-h-[78vh] items-center py-24">
           <div className="max-w-2xl">
@@ -523,16 +555,26 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <Section tone="alt" labelledBy="school-title">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal className="relative">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-panel)] md:aspect-[5/5]">
-              <Image src="/photos/school-students-2.webp" alt="" fill sizes="(min-width:1024px) 600px, 100vw" className="object-cover" />
-            </div>
-            <div className="glass absolute -bottom-6 left-6 right-6 rounded-[var(--radius-card)] border border-line p-5 shadow-soft md:left-auto md:w-72">
-              <p className="text-xs uppercase tracking-[0.12em] text-muted">Parcours</p>
-              <p className="mt-1 font-medium text-heading">Comprendre la bourse</p>
-              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-surface-alt">
-                <div className="h-full w-2/3 rounded-full bg-brand-gold" />
+            <div className="relative overflow-hidden rounded-[var(--radius-panel)] bg-espresso p-6 md:p-10">
+              <span aria-hidden="true" className="grid-lines absolute inset-0" />
+              <span aria-hidden="true" className="absolute -left-20 -top-20 size-72 rounded-full bg-brand-gold/25 blur-[90px]" />
+              <LearnArt className="relative mx-auto w-full max-w-md opacity-90" />
+              <div className="relative mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-brand-sand backdrop-blur">
+                  <p className="text-[10px] uppercase tracking-[0.14em] text-brand-gold-light">Leçon 2 · 5 min</p>
+                  <p className="mt-1.5 font-medium text-brand-ivory">Actions et obligations</p>
+                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full w-2/3 rounded-full bg-brand-gold" /></div>
+                </div>
+                <div className="rounded-2xl bg-brand-ivory p-4 text-espresso shadow-2xl">
+                  <p className="text-[10px] uppercase tracking-[0.14em] text-[#8a6614]">Quiz</p>
+                  <p className="mt-1.5 text-sm font-medium">Qu’est-ce qu’une obligation ?</p>
+                  <p className="mt-2 flex items-center gap-2 rounded-lg bg-[#e4f3ea] px-2.5 py-1.5 text-xs text-[#157a43]"><Check aria-hidden="true" className="size-3.5" />Un prêt à un émetteur</p>
+                </div>
               </div>
-              <p className="mt-2 text-xs text-muted">2 / 3 · 4 min</p>
+              <div className="relative mt-3 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-3 text-sm text-brand-sand">
+                <span className="flex size-9 items-center justify-center rounded-full bg-brand-gold text-espresso"><Flame aria-hidden="true" className="size-4" /></span>
+                <span><span className="font-medium text-brand-ivory">Série de 4 jours</span> · badge « Premier pas » obtenu</span>
+              </div>
             </div>
           </Reveal>
           <div>
@@ -581,9 +623,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </Section>
 
       {/* APP */}
-      <section aria-labelledby="app-title" className="relative overflow-hidden bg-espresso-2 text-brand-sand">
+      <section aria-labelledby="app-title" className="grain relative overflow-hidden bg-espresso-2 text-brand-sand">
+        <div aria-hidden="true" className="grid-lines absolute inset-0" />
         <div aria-hidden="true" className="animate-orb absolute -left-20 top-0 size-[420px] rounded-full bg-brand-gold/15 blur-[110px]" />
-        <div className="container-site relative grid items-center gap-14 py-24 lg:grid-cols-[1.2fr_1fr]">
+        <div className="container-site relative grid items-center gap-16 py-24 md:py-32 lg:grid-cols-[1.1fr_1fr]">
           <div>
             <Reveal><p className="eyebrow text-brand-gold-light!">{t.appEyebrow}</p></Reveal>
             <Reveal delay={0.1}><h2 id="app-title" className="text-h1 mt-5 text-brand-ivory!">{t.appTitle}</h2></Reveal>
@@ -593,75 +636,56 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 <StaggerItem key={point} as="li" className="rounded-full border border-white/15 px-4 py-2 text-sm text-brand-ivory">{point}</StaggerItem>
               ))}
             </Stagger>
-            <Reveal delay={0.25} className="mt-10 flex flex-wrap items-center gap-4">
-              <ButtonLink href={CONTACT.playStore} variant="gold" external>Google Play</ButtonLink>
-              <span className="inline-flex h-12 items-center rounded-full border border-dashed border-white/25 px-6 text-sm text-brand-sand/70">App Store</span>
-              <span className="flex items-center gap-3 text-sm text-brand-sand/70">
-                <span className="flex size-16 items-center justify-center rounded-2xl bg-brand-ivory text-espresso" aria-hidden="true">
-                  <QrCode className="size-10" strokeWidth={1.25} />
-                </span>
-                {t.qr}
-              </span>
+            <Reveal delay={0.25} className="mt-10 flex flex-wrap items-center gap-3">
+              <StoreBadge store="google" href={CONTACT.playStore} locale={locale} />
+              <StoreBadge store="apple" locale={locale} soon />
+            </Reveal>
+            <Reveal delay={0.3} className="mt-8 flex items-center gap-4 border-t border-white/10 pt-8">
+              <span className="rounded-2xl bg-brand-ivory p-2.5 text-espresso shadow-xl"><QrCode className="size-20" /></span>
+              <span className="max-w-[14rem] text-sm text-brand-sand/70">{t.qr}</span>
             </Reveal>
           </div>
           <Reveal delay={0.15} className="mx-auto">
-            <PhoneMockup locale={locale} rows={equities.slice(0, 5).map((e) => ({ name: e.shortName, price: formatNumber(e.closePrice, locale), change: e.change }))} />
+            <AppShowcase
+              capitalisation={formatNumber(summary.equityCapitalisation / 1e9, locale, 1)}
+              area={capHistory.slice(-60).map((pt) => pt.value)}
+              rows={equities.slice(0, 5).map((e) => ({ slug: e.slug, name: e.shortName, sector: e.sector, price: formatNumber(e.closePrice, locale), change: e.change, spark: sparks[e.slug].slice(-20).map((pt) => pt.value) }))}
+            />
           </Reveal>
         </div>
       </section>
 
       {/* PARTNERS */}
-      <section aria-labelledby="partners-title" className="border-b border-line bg-surface py-14">
+      <section aria-labelledby="partners-title" className="relative border-b border-line bg-surface py-20">
         <div className="container-site">
-          <h2 id="partners-title" className="text-center text-sm uppercase tracking-[0.14em] text-muted">{t.partners}</h2>
-          <ul className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="mx-auto max-w-xl text-center">
+            <p className="eyebrow">{t.partnersEyebrow}</p>
+            <h2 id="partners-title" className="text-h2 mt-3">{t.partners}</h2>
+          </div>
+          <Stagger as="ul" className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {PARTNERS.map((partner) => (
-              <li key={partner.name}>
-                <a href={partner.href} target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col items-center justify-center rounded-2xl px-4 py-6 text-center transition-colors hover:bg-surface-alt">
-                  <span className="font-serif-display text-3xl text-heading">{partner.name}</span>
-                  <span className="mt-2 text-xs text-muted">{partner.desc}</span>
+              <StaggerItem as="li" key={partner.name}>
+                <a href={partner.href} target="_blank" rel="noopener noreferrer" className="card-lift group flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-background p-7 text-center">
+                  <span className="flex h-28 w-full items-center justify-center rounded-2xl bg-white p-3 dark:bg-white/95">
+                    {partner.logo ? (
+                      <Image src={partner.logo} alt={`Logo ${partner.name}`} width={240} height={200} className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
+                    ) : (
+                      <span className="relative flex size-20 items-center justify-center rounded-full border border-brand-gold/40 bg-surface">
+                        <span className="absolute inset-1.5 rounded-full border border-dashed border-brand-gold/40" />
+                        <span className="font-serif-display text-lg text-heading">{partner.name}</span>
+                      </span>
+                    )}
+                  </span>
+                  <span className="mt-5 font-medium text-heading">{partner.name}</span>
+                  <span className="mt-1.5 text-xs leading-relaxed text-muted">{partner.desc}</span>
+                  <span className="mt-4 inline-flex items-center gap-1 text-xs text-link opacity-0 transition-opacity group-hover:opacity-100">{t.partnersVisit}<ArrowUpRight aria-hidden="true" className="size-3.5" /></span>
                   <span className="sr-only">{dict.a11y.external}</span>
                 </a>
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
+          </Stagger>
         </div>
       </section>
     </>
-  );
-}
-
-function PhoneMockup({ rows, locale }: { rows: { name: string; price: string; change: number }[]; locale: "fr" | "en" | "es" }) {
-  return (
-    <div aria-hidden="true" className="relative w-[280px] rotate-[-4deg] rounded-[44px] border-[10px] border-[#05030a] bg-[#05030a] shadow-[0_60px_120px_-40px_rgb(0_0_0/0.9)] transition-transform duration-700 hover:rotate-0">
-      <div className="overflow-hidden rounded-[34px] bg-[#fbf9f5] p-5 text-[#1a140e]">
-        <div className="mx-auto mb-4 h-5 w-24 rounded-full bg-[#05030a]" />
-        <div className="flex items-center justify-between">
-          <span className="font-serif-display text-2xl">Marchés</span>
-          <Logo variant="medal" className="size-8" alt="" />
-        </div>
-        <div className="mt-4 rounded-2xl bg-[#1c130b] p-4 text-[#efe6d4]">
-          <p className="text-[10px] uppercase tracking-wider opacity-70">Capitalisation</p>
-          <p className="font-serif-display text-2xl text-[#fbf6ea]">1 795,9 Md</p>
-          <svg viewBox="0 0 100 24" className="mt-2 h-8 w-full"><path d="M0 18 L12 15 L22 16 L34 10 L46 12 L58 7 L70 9 L82 5 L100 6" fill="none" stroke="#ead18a" strokeWidth="1.5" /></svg>
-        </div>
-        <ul className="mt-3 divide-y divide-[#e8e0d0] text-xs">
-          {rows.map((r) => (
-            <li key={r.name} className="flex items-center justify-between py-2.5">
-              <span className="font-medium">{r.name}</span>
-              <span className="flex items-center gap-2">
-                <span className="figure">{r.price}</span>
-                <PriceChange value={r.change} locale={locale} className="text-[10px]" />
-              </span>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-3 grid grid-cols-4 border-t border-[#e8e0d0] pt-3 text-center text-[9px] text-[#6b6155]">
-          {["Marchés", "Favoris", "Avis", "École"].map((tab, i) => (
-            <span key={tab} className={i === 0 ? "font-semibold text-[#1c130b]" : ""}>{tab}</span>
-          ))}
-        </div>
-      </div>
-    </div>
   );
 }

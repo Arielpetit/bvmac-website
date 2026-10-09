@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Maintenance", robots: { index: false
 // Shown during planned maintenance (the proxy can rewrite all routes here).
 export default function MaintenancePage() {
   return (
-    <section className="grain relative isolate flex min-h-svh items-center overflow-hidden bg-espresso pt-[72px] text-brand-sand">
+    <section className="grain relative isolate flex min-h-svh items-center overflow-hidden bg-espresso pt-[76px] text-brand-sand">
       <Image src="/photos/bvmac-building.webp" alt="" fill priority sizes="100vw" className="-z-10 object-cover opacity-20" />
       <div className="animate-orb absolute -left-32 top-1/4 -z-10 size-[480px] rounded-full bg-brand-gold/20 blur-3xl" aria-hidden="true" />
       <div className="container-site py-24">

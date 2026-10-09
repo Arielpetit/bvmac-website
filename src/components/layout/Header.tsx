@@ -16,7 +16,6 @@ import { ThemeToggle } from "./ThemeToggle";
 import { SessionChip } from "./SessionChip";
 import { NavIcon } from "./NavIcon";
 import { SearchDialog, type SearchEntry } from "./SearchDialog";
-import { FavoritesButton, type QuoteLite } from "./FavoritesButton";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -33,7 +32,7 @@ function useActiveGroup() {
   );
 }
 
-export function Header({ searchIndex, quotes }: { searchIndex: SearchEntry[]; quotes: QuoteLite[] }) {
+export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
   const { locale, dict } = useI18n();
   const pathname = usePathname();
   const isActive = useActiveGroup();
@@ -86,19 +85,19 @@ export function Header({ searchIndex, quotes }: { searchIndex: SearchEntry[]; qu
         onMouseLeave={leave}
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-500",
-          onDark ? "border-b border-transparent bg-transparent" : "glass border-b border-line/70 shadow-[0_8px_30px_-20px_rgb(var(--shadow-color)/0.25)]",
+          onDark ? "border-b border-transparent bg-transparent" : "border-b border-line/70 bg-surface/[0.97] shadow-[0_8px_30px_-20px_rgb(var(--shadow-color)/0.25)] backdrop-blur-xl backdrop-saturate-150",
         )}
       >
-        <div className="container-site flex h-[72px] items-center justify-between gap-6">
+        <div className="container-site flex h-[76px] items-center justify-between gap-6">
           <Link href={localePath(locale, "/")} className="relative z-10 flex shrink-0 items-center" aria-label={`BVMAC – ${dict.nav.home}`}>
-            <Logo variant="medal" className="size-10 sm:hidden" alt="" priority />
+            <Logo variant="medal" className="size-11 sm:hidden" alt="" priority />
             <span className="hidden sm:block">
               {onDark ? (
-                <Logo variant="dark" className="h-10 w-auto" alt="" priority />
+                <Logo variant="dark" className="h-[52px] w-auto" alt="" priority />
               ) : (
                 <>
-                  <Logo variant="light" className="h-10 w-auto dark:hidden" alt="" priority />
-                  <Logo variant="dark" className="hidden h-10 w-auto dark:block" alt="" />
+                  <Logo variant="light" className="h-[52px] w-auto dark:hidden" alt="" priority />
+                  <Logo variant="dark" className="hidden h-[52px] w-auto dark:block" alt="" />
                 </>
               )}
             </span>
@@ -143,16 +142,15 @@ export function Header({ searchIndex, quotes }: { searchIndex: SearchEntry[]; qu
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
+              title={`${dict.nav.search} (Ctrl K)`}
               className={cn(
-                "inline-flex h-10 items-center gap-2 rounded-full px-3 text-sm transition-colors",
+                "inline-flex size-10 items-center justify-center rounded-full transition-colors",
                 onDark ? "text-brand-ivory/85 hover:bg-white/10" : "text-muted hover:bg-surface-alt hover:text-heading",
               )}
             >
-              <Search className="size-[18px]" strokeWidth={1.6} aria-hidden="true" />
-              <span className="sr-only xl:not-sr-only">{dict.nav.search}</span>
-              <kbd className={cn("hidden rounded-md border px-1.5 py-0.5 font-mono text-[10px] xl:inline", onDark ? "border-white/20" : "border-line")}>⌘K</kbd>
+              <Search className="size-[19px]" strokeWidth={1.7} aria-hidden="true" />
+              <span className="sr-only">{dict.nav.search}</span>
             </button>
-            <FavoritesButton quotes={quotes} tone={onDark ? "onDark" : "default"} />
             <div className="hidden md:block">
               <LanguageMenu tone={onDark ? "onDark" : "default"} />
             </div>

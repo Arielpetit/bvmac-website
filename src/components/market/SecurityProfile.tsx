@@ -12,12 +12,12 @@ import { localePath } from "@/lib/paths";
 import { formatDate, formatFcfa, formatNumber } from "@/lib/format";
 import { STATUS_LABEL, formatListedOn } from "@/lib/market-labels";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { CompanyMark } from "@/components/brand/CompanyMark";
 import { Tabs } from "@/components/ui/Tabs";
 import { Callout } from "@/components/ui/Callout";
 import { CountryChip, Tag } from "@/components/ui/Chip";
 import { PriceChange } from "@/components/ui/PriceChange";
 import { TimeSeriesChart } from "./LazyCharts";
-import { FollowButton } from "./FollowButton";
 import { NoticeRow } from "@/components/content/NoticeRow";
 
 const T = {
@@ -204,13 +204,13 @@ export function SecurityProfile({
       <PageHeader
         group={group}
         title={e.name}
+        leading={<CompanyMark slug={e.slug} name={e.shortName} size="xl" />}
         overline={`${e.ticker} · ${e.isin}`}
         breadcrumbLabel={dict.a11y.breadcrumb}
         breadcrumb={breadcrumb}
         image={PHOTOS[e.slug]}
         meta={
           <>
-            <FollowButton slug={e.slug} name={e.shortName} />
             <a href={`mailto:?subject=${encodeURIComponent(`BVMAC – ${e.shortName}`)}`} className="inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm text-muted hover:bg-surface-alt hover:text-heading">
               <Share2 aria-hidden="true" className="size-4" strokeWidth={1.6} /> {t.share}
             </a>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { CompanyMark } from "@/components/brand/CompanyMark";
 import { useMemo, useRef, useState } from "react";
 import { ArrowDown, ArrowUp, ArrowUpDown, Columns3, Download, Search } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
@@ -10,7 +11,6 @@ import { COUNTRIES } from "@/lib/navigation";
 import { COLUMN_HINTS, STATUS_LABEL } from "@/lib/market-labels";
 import type { EquityQuote } from "@/lib/api";
 import { PriceChange } from "@/components/ui/PriceChange";
-import { Flag } from "@/components/ui/Flag";
 import { Hint } from "@/components/ui/Hint";
 import { EmptyState } from "@/components/ui/States";
 import { Sparkline } from "./Sparkline";
@@ -184,7 +184,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
                   <tr key={r.slug} className="group transition-colors hover:bg-surface-alt/50">
                     <th scope="row" className="sticky left-0 z-10 bg-surface px-4 py-4 text-left font-normal group-hover:bg-surface-alt/50">
                       <Link href={localePath(locale, `/marches/actions/${r.slug}`)} className="flex items-center gap-3">
-                        <Flag code={r.country} className="h-3 w-[18px]" />
+                        <CompanyMark slug={r.slug} name={r.shortName} />
                         <span>
                           <span className="block font-medium text-heading group-hover:text-link">{r.shortName}</span>
                           <span className="block max-w-52 truncate text-xs text-muted">{r.name}</span>
@@ -205,7 +205,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
               <li key={r.slug} className="rounded-[var(--radius-card)] border border-line bg-surface p-4">
                 <div className="flex items-start justify-between gap-3">
                   <Link href={localePath(locale, `/marches/actions/${r.slug}`)} className="flex items-center gap-2.5">
-                    <Flag code={r.country} className="h-3 w-[18px]" />
+                    <CompanyMark slug={r.slug} name={r.shortName} />
                     <span>
                       <span className="block font-medium text-heading">{r.shortName}</span>
                       <span className="block text-xs text-muted">{r.sector}</span>

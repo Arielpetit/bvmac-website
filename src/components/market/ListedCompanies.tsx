@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import { CompanyMark } from "@/components/brand/CompanyMark";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, LayoutGrid, List, Search } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
@@ -16,7 +16,6 @@ import { PriceChange } from "@/components/ui/PriceChange";
 import { EmptyState } from "@/components/ui/States";
 import { cn } from "@/lib/cn";
 
-const PHOTOS: Record<string, string> = { "bgfi-holding": "/photos/ceremony-speech.webp", bange: "/photos/governance-officials.webp", semc: "/photos/ceremony-guests.webp", socapalm: "/photos/ceremony-arrival.webp", safacam: "/photos/ceremony-audience.webp", "la-regionale": "/photos/ceremony-talk.webp", "scg-re": "/photos/ceremony-handshake.webp" };
 
 export function ListedCompanies({ equities }: { equities: (Equity & { change: number })[] }) {
   const { locale, dict } = useI18n();
@@ -58,11 +57,13 @@ export function ListedCompanies({ equities }: { equities: (Equity & { change: nu
             {rows.map((e) => (
               <motion.li key={e.slug} layout initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.96 }} transition={{ duration: 0.35 }}>
                 <Link href={href(e.slug)} className="card-lift group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface">
-                  <div className="relative h-40 overflow-hidden bg-espresso">
-                    <Image src={PHOTOS[e.slug] ?? "/photos/bvmac-building.webp"} alt="" fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover opacity-60 transition-transform duration-[1.2s] group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-espresso/90 to-transparent" />
-                    <span className="absolute left-5 top-5 rounded-full bg-white/10 px-3 py-1 text-xs text-brand-ivory backdrop-blur">{e.sector}</span>
-                    <span className="font-serif-display absolute bottom-4 left-5 text-3xl text-brand-ivory">{e.shortName}</span>
+                  <div className="relative flex h-40 items-end justify-between overflow-hidden border-b border-line bg-surface-alt p-5">
+                    <span aria-hidden="true" className="dots absolute inset-0" />
+                    <span className="relative">
+                      <CompanyMark slug={e.slug} name={e.shortName} size="lg" className="transition-transform duration-700 group-hover:-rotate-3 group-hover:scale-105" />
+                      <span className="font-serif-display mt-3 block text-2xl text-heading">{e.shortName}</span>
+                    </span>
+                    <span className="relative rounded-full border border-line bg-surface px-3 py-1 text-xs text-muted">{e.sector}</span>
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <p className="text-sm text-muted">{e.name}</p>
@@ -88,7 +89,7 @@ export function ListedCompanies({ equities }: { equities: (Equity & { change: nu
           {rows.map((e) => (
             <li key={e.slug}>
               <Link href={href(e.slug)} className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 px-5 py-4 transition-colors hover:bg-surface-alt md:grid-cols-[auto_2fr_1fr_1fr_auto]">
-                <span className="flex size-11 items-center justify-center rounded-xl bg-accent-soft text-xs font-semibold text-accent-text">{e.ticker.slice(0, 4)}</span>
+                <CompanyMark slug={e.slug} name={e.shortName} />
                 <span className="min-w-0">
                   <span className="block truncate font-medium text-heading group-hover:text-link">{e.shortName}</span>
                   <span className="block truncate text-xs text-muted">{e.name}</span>

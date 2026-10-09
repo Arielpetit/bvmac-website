@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { CompanyMark } from "@/components/brand/CompanyMark";
 import { motion } from "motion/react";
 import { ArrowUpRight, FileDown } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
@@ -111,9 +112,12 @@ export function HeroMarketCard({
         {rows.map((r, i) => (
           <motion.li key={r.slug} initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1 + i * 0.08, duration: 0.6 }}>
             <Link href={localePath(locale, `/marches/actions/${r.slug}`)} className="group flex items-center justify-between gap-3 py-2.5">
-              <span>
+              <span className="flex items-center gap-3">
+                <CompanyMark slug={r.slug} name={r.shortName} size="sm" />
+                <span>
                 <span className="block text-sm font-medium text-brand-ivory group-hover:text-brand-gold-light">{r.shortName}</span>
                 <span className="block text-xs text-brand-sand/50">{r.sector}</span>
+                </span>
               </span>
               <span className="text-right">
                 <span className="figure block text-sm text-brand-ivory">{formatNumber(r.closePrice, locale)}</span>

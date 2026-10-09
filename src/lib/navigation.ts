@@ -140,11 +140,11 @@ export const COUNTRIES = [
 
 export type CountryCode = (typeof COUNTRIES)[number]["code"];
 
-export const PARTNERS = [
-  { name: "CEMAC", href: "https://www.cemac.int/", desc: "Communauté Économique et Monétaire de l'Afrique Centrale" },
-  { name: "COSUMAF", href: "https://cosumaf.org/", desc: "Commission de Surveillance du Marché Financier de l'Afrique Centrale" },
-  { name: "BEAC", href: "https://www.beac.int/", desc: "Banque des États de l'Afrique Centrale" },
-  { name: "COBAC", href: "https://www.sgcobac.org/", desc: "Commission Bancaire de l'Afrique Centrale" },
+export const PARTNERS: { name: string; href: string; desc: string; logo?: string }[] = [
+  { name: "CEMAC", logo: "/institutions/cemac.png", href: "https://www.cemac.int/", desc: "Communauté Économique et Monétaire de l'Afrique Centrale" },
+  { name: "COSUMAF", logo: "/institutions/cosumaf.png", href: "https://cosumaf.org/", desc: "Commission de Surveillance du Marché Financier de l'Afrique Centrale" },
+  { name: "BEAC", logo: "/institutions/beac.png", href: "https://www.beac.int/", desc: "Banque des États de l'Afrique Centrale" },
+  { name: "COBAC", logo: "/institutions/cobac.png", href: "https://www.beac.int/supervision-bancaire/reglements-de-cobac/", desc: "Commission Bancaire de l'Afrique Centrale" },
 ];
 
 export const CONTACT = {
