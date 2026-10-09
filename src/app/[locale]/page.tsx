@@ -272,7 +272,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   ]);
   const sparks = Object.fromEntries(await Promise.all(equities.map(async (e) => [e.slug, await getPriceHistory(e.slug, 60)] as const)));
   const latestBoc = boc[0];
-  const heroRows = equities.slice().sort((a, b) => b.closePrice * (b.qtyTraded + 1) - a.closePrice * (a.qtyTraded + 1)).slice(0, 4);
+  const heroRows = equities.slice().sort((a, b) => b.lastDividend.amount / b.closePrice - a.lastDividend.amount / a.closePrice).slice(0, 4);
   const marketNews = news.filter((n) => n.category !== "Recrutement");
 
   const counts = [
@@ -287,16 +287,19 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       {/* HERO */}
       <section aria-labelledby="hero-title" className="grain relative isolate overflow-hidden bg-espresso text-brand-sand">
-        <Image src="/photos/bvmac-building.webp" alt="" fill priority sizes="100vw" className="-z-20 object-cover object-[70%_40%] opacity-[0.18]" />
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_20%_20%,rgb(201_162_58/0.18),transparent_55%),linear-gradient(180deg,rgb(18_12_6/0.55),#120c06_92%)]" />
-        <div aria-hidden="true" className="animate-orb absolute -left-40 top-24 -z-10 size-[520px] rounded-full bg-brand-gold/20 blur-[120px]" />
-        <div aria-hidden="true" className="animate-orb absolute -right-32 bottom-0 -z-10 size-[460px] rounded-full bg-[#7a4f12]/40 blur-[120px] [animation-delay:-8s]" />
-        <div aria-hidden="true" className="grid-lines absolute inset-0 -z-10" />
+        <div aria-hidden="true" className="absolute inset-0 -z-30 bg-[#0b0704]" />
+        <div aria-hidden="true" className="absolute inset-y-0 right-0 -z-20 w-full lg:w-[62%]" style={{ maskImage: "linear-gradient(to left, black 25%, transparent 95%)", WebkitMaskImage: "linear-gradient(to left, black 25%, transparent 95%)" }}>
+          <Image src="/photos/bvmac-building.webp" alt="" fill priority sizes="(min-width:1024px) 62vw, 100vw" className="object-cover object-[60%_35%] opacity-[0.28] saturate-[0.8]" />
+        </div>
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_85%_0%,rgb(234_209_138/0.22),transparent_60%),radial-gradient(ellipse_60%_50%_at_10%_100%,rgb(201_162_58/0.10),transparent_60%),linear-gradient(180deg,transparent_55%,#0b0704)]" />
+        <div aria-hidden="true" className="absolute -top-40 right-[18%] -z-10 h-[140%] w-40 rotate-[24deg] bg-gradient-to-b from-brand-gold-light/15 via-brand-gold/5 to-transparent blur-2xl" />
+        <div aria-hidden="true" className="animate-orb absolute -left-40 top-24 -z-10 size-[520px] rounded-full bg-brand-gold/10 blur-[130px]" />
+        <div aria-hidden="true" className="grid-lines absolute inset-0 -z-10 opacity-70" />
 
-        <div className="container-site grid gap-14 pb-16 pt-32 md:pt-40 lg:min-h-[92vh] lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16 lg:pb-24">
+        <div className="container-site grid gap-14 pb-14 pt-32 md:pt-36 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16 lg:pb-16 lg:pt-40">
           <div>
             <Reveal y={12} className="flex flex-wrap items-center gap-3">
-              <SessionChip className="bg-white/10! text-brand-ivory!" />
+              <SessionChip withNext className="bg-white/10! text-brand-ivory! ring-1 ring-white/15" />
               <span className="text-sm text-brand-sand/70">{t.eyebrow}</span>
             </Reveal>
             <h1 id="hero-title" className="text-display mt-7 text-brand-ivory!">
@@ -333,8 +336,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             capitalisation={summary.equityCapitalisation}
             traded={summary.valueTraded}
             bonds={summary.bondOutstanding}
-            lines={KEY_FIGURES.listedEquities + KEY_FIGURES.listedBonds}
-            rows={heroRows.map(({ slug, shortName, sector, closePrice, change }) => ({ slug, shortName, sector, closePrice, change }))}
+            equitiesCount={KEY_FIGURES.listedEquities}
+            bondsCount={KEY_FIGURES.listedBonds}
+            rows={heroRows.map(({ slug, shortName, sector, closePrice, lastDividend }) => ({ slug, shortName, sector, closePrice, dividend: lastDividend.amount }))}
             date={summary.date}
             bocUrl={latestBoc.url}
           />

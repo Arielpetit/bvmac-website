@@ -27,7 +27,8 @@ const T = {
 };
 
 const ISSUER_PAGE = "https://www.bvm-ac.org/espace-emetteurs/emetteurs-actions/";
-const PHOTOS: Record<string, string> = { "bgfi-holding": "/photos/ceremony-speech.webp", bange: "/photos/governance-officials.webp", semc: "/photos/ceremony-guests.webp", socapalm: "/photos/ceremony-arrival.webp", safacam: "/photos/ceremony-audience.webp", "la-regionale": "/photos/ceremony-talk.webp", "scg-re": "/photos/ceremony-handshake.webp" };
+// Only images that relate to the issuer; others show the logo-led header.
+const PHOTOS: Record<string, string> = { "bgfi-holding": "/photos/bgfi-ipo-signing.webp" };
 
 export function SecurityProfile({
   e,
