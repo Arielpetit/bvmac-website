@@ -21,7 +21,7 @@ export function DocumentLibrary({ docs }: { docs: DocItem[] }) {
   const L = { fr: { body: "Organisme", year: "Année", all: "Tous", open: "Ouvrir", lang: "Langue" }, en: { body: "Body", year: "Year", all: "All", open: "Open", lang: "Language" }, es: { body: "Organismo", year: "Año", all: "Todos", open: "Abrir", lang: "Idioma" } }[locale];
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[260px_1fr]">
+    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[260px_minmax(0,1fr)]">
       <aside className="grid h-fit gap-6 rounded-[var(--radius-card)] border border-line bg-surface p-5 lg:sticky lg:top-40">
         <div className="relative">
           <label htmlFor="doc-q" className="sr-only">{dict.common.search}</label>
@@ -61,7 +61,7 @@ export function DocumentLibrary({ docs }: { docs: DocItem[] }) {
                       <span>· {L.lang} : {d.language}</span>
                     </span>
                     <span lang="fr" className="mt-1.5 block font-medium text-heading group-hover:text-link">{d.title}</span>
-                    {d.ref && <span lang="fr" className="block text-sm text-muted">{d.ref}</span>}
+                    {d.ref && <span lang="fr" className="block break-words text-sm text-muted">{d.ref}</span>}
                   </span>
                   <span className="inline-flex shrink-0 items-center gap-1 text-sm text-muted group-hover:text-link">{L.open}<ArrowUpRight aria-hidden="true" className="size-4" /><span className="sr-only">{dict.a11y.external}</span></span>
                 </a>

@@ -145,6 +145,11 @@
     outline-offset: 3px;
     border-radius: 8px;
   }
+  /* Grid items may shrink below their content width, so wide tables scroll
+     inside their own container instead of widening the page. */
+  .grid > * {
+    min-width: 0;
+  }
   ::selection {
     background: #ead18a;
     color: #120c06;

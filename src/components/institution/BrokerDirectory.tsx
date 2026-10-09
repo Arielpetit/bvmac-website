@@ -100,7 +100,7 @@ export function BrokerDirectory({ brokers, totals }: { brokers: Broker[]; totals
                     {(() => {
                       const pos = LABEL[name] ?? "right";
                       const r = radius(count) + 6;
-                      const [tx, ty, anchor] = pos === "above" ? [x, y - r - 2, "middle"] : pos === "below" ? [x + 6, y + r + 10, "start"] : pos === "left" ? [x - r, y + 4, "end"] : [x + r, y + 4, "start"];
+                      const [tx, ty, anchor]: [number, number, "start" | "middle" | "end"] = pos === "above" ? [x, y - r - 2, "middle"] : pos === "below" ? [x + 6, y + r + 10, "start"] : pos === "left" ? [x - r, y + 4, "end"] : [x + r, y + 4, "start"];
                       return <text x={tx} y={ty} textAnchor={anchor} fontSize="12.5" fill={active ? "#ead18a" : "#efe6d4"}>{name}{count ? ` · ${count}` : ""}</text>;
                     })()}
                   </g>

@@ -16,16 +16,17 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/la-bvmac
 export default async function ShareholdingPage({ params }: PageProps<"/[locale]/la-bvmac/actionnariat">) {
   const { locale, dict } = await resolveLocale(params);
   return (
-    <ContentPage locale={locale} dict={dict} group="about" title={dict.nav.items.shareholding} intro={`Capital social de ${formatFcfa(SHAREHOLDING.capital, locale)}, réparti entre les acteurs publics et privés de la sous-région.`}>
+    <ContentPage locale={locale} dict={dict} group="about" title={dict.nav.items.shareholding} image="/photos/governance-handover.webp" intro={`Capital social de ${formatFcfa(SHAREHOLDING.capital, locale)}, réparti entre les acteurs publics et privés de la sous-région.`}>
       <div className="grid gap-8 lg:grid-cols-2">
-        <Card className="p-6">
+        <Card className="p-6 md:p-8">
           <h2 className="text-h3">Répartition du capital</h2>
           <p className="text-sm text-muted">Au {formatDate(SHAREHOLDING.asOf, locale)}</p>
           <ShareholdingChart parts={SHAREHOLDING.parts} />
         </Card>
         <div>
-          <table className="w-full overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface text-sm">
-            <caption className="mb-2 text-left text-sm text-muted">Tableau des données du graphique</caption>
+          <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+          <table className="w-full min-w-[440px] text-sm">
+            <caption className="px-4 pt-4 text-left text-sm text-muted">Tableau des données du graphique</caption>
             <thead className="bg-surface-alt">
               <tr className="text-xs uppercase tracking-[0.1em] text-muted">
                 <th scope="col" className="px-4 py-3 text-left font-medium">Catégorie d’actionnaires</th>
@@ -55,6 +56,7 @@ export default async function ShareholdingPage({ params }: PageProps<"/[locale]/
               </tr>
             </tfoot>
           </table>
+          </div>
           <p className="mt-3 text-xs text-muted">Montants calculés à partir des pourcentages publiés. Mise à jour annuelle par le Service Communication.</p>
         </div>
       </div>
