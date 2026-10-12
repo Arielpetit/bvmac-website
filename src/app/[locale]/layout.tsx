@@ -38,13 +38,11 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbf9f5" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e0a06" },
-  ],
+  themeColor: "#fbf9f5",
 };
 
-const themeScript = `(function(){try{var t=localStorage.getItem('bvmac-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t}catch(e){}})();`;
+// Light by default; dark only when the visitor picked it with the theme toggle.
+const themeScript = `(function(){try{if(localStorage.getItem('bvmac-theme')==='dark')document.documentElement.dataset.theme='dark'}catch(e){}})();`;
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[locale]">) {
   const { locale, dict } = await resolveLocale(params);
