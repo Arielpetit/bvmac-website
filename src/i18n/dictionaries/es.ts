@@ -81,6 +81,7 @@ const es: Dictionary = {
       reports: "Informes",
       tariffs: "Tarifas",
       economic: "Datos económicos",
+      contact: "Contacto",
     },
     groupIntro: {
       invest: "Comprender, elegir una sociedad de bolsa e invertir con confianza.",
@@ -191,6 +192,24 @@ const es: Dictionary = {
     thirdPartyText: "Vídeos de BVMAC TV reproducidos desde YouTube.",
     videoBlocked: "Este vídeo está alojado en YouTube. Solo se muestra si acepta los contenidos de terceros.",
     videoAllow: "Permitir contenidos de terceros",
+  },
+  chat: {
+    title: "Asistente BVMAC",
+    subtitle: "Haz una pregunta sobre el sitio",
+    placeholder: "Su pregunta…",
+    send: "Enviar",
+    close: "Cerrar",
+    greeting: "Hola 👋 Soy el asistente de la BVMAC. Pregúntame sobre el mercado, los emisores o cualquier página del sitio…",
+    sources: "Páginas útiles",
+    thinking: "Pensando…",
+    error: "Lo sentimos, se ha producido un error. Inténtelo de nuevo.",
+    disclaimer: "Respuestas generadas por IA a partir del contenido del sitio. Datos indicativos.",
+    suggestions: [
+      "¿Dónde encuentro la lista de sociedades cotizadas?",
+      "¿Cuál es el precio de la acción de BGFI?",
+      "¿Cómo invertir en bolsa?",
+      "¿Qué es un dividendo?",
+    ],
   },
 };
 

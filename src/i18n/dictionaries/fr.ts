@@ -80,6 +80,7 @@ const fr = {
       reports: "Rapports",
       tariffs: "Tarifs",
       economic: "Données économiques",
+      contact: "Contact",
     },
     groupIntro: {
       invest: "Comprendre, choisir une société de bourse et investir en confiance.",
@@ -191,6 +192,24 @@ const fr = {
     thirdPartyText: "Vidéos BVMAC TV lues depuis YouTube.",
     videoBlocked: "Cette vidéo est hébergée par YouTube. Elle s'affiche seulement si vous acceptez les contenus tiers.",
     videoAllow: "Autoriser les contenus tiers",
+  },
+  chat: {
+    title: "Assistant BVMAC",
+    subtitle: "Posez une question sur le site",
+    placeholder: "Votre question…",
+    send: "Envoyer",
+    close: "Fermer",
+    greeting: "Bonjour 👋 Je suis l'assistant BVMAC. Posez-moi une question sur le marché, les émetteurs, les pages du site…",
+    sources: "Pages utiles",
+    thinking: "Réflexion…",
+    error: "Désolé, une erreur est survenue. Réessayez.",
+    disclaimer: "Réponses générées par IA à partir du contenu du site. Données indicatives.",
+    suggestions: [
+      "Où trouver la liste des sociétés cotées ?",
+      "Quel est le cours de BGFI ?",
+      "Comment investir en bourse ?",
+      "Qu'est-ce qu'un dividende ?",
+    ],
   },
 };
 

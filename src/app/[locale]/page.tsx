@@ -286,15 +286,16 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   return (
     <>
       {/* HERO */}
-      <section aria-labelledby="hero-title" className="grain relative isolate overflow-hidden bg-espresso text-brand-sand">
+      <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-espresso text-brand-sand">
         <div aria-hidden="true" className="absolute inset-0 -z-30 bg-[#0b0704]" />
-        <div aria-hidden="true" className="absolute inset-y-0 right-0 -z-20 w-full lg:w-[62%]" style={{ maskImage: "linear-gradient(to left, black 25%, transparent 95%)", WebkitMaskImage: "linear-gradient(to left, black 25%, transparent 95%)" }}>
+        {/* Building on the right; faded with a solid gradient overlay (no CSS mask, which rendered blocky pixels). */}
+        <div aria-hidden="true" className="absolute inset-y-0 right-0 -z-20 w-full lg:w-[62%]">
           <Image src="/photos/bvmac-building.webp" alt="" fill priority sizes="(min-width:1024px) 62vw, 100vw" className="object-cover object-[60%_35%] opacity-[0.28] saturate-[0.8]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0b0704] via-[#0b0704]/70 to-transparent" />
         </div>
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_85%_0%,rgb(234_209_138/0.22),transparent_60%),radial-gradient(ellipse_60%_50%_at_10%_100%,rgb(201_162_58/0.10),transparent_60%),linear-gradient(180deg,transparent_55%,#0b0704)]" />
         <div aria-hidden="true" className="absolute -top-40 right-[18%] -z-10 h-[140%] w-40 rotate-[24deg] bg-gradient-to-b from-brand-gold-light/15 via-brand-gold/5 to-transparent blur-2xl" />
         <div aria-hidden="true" className="animate-orb absolute -left-40 top-24 -z-10 size-[520px] rounded-full bg-brand-gold/10 blur-[130px]" />
-        <div aria-hidden="true" className="grid-lines absolute inset-0 -z-10 opacity-70" />
 
         <div className="container-site grid gap-14 pb-14 pt-32 md:pt-36 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16 lg:pb-16 lg:pt-40">
           <div>

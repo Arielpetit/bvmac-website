@@ -18,12 +18,12 @@ const L = {
   es: { cap: "Capitalización bursátil", session: "Sesión del", traded: "Valor negociado", bonds: "Saldo obligacionista", listed: "Valores cotizados", listedValue: (e: number, b: number) => `${e} acciones · ${b} oblig.`, yields: "Rentabilidad del último dividendo", boc: "Boletín oficial", all: "Todas las cotizaciones", trend: "Tendencia 120 sesiones" },
 };
 
-// Downsample + moving average, then a Catmull-Rom curve: a calm trend line.
+// Downsample lightly + minimal smoothing: shows realistic market fluctuation.
 function smoothPath(values: number[], w: number, h: number, pad: number) {
-  const step = Math.max(1, Math.floor(values.length / 28));
+  const step = Math.max(1, Math.floor(values.length / 60));
   const sampled: number[] = [];
   for (let i = 0; i < values.length; i += step) {
-    const win = values.slice(Math.max(0, i - step * 2), i + step * 2 + 1);
+    const win = values.slice(Math.max(0, i - 1), i + 2);
     sampled.push(win.reduce((a, b) => a + b, 0) / win.length);
   }
   const min = Math.min(...sampled);

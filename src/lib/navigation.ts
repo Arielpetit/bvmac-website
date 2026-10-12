@@ -119,6 +119,7 @@ export const NAV: NavGroup[] = [
       { key: "shareholding", href: "/la-bvmac/actionnariat", icon: "PieChart" },
       { key: "services", href: "/la-bvmac/produits-et-services", icon: "Boxes" },
       { key: "tenders", href: "/la-bvmac/appels-d-offres", icon: "FileSignature" },
+      { key: "contact", href: "/contact", icon: "Mail" },
     ],
     feature: {
       image: "/photos/bvmac-building.webp",

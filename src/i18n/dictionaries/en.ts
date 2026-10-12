@@ -81,6 +81,7 @@ const en: Dictionary = {
       reports: "Reports",
       tariffs: "Tariffs",
       economic: "Economic data",
+      contact: "Contact",
     },
     groupIntro: {
       invest: "Understand, choose a broker and invest with confidence.",
@@ -191,6 +192,24 @@ const en: Dictionary = {
     thirdPartyText: "BVMAC TV videos played from YouTube.",
     videoBlocked: "This video is hosted by YouTube. It appears only if you accept third-party content.",
     videoAllow: "Allow third-party content",
+  },
+  chat: {
+    title: "BVMAC Assistant",
+    subtitle: "Ask a question about the site",
+    placeholder: "Your question…",
+    send: "Send",
+    close: "Close",
+    greeting: "Hello 👋 I'm the BVMAC assistant. Ask me about the market, issuers, or any page on the site…",
+    sources: "Useful pages",
+    thinking: "Thinking…",
+    error: "Sorry, something went wrong. Please try again.",
+    disclaimer: "AI-generated answers based on site content. Indicative data.",
+    suggestions: [
+      "Where can I find the list of listed companies?",
+      "What is the BGFI share price?",
+      "How do I invest in the stock market?",
+      "What is a dividend?",
+    ],
   },
 };
 
