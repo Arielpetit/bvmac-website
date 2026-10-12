@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
 import { formatDate, formatFcfa, formatNumber } from "@/lib/format";
-import { SHAREHOLDING } from "@/data/institution";
+import { getShareholding } from "@/lib/api";
 import { ContentPage } from "@/components/content/ContentPage";
 import { Card } from "@/components/ui/Card";
 import { ShareholdingChart } from "@/components/market/LazyCharts";
@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/la-bvmac
 
 export default async function ShareholdingPage({ params }: PageProps<"/[locale]/la-bvmac/actionnariat">) {
   const { locale, dict } = await resolveLocale(params);
+  const SHAREHOLDING = await getShareholding();
   return (
     <ContentPage locale={locale} dict={dict} group="about" title={dict.nav.items.shareholding} image="/photos/governance-handover.webp" intro={`Capital social de ${formatFcfa(SHAREHOLDING.capital, locale)}, réparti entre les acteurs publics et privés de la sous-région.`}>
       <div className="grid gap-8 lg:grid-cols-2">

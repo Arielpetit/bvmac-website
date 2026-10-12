@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
-import { CONTACT, NAV, PARTNERS } from "@/lib/navigation";
+import { NAV } from "@/lib/navigation";
+import { getContact, getPartners } from "@/lib/api";
 import { localePath } from "@/lib/paths";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n";
@@ -17,7 +18,8 @@ const CTA = {
   es: { title: "Invertir en las economías de África Central empieza aquí.", text: "Encuentre una sociedad de bolsa autorizada, siga las cotizaciones y aprenda a su ritmo.", a: "Encontrar una sociedad de bolsa", b: "Empezar a aprender" },
 };
 
-export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+  const [CONTACT, PARTNERS] = await Promise.all([getContact(), getPartners()]);
   const t = dict.footer;
   const c = CTA[locale];
   const p = (path: string) => localePath(locale, path);

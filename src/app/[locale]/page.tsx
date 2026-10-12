@@ -22,9 +22,10 @@ import {
 import { resolveLocale } from "@/lib/i18n-server";
 import { localePath } from "@/lib/paths";
 import { formatDate, formatDayMonth, formatNumber } from "@/lib/format";
-import { getAgenda, getBocArchive, getBonds, getCapitalisationHistory, getEquities, getMarketSummary, getNews, getNotices, getPriceHistory } from "@/lib/api";
+import { getAgenda, getBocArchive, getPartners, getBonds, getCapitalisationHistory, getEquities, getMarketSummary, getNews, getNotices, getPriceHistory } from "@/lib/api";
 import { KEY_FIGURES } from "@/data/content";
-import { COUNTRIES, CONTACT, PARTNERS } from "@/lib/navigation";
+import { COUNTRIES } from "@/lib/navigation";
+import { getContact } from "@/lib/api";
 import { ButtonLink } from "@/components/ui/Button";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { PriceChange } from "@/components/ui/PriceChange";
@@ -257,6 +258,7 @@ const COUNTRY_TONES = ["#5a3412", "#8a6614", "#c9a23a", "#ead18a", "#b38a2a", "#
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale, dict } = await resolveLocale(params);
+  const CONTACT = await getContact();
   const t = copy[locale];
   const p = (path: string) => localePath(locale, path);
 
@@ -270,6 +272,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     getBocArchive(),
     getBonds(),
   ]);
+  const partners = await getPartners();
   const sparks = Object.fromEntries(await Promise.all(equities.map(async (e) => [e.slug, await getPriceHistory(e.slug, 60)] as const)));
   const latestBoc = boc[0];
   const heroRows = equities.slice().sort((a, b) => b.lastDividend.amount / b.closePrice - a.lastDividend.amount / a.closePrice).slice(0, 4);
@@ -741,7 +744,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </Stagger>
             <Reveal delay={0.25} className="mt-10 flex flex-wrap items-center gap-3">
               <StoreBadge store="google" href={CONTACT.playStore} locale={locale} />
-              <StoreBadge store="apple" locale={locale} soon />
+              {CONTACT.appStore ? <StoreBadge store="apple" href={CONTACT.appStore} locale={locale} /> : <StoreBadge store="apple" locale={locale} soon />}
             </Reveal>
             <Reveal delay={0.3} className="mt-8 flex items-center gap-4 border-t border-white/10 pt-8">
               <span className="rounded-2xl bg-brand-ivory p-2.5 text-espresso shadow-xl"><QrCode className="size-20" /></span>
@@ -766,7 +769,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             <h2 id="partners-title" className="text-h2 mt-3">{t.partners}</h2>
           </div>
           <Stagger as="ul" className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {PARTNERS.map((partner) => (
+            {partners.map((partner) => (
               <StaggerItem as="li" key={partner.name}>
                 <a href={partner.href} target="_blank" rel="noopener noreferrer" className="card-lift group flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-background p-7 text-center">
                   <span className="flex h-28 w-full items-center justify-center rounded-2xl bg-white p-3 dark:bg-white/95">

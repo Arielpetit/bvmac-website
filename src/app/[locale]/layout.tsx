@@ -14,6 +14,8 @@ import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { NavigationProgress } from "@/components/layout/NavigationProgress";
 import { BackToTop } from "@/components/motion/BackToTop";
 import { ChatWidget } from "@/components/ai/ChatWidget";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import { getAnnouncement } from "@/lib/api";
 
 // Self-hosted at build time by next/font (no request to Google from the browser).
 const fraunces = Fraunces({ subsets: ["latin", "latin-ext"], axes: ["SOFT", "opsz"], variable: "--font-fraunces", display: "swap" });
@@ -46,6 +48,7 @@ const themeScript = `(function(){try{var t=localStorage.getItem('bvmac-theme');i
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[locale]">) {
   const { locale, dict } = await resolveLocale(params);
+  const announcement = await getAnnouncement();
   return (
     <html lang={locale} data-theme="light" suppressHydrationWarning className={`${fraunces.variable} ${geist.variable} ${geistMono.variable} antialiased`}>
       <head>
@@ -69,6 +72,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[lo
               </main>
               <Footer locale={locale} dict={dict} />
               <BackToTop />
+              {announcement && <AnnouncementBar text={announcement.text} link={announcement.link} />}
               <ChatWidget />
               <CookieConsent />
             </SmoothScroll>

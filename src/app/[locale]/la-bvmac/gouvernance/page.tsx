@@ -5,7 +5,7 @@ import { ArrowUpRight, FileText, Network, UserRound } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
 import { localePath } from "@/lib/paths";
-import { BOARD } from "@/data/institution";
+import { getBoard } from "@/lib/api";
 import { ContentPage } from "@/components/content/ContentPage";
 import { Tabs } from "@/components/ui/Tabs";
 import { Callout } from "@/components/ui/Callout";
@@ -23,6 +23,7 @@ const COMMITTEES = [
 
 export default async function GovernancePage({ params }: PageProps<"/[locale]/la-bvmac/gouvernance">) {
   const { locale, dict } = await resolveLocale(params);
+  const board = await getBoard();
   const p = (path: string) => localePath(locale, path);
   const messages = [
     { href: p("/la-bvmac/gouvernance/message-du-pca"), role: "Président du Conseil d’Administration", title: "Mot du Président", photo: "/photos/governance-officials.webp" },
@@ -57,7 +58,7 @@ export default async function GovernancePage({ params }: PageProps<"/[locale]/la
                 <div>
                   <p className="max-w-2xl text-muted">Le Conseil d’Administration définit les orientations stratégiques de la BVMAC et contrôle leur mise en œuvre. Il représente les différentes catégories d’actionnaires.</p>
                   <Stagger className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-                    {BOARD.map((m) => (
+                    {board.map((m) => (
                       <StaggerItem key={m.name} className="rounded-[var(--radius-card)] border border-line bg-surface p-5 text-center">
                         <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-gradient-to-br from-accent-soft to-surface-alt">
                           <UserRound aria-hidden="true" className="size-7 text-accent-text" strokeWidth={1.3} />
