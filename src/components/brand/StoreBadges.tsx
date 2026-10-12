@@ -20,17 +20,17 @@ export function StoreBadge({ store, href, locale = "fr", soon = false }: { store
   const inner = (
     <>
       {store === "apple" ? (
-        <svg viewBox="0 0 384 512" className="size-7 fill-white" aria-hidden="true"><path d={APPLE} /></svg>
+        <svg viewBox="0 0 384 512" className="size-6 shrink-0 fill-white sm:size-7" aria-hidden="true"><path d={APPLE} /></svg>
       ) : (
-        <PlayLogo className="size-6" />
+        <PlayLogo className="size-5 shrink-0 sm:size-6" />
       )}
       <span className="text-left leading-none">
-        <span className="block text-[10px] tracking-wide text-white/80">{soon ? { fr: "Bientôt sur", en: "Coming to", es: "Pronto en" }[locale] : top}</span>
-        <span className="mt-1 block text-[19px] font-semibold tracking-tight text-white">{name}</span>
+        <span className="block whitespace-nowrap text-[9px] tracking-wide text-white/80 sm:text-[10px]">{soon ? { fr: "Bientôt sur", en: "Coming to", es: "Pronto en" }[locale] : top}</span>
+        <span className="mt-0.5 block whitespace-nowrap text-base font-semibold tracking-tight text-white sm:mt-1 sm:text-[19px]">{name}</span>
       </span>
     </>
   );
-  const cls = cn("inline-flex h-14 items-center gap-3 rounded-[14px] border border-white/25 bg-black px-4 pr-5 transition-transform duration-300", href && "hover:-translate-y-0.5 hover:border-white/50", soon && "opacity-80");
+  const cls = cn("inline-flex h-12 min-w-0 items-center justify-center gap-2 rounded-[12px] border border-white/25 bg-black px-3 transition-transform duration-300 sm:h-14 sm:justify-start sm:gap-3 sm:rounded-[14px] sm:px-4 sm:pr-5", href && "hover:-translate-y-0.5 hover:border-white/50", soon && "opacity-80");
   return href ? (
     <a href={href} target="_blank" rel="noopener noreferrer" className={cls} aria-label={`${top} ${name}`}>{inner}</a>
   ) : (

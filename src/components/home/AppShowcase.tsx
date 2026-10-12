@@ -109,7 +109,7 @@ export function AppShowcase({ rows, capitalisation, area }: { rows: Row[]; capit
       </div>
 
       {/* floating notification */}
-      <div className="absolute -left-6 -top-8 z-10 hidden w-60 animate-[float_6s_ease-in-out_infinite] rounded-2xl border border-white/10 bg-white/95 p-3 text-[#1a140e] shadow-2xl backdrop-blur sm:block lg:-left-28">
+      <div className="absolute -left-6 -top-8 z-10 w-60 animate-[float_6s_ease-in-out_infinite] rounded-2xl border border-white/10 bg-white/95 p-3 text-[#1a140e] shadow-2xl backdrop-blur lg:-left-28">
         <div className="flex items-center gap-2.5">
           <Logo variant="medal" className="size-8" alt="" />
           <div className="min-w-0">
@@ -119,7 +119,7 @@ export function AppShowcase({ rows, capitalisation, area }: { rows: Row[]; capit
           </div>
         </div>
       </div>
-      <div className="absolute -bottom-6 -right-6 z-10 hidden w-44 animate-[float_7s_ease-in-out_infinite_-3s] rounded-2xl border border-white/10 bg-[#1c130b]/95 p-3 text-[#efe6d4] shadow-2xl backdrop-blur sm:block lg:-right-20">
+      <div className="absolute -bottom-6 -right-6 z-10 w-44 animate-[float_7s_ease-in-out_infinite_-3s] rounded-2xl border border-white/10 bg-[#1c130b]/95 p-3 text-[#efe6d4] shadow-2xl backdrop-blur lg:-right-20">
         <p className="text-[9px] uppercase tracking-[0.14em] text-[#ead18a]">Alerte de cours</p>
         <div className="mt-2 flex items-center gap-2">
           <CompanyMark slug="bgfi-holding" size="sm" />

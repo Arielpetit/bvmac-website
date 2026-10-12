@@ -765,7 +765,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 <StaggerItem key={point} as="li" className="rounded-full border border-white/15 px-4 py-2 text-sm text-brand-ivory">{point}</StaggerItem>
               ))}
             </Stagger>
-            <Reveal delay={0.25} className="mt-10 flex flex-wrap items-center gap-3">
+            <Reveal delay={0.25} className="mt-10 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
               <StoreBadge store="google" href={CONTACT.playStore} locale={locale} />
               {CONTACT.appStore ? <StoreBadge store="apple" href={CONTACT.appStore} locale={locale} /> : <StoreBadge store="apple" locale={locale} soon />}
             </Reveal>
