@@ -11,6 +11,7 @@ import { CookieSettingsLink } from "./CookieConsent";
 import { CurrentYear } from "./CurrentYear";
 import { FacebookIcon, LinkedinIcon, XIcon, YoutubeIcon } from "@/components/ui/SocialIcons";
 import { Reveal } from "@/components/motion/Reveal";
+import { Guilloche } from "@/components/brand/Guilloche";
 
 const CTA = {
   fr: { title: "Investir dans les économies de l’Afrique centrale commence ici.", text: "Trouvez une société de bourse agréée, suivez les cours et apprenez à votre rythme.", a: "Trouver une société de bourse", b: "Commencer à apprendre" },
@@ -34,6 +35,7 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
   return (
     <footer className="relative mt-auto overflow-hidden bg-espresso text-brand-sand">
       <div aria-hidden="true" className="pointer-events-none absolute -right-40 -top-40 size-[520px] rounded-full bg-brand-gold/10 blur-3xl" />
+      <Guilloche className="absolute inset-x-0 top-0 h-80 w-full text-brand-gold-light opacity-[0.09] [mask-image:linear-gradient(90deg,transparent,black_35%,black_100%)]" />
       <div className="container-site relative">
         <Reveal className="grid gap-8 border-b border-white/10 py-16 md:grid-cols-[1.4fr_1fr] md:items-end md:py-20">
           <h2 className="text-h1 max-w-2xl text-brand-ivory!">{c.title}</h2>

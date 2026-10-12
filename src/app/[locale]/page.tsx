@@ -44,6 +44,7 @@ import { Reveal, Stagger, StaggerItem, WordReveal } from "@/components/motion/Re
 import { CountUp } from "@/components/motion/CountUp";
 import { ParallaxImage } from "@/components/motion/Parallax";
 import { Marquee } from "@/components/motion/Marquee";
+import { Guilloche } from "@/components/brand/Guilloche";
 
 const copy = {
   fr: {
@@ -362,7 +363,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       {/* KEY FIGURES */}
-      <section aria-label={t.figures.join(", ")} className="relative bg-background pb-16 pt-12 md:pb-20 md:pt-14">
+      <section aria-label={t.figures.join(", ")} className="relative bg-background pb-12 pt-12 md:pb-16 md:pt-14">
         <div aria-hidden="true" className="dots absolute inset-x-0 top-0 h-72 opacity-50" />
         <div className="container-site relative grid gap-4 lg:grid-cols-2">
           {/* Equity capitalisation */}
@@ -443,7 +444,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       {/* PERSONAS — bento */}
-      <Section labelledBy="do-title">
+      <Section tone="alt" labelledBy="do-title">
         <SectionHeading id="do-title" overline={t.doEyebrow} title={t.doTitle} />
         <Stagger className="grid gap-5 md:grid-cols-2 lg:grid-cols-12">
           {t.personas.map((persona, i) => {
@@ -762,7 +763,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       {/* PARTNERS */}
-      <section aria-labelledby="partners-title" className="relative border-b border-line bg-surface py-20">
+      <section aria-labelledby="partners-title" className="relative isolate overflow-hidden border-b border-line bg-surface py-16 md:py-20">
+        <Guilloche className="absolute inset-x-0 top-6 -z-10 h-56 w-full text-brand-gold opacity-[0.22] [mask-image:linear-gradient(90deg,transparent,black_20%,black_80%,transparent)]" />
         <div className="container-site">
           <div className="mx-auto max-w-xl text-center">
             <p className="eyebrow">{t.partnersEyebrow}</p>
