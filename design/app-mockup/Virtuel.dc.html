@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Portefeuille virtuel</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:#8a7f72;text-decoration:none}
+.tab.on{color:#1c130b;font-weight:600}
+.pos{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #efe8da}
+.logo{width:38px;height:38px;border-radius:11px;object-fit:contain;background:#fff;border:1px solid #efe8da;flex-shrink:0}
+</style>
+</helmet>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+
+  <header style="padding:54px 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="Ecole.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <h1 class="serif" style="margin:0;font-size:22px;font-weight:500;flex:1">Portefeuille virtuel</h1>
+    <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8a6614;background:#f4e9c8;padding:5px 10px;border-radius:999px">Fictif</span>
+  </header>
+
+  <section style="margin:16px 20px 0;padding:18px;border-radius:24px;background:#fff;border:1px solid #e8e0d0">
+    <div style="font-size:12px;color:#6b6155">Valeur totale</div>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
+      <span class="num" style="font-size:34px;font-weight:500;letter-spacing:-0.02em">5 086 500</span>
+      <span style="font-size:13px;color:#6b6155">FCFA</span>
+    </div>
+    <div style="margin-top:6px;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#157a43;background:#e4f3ea;padding:3px 10px;border-radius:999px">
+      <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg><span class="num">+86 500 · +1,73 %</span><span style="color:#3f6b52">depuis le départ</span></div>
+    <div style="margin-top:16px;height:10px;border-radius:999px;overflow:hidden;display:flex;gap:2px">
+      <span style="width:27%;background:#1c130b"></span><span style="width:20%;background:#8a6614"></span><span style="width:12%;background:#c9a23a"></span><span style="width:5%;background:#ead18a"></span><span style="flex:1;background:#efe8da"></span>
+    </div>
+    <div style="margin-top:10px;display:flex;justify-content:space-between;font-size:12px;color:#6b6155">
+      <span>Investi <b class="num" style="color:#1a140e;font-weight:600">3 281 000</b></span>
+      <span>Liquidités <b class="num" style="color:#1a140e;font-weight:600">1 805 500</b></span>
+    </div>
+  </section>
+
+  <section style="margin:12px 20px 0;padding:14px 16px;border-radius:20px;background:#1c130b;color:#efe6d4;display:flex;align-items:center;gap:14px">
+    <span style="width:44px;height:44px;border-radius:14px;background:rgba(201,162,58,0.18);color:#ead18a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"></path><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"></path></svg></span>
+    <span style="flex:1">
+      <span style="display:block;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:#ead18a">Défi d’octobre</span>
+      <span style="display:block;font-size:14px;color:#fbf6ea;margin-top:2px">Diversifier sur 3 secteurs</span>
+      <span style="display:block;margin-top:8px;height:5px;border-radius:999px;background:rgba(255,255,255,0.12);overflow:hidden"><span style="display:block;width:100%;height:100%;background:#c9a23a"></span></span>
+    </span>
+    <span style="font-size:12px;color:#ead18a;font-weight:600">3/3</span>
+  </section>
+
+  <section style="padding:16px 20px 0">
+    <h2 class="serif" style="margin:0;font-size:18px;font-weight:500">Positions</h2>
+    <div style="margin-top:4px">
+      <div class="pos"><img class="logo" src="/_blob/dad075d0e86d2f40aa8c230910e920ed" alt=""><span style="flex:1"><span style="display:block;font-weight:600;font-size:14px">BGFI HC</span><span class="num" style="display:block;font-size:12px;color:#6b6155">15 titres · PRU 87 500</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:14px">1 335 000</span><span class="num" style="display:block;font-size:12px;color:#157a43">+1,71 %</span></span></div>
+      <div class="pos"><img class="logo" src="/_blob/d99733952378c2f0b677faef5b0f9f3a" alt=""><span style="flex:1"><span style="display:block;font-weight:600;font-size:14px">SOCAPALM</span><span class="num" style="display:block;font-size:12px;color:#6b6155">20 titres · PRU 47 000</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:14px">990 000</span><span class="num" style="display:block;font-size:12px;color:#157a43">+5,32 %</span></span></div>
+      <div class="pos"><img class="logo" src="/_blob/7ef65fcd5636225925680793a7130b18" alt=""><span style="flex:1"><span style="display:block;font-weight:600;font-size:14px">SCG-Ré</span><span class="num" style="display:block;font-size:12px;color:#6b6155">30 titres · PRU 20 500</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:14px">600 000</span><span class="num" style="display:block;font-size:12px;color:#c0263d">−2,44 %</span></span></div>
+      <div class="pos" style="border-bottom:0"><img class="logo" src="/_blob/5d754d569f2a9eb85783b50b38e4ff00" alt=""><span style="flex:1"><span style="display:block;font-weight:600;font-size:14px">SAFACAM</span><span class="num" style="display:block;font-size:12px;color:#6b6155">9 titres · PRU 38 500</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:14px">346 500</span><span class="num" style="display:block;font-size:12px;color:#6b6155">0,00 %</span></span></div>
+    </div>
+  </section>
+
+  <div style="position:absolute;left:0;right:0;bottom:84px;padding:0 20px 12px">
+    <a href="Marches.dc.html" style="height:50px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;box-shadow:0 12px 30px -12px rgba(28,19,11,0.5)">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Acheter une valeur (virtuel)</a>
+  </div>
+
+  <nav aria-label="Navigation principale" style="position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,0.96);border-top:1px solid #e8e0d0;display:flex;padding:10px 8px 0">
+    <a class="tab" href="Main.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"></path></svg>Accueil</a>
+    <a class="tab" href="Marches.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-6"></path></svg>Marchés</a>
+    <a class="tab" href="Portefeuille.dc.html" style="color:#1c130b;font-weight:500"><span style="width:52px;height:52px;margin-top:-26px;border-radius:50%;background:#c9a23a;color:#1c130b;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(138,102,20,0.6),0 0 0 5px #fbf9f5"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"></rect><path d="M3 10h18M16 15h2"></path></svg></span>Portefeuille</a>
+    <a class="tab on" href="Ecole.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>École</a>
+    <a class="tab" href="Moi.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>Compte</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

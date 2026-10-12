@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Décision N°059</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.iconbtn{width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.kv{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #efe8da;font-size:13.5px}
+.kv:last-child{border-bottom:0}
+.kv dt{color:#6b6155}
+.kv dd{margin:0;text-align:right;font-weight:500}
+</style>
+</helmet>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+
+  <header style="padding:54px 20px 0;display:flex;align-items:center;gap:10px">
+    <a class="iconbtn" href="Avis.dc.html" aria-label="Retour"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <span style="flex:1"></span>
+    <button class="iconbtn" aria-label="Partager" onClick="{{share}}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 8l5-5 5 5M5 14v6h14v-6"></path></svg></button>
+  </header>
+
+  <article style="padding:20px 20px 0">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:11.5px;font-weight:500;padding:3px 10px;border-radius:999px;background:#efe7fb;color:#5b3aa0">Décision</span>
+      <span style="font-family:'Geist Mono',monospace;font-size:11.5px;color:#8a7f72">N°059/2026/BVMAC/DG</span>
+    </div>
+    <h1 class="serif" style="margin:12px 0 0;font-size:25px;font-weight:500;line-height:1.22">Introduction en bourse des actions de RENAPROV Finance S.A.</h1>
+    <div style="margin-top:8px;font-size:12.5px;color:#6b6155">Publié le 3 septembre 2026 · Comité d’Admission et de Développement</div>
+
+    <p style="margin:18px 0 0;font-size:15px;line-height:1.6;color:#2b231b">Le Comité d’Admission et de Développement de la BVMAC autorise l’introduction en bourse des actions de RENAPROV Finance S.A. La date de première cotation est fixée par avis.</p>
+
+    <dl style="margin:18px 0 0;padding:4px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:18px">
+      <div class="kv"><dt>Émetteur</dt><dd>RENAPROV Finance S.A.</dd></div>
+      <div class="kv"><dt>Référence</dt><dd style="font-family:'Geist Mono',monospace;font-size:12.5px">CAD/05-08-2026/04</dd></div>
+      <div class="kv"><dt>Première cotation</dt><dd>2 novembre 2026</dd></div>
+    </dl>
+
+    <a href="Document.dc.html" style="margin-top:12px;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:18px;background:#f4efe5;color:#1a140e">
+      <span style="width:40px;height:46px;border-radius:8px;background:#fff;border:1px solid #e8e0d0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#c0263d;flex-shrink:0">PDF</span>
+      <span style="flex:1"><span style="display:block;font-size:14px;font-weight:600">Texte officiel de la décision</span><span style="display:block;font-size:12px;color:#6b6155">Document signé · FR</span></span>
+      <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#7a4f12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+    </a>
+  </article>
+
+  <sc-if value="{{toast}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="position:absolute;left:20px;right:20px;bottom:116px;z-index:5;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:16px;background:#1c130b;color:#fbf6ea;font-size:13.5px;box-shadow:0 16px 40px -12px rgba(28,19,11,0.55)"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ead18a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg>{{toast}}</div>
+  </sc-if>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 30px;background:#fff;border-top:1px solid #e8e0d0;display:flex;gap:10px">
+    <button aria-pressed="{{followAria}}" onClick="{{toggleFollow}}" style="flex:1;height:52px;border-radius:999px;font:inherit;font-size:14px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;{{followStyle}}"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10 21h4"></path></svg>{{followLabel}}</button>
+    <a href="Souscrire.dc.html" style="flex:1;height:52px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600">Voir l’opération</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { follow: false, toast: null };
+  }
+  toast(msg) {
+    this.setState({ toast: msg });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: null }), 2500);
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+  renderVals() {
+    const f = this.state.follow;
+    return {
+      toast: this.state.toast,
+      share: () => this.toast('Lien de l’avis copié'),
+      followAria: f ? 'true' : 'false',
+      followLabel: f ? 'Émetteur suivi' : 'Suivre l’émetteur',
+      followStyle: f ? 'border:1px solid #157a43;background:#e4f3ea;color:#0f5c32;' : 'border:1px solid #d9cdb6;background:#fff;color:#1a140e;',
+      toggleFollow: () => { this.setState({ follow: !f }); this.toast(f ? 'Vous ne suivez plus RENAPROV' : 'Vous suivez RENAPROV Finance S.A.'); }
+    };
+  }
+}
+</script>
+</body>
+</html>

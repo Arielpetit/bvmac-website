@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Passer un ordre</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.seg{flex:1;height:40px;border:0;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+.field{background:#fff;border:1px solid #e8e0d0;border-radius:16px;padding:10px 14px}
+.lbl{font-size:12px;color:#6b6155}
+.step{width:36px;height:36px;border-radius:50%;border:1px solid #d9cdb6;background:#fbf9f5;font:inherit;font-size:18px;color:#1a140e;cursor:pointer}
+.chip{height:34px;padding:0 14px;border-radius:999px;font:inherit;font-size:12.5px;cursor:pointer}
+.sum{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 0}
+</style>
+</helmet>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+
+  <header style="padding:54px 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="Valeur.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <img src="/_blob/dad075d0e86d2f40aa8c230910e920ed" alt="" style="width:38px;height:38px;border-radius:11px;object-fit:contain;background:#fff;border:1px solid #e8e0d0">
+    <div style="flex:1"><div style="font-weight:600;font-size:15px">BGFI HC</div><div class="num" style="font-size:12px;color:#6b6155">89 000 FCFA · différé</div></div>
+  </header>
+
+  <div role="tablist" aria-label="Sens de l’ordre" style="margin:16px 20px 0;display:flex;background:#f4efe5;border-radius:999px;padding:4px">
+    <button class="seg" role="tab" aria-selected="{{buySel}}" onClick="{{setBuy}}" style="{{buyStyle}}">Acheter</button>
+    <button class="seg" role="tab" aria-selected="{{sellSel}}" onClick="{{setSell}}" style="{{sellStyle}}">Vendre</button>
+  </div>
+
+  <section style="padding:16px 20px 0;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;gap:8px">
+      <button class="chip" aria-pressed="{{limitSel}}" onClick="{{setLimit}}" style="{{limitStyle}}">À cours limité</button>
+      <button class="chip" aria-pressed="{{marketSel}}" onClick="{{setMarket}}" style="{{marketStyle}}">Au marché</button>
+    </div>
+    <div class="field" style="display:flex;align-items:center;gap:12px">
+      <div style="flex:1"><div class="lbl">Quantité</div><div class="num" style="font-size:22px;font-weight:600;margin-top:2px">{{qty}}</div></div>
+      <button class="step" aria-label="Moins" onClick="{{dec}}">−</button>
+      <button class="step" aria-label="Plus" onClick="{{inc}}">+</button>
+    </div>
+    <sc-if value="{{isLimit}}" hint-placeholder-val="{{true}}">
+      <div class="field"><div class="lbl">Cours limite (FCFA)</div><div class="num" style="font-size:22px;font-weight:600;margin-top:2px">89 000</div></div>
+    </sc-if>
+    <div>
+      <div class="lbl" style="margin-bottom:6px">Validité</div>
+      <div style="display:flex;gap:8px">
+        <sc-for list="{{validities}}" as="v" hint-placeholder-count="3">
+          <button class="chip" aria-pressed="{{v.aria}}" onClick="{{v.pick}}" style="{{v.style}}">{{v.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin:16px 20px 0;padding:12px 16px;border-radius:18px;background:#fff;border:1px solid #e8e0d0">
+    <div class="sum"><span style="color:#6b6155">Montant estimé</span><span class="num">{{gross}} FCFA</span></div>
+    <div class="sum"><span style="color:#6b6155">Frais SDB + taxes</span><span class="num">{{fees}} FCFA</span></div>
+    <div class="sum" style="border-top:1px solid #efe8da;margin-top:4px;padding-top:9px;font-weight:600"><span>{{totalLabel}}</span><span class="num">≈ {{total}} FCFA</span></div>
+  </section>
+
+  <div style="margin:12px 20px 0;display:flex;align-items:center;gap:8px;font-size:11.5px;color:#6b6155">
+    <span style="padding:3px 8px;border-radius:8px;background:#f4efe5">Vous</span><span aria-hidden="true">→</span>
+    <span style="padding:3px 8px;border-radius:8px;background:#f4efe5">EDC Investment</span><span aria-hidden="true">→</span>
+    <span style="padding:3px 8px;border-radius:8px;background:#f4efe5">Cotation BVMAC</span>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 30px;background:#fff;border-top:1px solid #e8e0d0">
+    <a href="PIN.dc.html" style="height:54px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:600;{{ctaStyle}}">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 0-4 4v3h8V7a4 4 0 0 0-4-4z"></path><rect x="5" y="10" width="14" height="11" rx="2"></rect></svg>{{ctaLabel}}</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { side: 'buy', type: 'limit', qty: 10, validity: 'Jour' };
+  }
+  renderVals() {
+    const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const { side, type, qty } = this.state;
+    const on = 'background:#fff;color:#1a140e;font-weight:600;box-shadow:0 1px 3px rgba(32,20,8,0.12);';
+    const off = 'background:transparent;color:#6b6155;';
+    const chipOn = 'border:2px solid #1c130b;background:#fff;font-weight:600;color:#1a140e;';
+    const chipOff = 'border:1px solid #e8e0d0;background:#fff;color:#1a140e;';
+    const buy = side === 'buy';
+    return {
+      buySel: buy ? 'true' : 'false', sellSel: buy ? 'false' : 'true',
+      buyStyle: buy ? on : off, sellStyle: buy ? off : on,
+      setBuy: () => this.setState({ side: 'buy' }), setSell: () => this.setState({ side: 'sell' }),
+      limitSel: type === 'limit' ? 'true' : 'false', marketSel: type === 'market' ? 'true' : 'false',
+      limitStyle: type === 'limit' ? chipOn : chipOff, marketStyle: type === 'market' ? chipOn : chipOff,
+      setLimit: () => this.setState({ type: 'limit' }), setMarket: () => this.setState({ type: 'market' }),
+      isLimit: type === 'limit',
+      validities: ['Jour', 'Fin du mois', 'Jusqu’au…'].map((label) => ({
+        label,
+        aria: label === this.state.validity ? 'true' : 'false',
+        style: label === this.state.validity ? chipOn : chipOff,
+        pick: () => this.setState({ validity: label })
+      })),
+      qty,
+      inc: () => this.setState({ qty: this.state.qty + 1 }),
+      dec: () => this.setState({ qty: Math.max(1, this.state.qty - 1) }),
+      gross: fmt(qty * 89000),
+      fees: fmt(Math.round(qty * 89000 * 0.012)),
+      total: fmt(qty * 89000 + (buy ? 1 : -1) * Math.round(qty * 89000 * 0.012)),
+      totalLabel: buy ? 'Total à débiter' : 'Total à créditer',
+      ctaLabel: buy ? 'Vérifier l’achat' : 'Vérifier la vente',
+      ctaStyle: buy ? 'background:#1c130b;color:#fbf6ea;' : 'background:#8a2b1c;color:#fff;'
+    };
+  }
+}
+</script>
+</body>
+</html>

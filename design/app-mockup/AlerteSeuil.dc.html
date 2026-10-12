@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Créer une alerte de cours</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.seg{flex:1;height:40px;border:0;border-radius:999px;font:inherit;font-size:13.5px;cursor:pointer}
+.step{width:48px;height:48px;border-radius:50%;border:1px solid #d9cdb6;background:#fff;font:inherit;font-size:22px;color:#1a140e;cursor:pointer}
+</style>
+</helmet>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#2a2219;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+  <a href="Valeur.dc.html" aria-label="Fermer" style="position:absolute;inset:0;background:rgba(18,12,6,0.55)"></a>
+  <div aria-hidden="true" style="position:absolute;left:20px;right:20px;top:70px;padding:18px;border-radius:22px;background:rgba(251,249,245,0.12);color:rgba(251,246,234,0.6)">
+    <div class="serif" style="font-size:22px">BGFI HC</div><div class="num" style="font-size:30px;margin-top:6px">89 000 FCFA</div>
+  </div>
+
+  <section role="dialog" aria-modal="true" aria-labelledby="al-t" style="position:absolute;left:0;right:0;bottom:0;background:#fbf9f5;border-radius:28px 28px 0 0;padding:12px 22px 32px">
+    <div style="width:40px;height:5px;border-radius:999px;background:#d9cdb6;margin:0 auto 16px"></div>
+
+    <sc-if value="{{editing}}" hint-placeholder-val="{{true}}">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="/_blob/dad075d0e86d2f40aa8c230910e920ed" alt="" style="width:40px;height:40px;border-radius:12px;object-fit:contain;border:1px solid #efe8da;background:#fff">
+        <div style="flex:1"><h2 id="al-t" class="serif" style="margin:0;font-size:21px;font-weight:500">Alerte de cours</h2><div class="num" style="font-size:12.5px;color:#6b6155">BGFI HC · dernier cours 89 000 FCFA</div></div>
+        <a href="Valeur.dc.html" aria-label="Fermer" style="width:38px;height:38px;border-radius:50%;background:#f4efe5;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"></path></svg></a>
+      </div>
+      <div role="tablist" aria-label="Condition" style="margin-top:18px;display:flex;background:#f4efe5;border-radius:999px;padding:4px">
+        <button class="seg" role="tab" aria-selected="{{upAria}}" onClick="{{setUp}}" style="{{upStyle}}">Monte au-dessus de</button>
+        <button class="seg" role="tab" aria-selected="{{downAria}}" onClick="{{setDown}}" style="{{downStyle}}">Descend sous</button>
+      </div>
+      <div style="margin-top:18px;display:flex;align-items:center;gap:14px">
+        <button class="step" aria-label="Moins 500" onClick="{{dec}}">−</button>
+        <div style="flex:1;text-align:center"><div class="num" style="font-size:32px;font-weight:600">{{price}}</div><div style="font-size:12px;color:#6b6155">FCFA · {{delta}}</div></div>
+        <button class="step" aria-label="Plus 500" onClick="{{inc}}">+</button>
+      </div>
+      <p style="margin:16px 0 0;font-size:12.5px;color:#6b6155;line-height:1.5">Vous recevrez une notification push après la publication du BOC si la condition est remplie.</p>
+      <button onClick="{{create}}" style="margin-top:18px;width:100%;height:54px;border-radius:999px;border:0;background:#1c130b;color:#fbf6ea;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Créer l’alerte</button>
+    </sc-if>
+
+    <sc-if value="{{created}}" hint-placeholder-val="{{false}}">
+      <div style="text-align:center;padding:10px 0 4px">
+        <span style="margin:0 auto;width:64px;height:64px;border-radius:50%;background:#e4f3ea;color:#157a43;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg></span>
+        <h2 class="serif" style="margin:16px 0 0;font-size:22px;font-weight:500">Alerte créée</h2>
+        <p class="num" style="margin:6px 0 0;font-size:14px;color:#6b6155">BGFI HC {{summary}}</p>
+        <a href="Valeur.dc.html" style="margin-top:20px;height:52px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Retour à la fiche</a>
+        <a href="Notifications.dc.html" style="margin-top:6px;height:46px;display:flex;align-items:center;justify-content:center;font-size:14px">Gérer mes alertes</a>
+      </div>
+    </sc-if>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { dir: 'up', price: 90000, created: false };
+  }
+  renderVals() {
+    const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const { dir, price, created } = this.state;
+    const on = 'background:#fff;color:#1a140e;font-weight:600;box-shadow:0 1px 3px rgba(32,20,8,0.12);';
+    const off = 'background:transparent;color:#6b6155;';
+    const pct = ((price - 89000) / 89000 * 100).toFixed(1).replace('.', ',');
+    return {
+      editing: !created, created,
+      upAria: dir === 'up' ? 'true' : 'false', downAria: dir === 'down' ? 'true' : 'false',
+      upStyle: dir === 'up' ? on : off, downStyle: dir === 'down' ? on : off,
+      setUp: () => this.setState({ dir: 'up', price: Math.max(this.state.price, 89500) }),
+      setDown: () => this.setState({ dir: 'down', price: Math.min(this.state.price, 88500) }),
+      price: fmt(price),
+      delta: (price >= 89000 ? '+' : '') + pct + ' % vs dernier cours',
+      inc: () => this.setState({ price: this.state.price + 500 }),
+      dec: () => this.setState({ price: Math.max(500, this.state.price - 500) }),
+      summary: (dir === 'up' ? 'au-dessus de ' : 'sous ') + fmt(price) + ' FCFA',
+      create: () => this.setState({ created: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

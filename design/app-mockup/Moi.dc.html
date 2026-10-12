@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Mon compte</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:#8a7f72;text-decoration:none}
+.tab.on{color:#1c130b;font-weight:600}
+.glabel{margin:24px 24px 8px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:#8a7f72;font-weight:500}
+.group{margin:0 20px;background:#fff;border:1px solid #e8e0d0;border-radius:20px;overflow:hidden}
+.item{display:flex;align-items:center;gap:14px;min-height:58px;padding:0 16px;color:#1a140e;font-size:15px;border-bottom:1px solid #efe8da}
+.item:last-child{border-bottom:0}
+.ico{width:36px;height:36px;border-radius:11px;background:#f4efe5;color:#7a4f12;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.val{color:#6b6155;font-size:14px}
+.chev{flex-shrink:0}
+</style>
+</helmet>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+ <div data-lenis-prevent style="position:absolute;top:0;left:0;right:0;bottom:84px;overflow-y:auto;padding-bottom:28px">
+
+  <header style="padding:56px 20px 0">
+    <h1 class="serif" style="margin:0;font-size:30px;font-weight:500">Compte</h1>
+  </header>
+
+  <a href="Profil.dc.html" style="margin:18px 20px 0;display:flex;align-items:center;gap:16px;padding:18px;border-radius:22px;background:#fff;border:1px solid #e8e0d0;color:#1a140e">
+    <span style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#ead18a,#c9a23a);color:#1c130b;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',Georgia,serif;font-size:22px;flex-shrink:0">AK</span>
+    <span style="flex:1;min-width:0">
+      <span class="serif" style="display:block;font-size:20px">Aminata Kamga</span>
+      <span style="display:block;font-size:13px;color:#6b6155;margin-top:2px">+237 6•• •• •• 41</span>
+      <span style="display:inline-block;margin-top:8px;font-size:11px;font-weight:600;color:#8a6614;background:#f4e9c8;padding:3px 10px;border-radius:999px">Compte gratuit</span>
+    </span>
+    <svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+  </a>
+
+  <a href="CompteIdentite.dc.html" style="margin:12px 20px 0;display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:22px;background:#1c130b;color:#efe6d4">
+    <span style="flex:1">
+      <span class="serif" style="display:block;font-size:17px;color:#fbf6ea">Ouvrir un compte-titres</span>
+      <span style="display:block;font-size:12.5px;color:rgba(239,230,212,0.65);margin-top:3px">Pour investir pour de vrai, via une société de bourse</span>
+    </span>
+    <span style="width:38px;height:38px;border-radius:50%;background:#c9a23a;color:#1c130b;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+  </a>
+
+  <div class="glabel">Préférences</div>
+  <nav class="group" aria-label="Préférences">
+    <a class="item" href="Preferences.dc.html"><span class="ico"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path></svg></span><span style="flex:1">Langue</span><span class="val">Français</span><svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+    <a class="item" href="Preferences.dc.html"><span class="ico"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></span><span style="flex:1">Apparence</span><span class="val">Clair</span><svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+    <a class="item" href="Notifications.dc.html"><span class="ico"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10 21h4"></path></svg></span><span style="flex:1">Notifications</span><span class="val">4 actives</span><svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+  </nav>
+
+  <div class="glabel">Sécurité</div>
+  <nav class="group" aria-label="Sécurité">
+    <a class="item" href="Securite.dc.html"><span class="ico"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></span><span style="flex:1">Code PIN et biométrie</span><span class="val">Activé</span><svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+    <a class="item" href="Securite.dc.html"><span class="ico"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg></span><span style="flex:1">Appareils connectés</span><span class="val">2</span><svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+  </nav>
+
+  <a href="Parrainage.dc.html" style="margin:24px 20px 0;display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:20px;background:linear-gradient(135deg,#f6ead0,#ecd59a);color:#1c130b">
+    <span style="width:44px;height:44px;border-radius:14px;background:rgba(28,19,11,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"></rect><path d="M12 8v13M3 12h18M12 8c-2-4-6-4-6-1.5S10 8 12 8zm0 0c2-4 6-4 6-1.5S14 8 12 8z"></path></svg></span>
+    <span style="flex:1"><span style="display:block;font-size:15px;font-weight:600">Parrainez vos proches</span><span style="display:block;font-size:12.5px;color:rgba(28,19,11,0.7);margin-top:2px">Partagez l’École de bourse, gagnez des badges</span></span>
+    <svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+  </a>
+
+  <div class="glabel">Aide et informations</div>
+  <nav class="group" aria-label="Aide et informations">
+    <a class="item" href="APropos.dc.html"><span class="ico"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 2.2-2.4 3.7M12 17h.01"></path></svg></span><span style="flex:1">Aide et contact</span><svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+    <a class="item" href="APropos.dc.html"><span class="ico"><img src="/_blob/4821813fde8f9178dd300928139609f5" alt="" style="width:22px;height:22px"></span><span style="flex:1">À propos de la BVMAC</span><svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+    <a class="item" href="Legal.dc.html"><span class="ico"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"></path></svg></span><span style="flex:1">Confidentialité et cookies</span><svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+    <a class="item" href="Legal.dc.html"><span class="ico"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"></path><path d="M14 3v4h4M9 13h6M9 17h4"></path></svg></span><span style="flex:1">Conditions d’utilisation</span><svg class="chev" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+  </nav>
+
+  <div style="margin:24px 20px 0">
+    <button onClick="{{askLogout}}" style="width:100%;height:54px;border-radius:999px;border:1px solid #e9c3c9;background:#fff;color:#a3263a;display:flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-size:15px;font-weight:500;cursor:pointer">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"></path></svg>Se déconnecter</button>
+    <p style="text-align:center;font-size:12px;color:#8a7f72;margin:14px 0 0">BVMAC · version 2.0.0</p>
+  </div>
+ </div>
+
+  <nav aria-label="Navigation principale" style="position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,0.96);border-top:1px solid #e8e0d0;display:flex;padding:10px 8px 0">
+    <a class="tab" href="Main.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"></path></svg>Accueil</a>
+    <a class="tab" href="Marches.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-6"></path></svg>Marchés</a>
+    <a class="tab" href="Portefeuille.dc.html" style="color:#1c130b;font-weight:500"><span style="width:52px;height:52px;margin-top:-26px;border-radius:50%;background:#c9a23a;color:#1c130b;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(138,102,20,0.6),0 0 0 5px #fbf9f5"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"></rect><path d="M3 10h18M16 15h2"></path></svg></span>Portefeuille</a>
+    <a class="tab" href="Ecole.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>École</a>
+    <a class="tab on" href="Moi.dc.html" aria-current="page"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>Compte</a>
+  </nav>
+
+  <sc-if value="{{confirm}}" hint-placeholder-val="{{false}}">
+    <div style="position:absolute;inset:0;z-index:10;background:rgba(18,12,6,0.55);display:flex;align-items:flex-end">
+      <div role="alertdialog" aria-modal="true" aria-labelledby="lo-t" style="width:100%;background:#fbf9f5;border-radius:28px 28px 0 0;padding:12px 24px 34px;box-sizing:border-box">
+        <div style="width:40px;height:5px;border-radius:999px;background:#d9cdb6;margin:0 auto 18px"></div>
+        <h2 id="lo-t" class="serif" style="margin:0;font-size:22px;font-weight:500">Se déconnecter ?</h2>
+        <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:#6b6155">Vos favoris et votre progression restent enregistrés. Vous pourrez vous reconnecter avec votre numéro.</p>
+        <a href="Bienvenue.dc.html" style="margin-top:20px;height:52px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Se déconnecter</a>
+        <button onClick="{{cancel}}" style="width:100%;margin-top:8px;height:48px;border:0;background:transparent;font:inherit;font-size:15px;color:#1a140e;cursor:pointer">Annuler</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { confirm: false };
+  }
+  renderVals() {
+    return {
+      confirm: this.state.confirm,
+      askLogout: () => this.setState({ confirm: true }),
+      cancel: () => this.setState({ confirm: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

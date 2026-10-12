@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Ouvrir un compte-titres</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.step{flex:1;display:flex;flex-direction:column;gap:6px;font-size:11px}
+.bar{height:4px;border-radius:999px}
+.doc{flex:1;height:40px;border-radius:12px;font:inherit;font-size:13px;cursor:pointer}
+.corner{position:absolute;width:26px;height:26px;border-color:#c9a23a;border-style:solid}
+</style>
+</helmet>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+
+  <header style="padding:54px 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="CompteIdentite.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <div style="flex:1;font-size:14px;font-weight:600;text-align:center;margin-right:42px">Ouvrir un compte-titres</div>
+  </header>
+
+  <ol aria-label="Étapes" style="list-style:none;margin:18px 20px 0;padding:0;display:flex;gap:8px">
+    <li class="step"><span class="bar" style="background:#157a43"></span><span style="color:#157a43;font-weight:600">Identité</span></li>
+    <li class="step" aria-current="step"><span class="bar" style="background:#1c130b"></span><span style="font-weight:600">Pièce</span></li>
+    <li class="step"><span class="bar" style="background:#e8e0d0"></span><span style="color:#8a7f72">Société de bourse</span></li>
+    <li class="step"><span class="bar" style="background:#e8e0d0"></span><span style="color:#8a7f72">Signature</span></li>
+  </ol>
+
+  <section style="padding:22px 20px 0">
+    <div style="font-size:12px;color:#8a6614;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">Étape 2 sur 4</div>
+    <h1 class="serif" style="margin:6px 0 0;font-size:26px;font-weight:500;line-height:1.2">Photographiez votre pièce d’identité</h1>
+    <p style="margin:8px 0 0;font-size:14px;color:#6b6155;line-height:1.5">Elle est exigée par la réglementation pour ouvrir votre compte.</p>
+    <div role="radiogroup" aria-label="Type de pièce" style="margin-top:16px;display:flex;gap:8px">
+      <sc-for list="{{docs}}" as="d" hint-placeholder-count="3">
+        <button class="doc" role="radio" aria-checked="{{d.aria}}" onClick="{{d.pick}}" style="{{d.style}}">{{d.label}}</button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section aria-label="Cadre de prise de vue" style="margin:18px 20px 0;height:210px;border-radius:22px;background:#1c130b;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
+    <div style="position:relative;width:270px;height:170px;border-radius:14px;background:rgba(255,255,255,0.05)">
+      <span class="corner" style="left:0;top:0;border-width:3px 0 0 3px;border-top-left-radius:14px"></span>
+      <span class="corner" style="right:0;top:0;border-width:3px 3px 0 0;border-top-right-radius:14px"></span>
+      <span class="corner" style="left:0;bottom:0;border-width:0 0 3px 3px;border-bottom-left-radius:14px"></span>
+      <span class="corner" style="right:0;bottom:0;border-width:0 3px 3px 0;border-bottom-right-radius:14px"></span>
+      <div style="position:absolute;left:22px;top:30px;width:62px;height:76px;border-radius:8px;background:rgba(234,209,138,0.16)"></div>
+      <div style="position:absolute;left:100px;top:38px;width:140px;height:8px;border-radius:4px;background:rgba(234,209,138,0.2)"></div>
+      <div style="position:absolute;left:100px;top:56px;width:110px;height:8px;border-radius:4px;background:rgba(234,209,138,0.2)"></div>
+      <div style="position:absolute;left:100px;top:74px;width:124px;height:8px;border-radius:4px;background:rgba(234,209,138,0.2)"></div>
+      <div style="position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:12px;color:rgba(239,230,212,0.7)">Recto · cadrez la carte entière</div>
+    </div>
+  </section>
+
+  <ul style="list-style:none;margin:14px 20px 0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:13px;color:#3f362c">
+    <li style="display:flex;gap:10px;align-items:center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#157a43" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg>Bonne lumière, sans reflet</li>
+    <li style="display:flex;gap:10px;align-items:center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#157a43" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg>Pièce en cours de validité</li>
+  </ul>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 30px;background:#fbf9f5">
+    <div style="display:flex;gap:10px;align-items:flex-start;font-size:11.5px;color:#6b6155;line-height:1.45;margin-bottom:12px">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a6614" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+      <span>Données chiffrées, transmises uniquement à la société de bourse que vous choisirez (loi n°2024/017).</span>
+    </div>
+    <a href="Societes.dc.html" style="height:54px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:600">
+      <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>Prendre la photo</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { doc: 'CNI' };
+  }
+  renderVals() {
+    return {
+      docs: ['CNI', 'Passeport', 'Titre de séjour'].map((label) => {
+        const on = label === this.state.doc;
+        return {
+          label,
+          aria: on ? 'true' : 'false',
+          style: on ? 'border:2px solid #1c130b;background:#fff;font-weight:600;color:#1a140e;' : 'border:1px solid #e8e0d0;background:#fff;color:#1a140e;',
+          pick: () => this.setState({ doc: label })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

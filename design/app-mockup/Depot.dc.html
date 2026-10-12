@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Déposer des fonds</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.key{height:50px;border:0;border-radius:16px;background:transparent;font:inherit;font-size:23px;color:#1a140e;cursor:pointer}
+.chip{flex:1;height:36px;border-radius:999px;font:inherit;font-size:13px;cursor:pointer}
+.m{flex:1;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:#fff;font:inherit;text-align:left;color:#1a140e;cursor:pointer}
+.badge{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</helmet>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+  <header style="padding:54px 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="Portefeuille.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <div style="flex:1;font-size:14px;font-weight:600;text-align:center;margin-right:42px">Déposer des fonds</div>
+  </header>
+
+  <sc-if value="{{form}}" hint-placeholder-val="{{true}}">
+    <section style="padding:26px 24px 0;text-align:center">
+      <div style="font-size:12.5px;color:#6b6155">Montant à déposer</div>
+      <div class="num serif" aria-live="polite" style="margin-top:6px;font-size:44px;font-weight:500;letter-spacing:-0.02em;color:{{amtColor}}">{{amount}}<span style="font-size:18px;color:#8a7f72;margin-left:6px;font-family:'Geist',sans-serif">FCFA</span></div>
+      <div style="font-size:12px;color:#8a7f72;margin-top:4px">Vers le compte espèces EDC Investment · solde 54 000 FCFA</div>
+    </section>
+    <div style="margin:18px 20px 0;display:flex;gap:8px">
+      <sc-for list="{{quick}}" as="q" hint-placeholder-count="4"><button class="chip" onClick="{{q.pick}}" style="{{q.style}}">{{q.label}}</button></sc-for>
+    </div>
+    <div role="radiogroup" aria-label="Moyen de paiement" style="margin:14px 20px 0;display:flex;gap:8px">
+      <sc-for list="{{methods}}" as="m" hint-placeholder-count="2">
+        <button class="m" role="radio" aria-checked="{{m.aria}}" onClick="{{m.pick}}" style="{{m.box}}">
+          <span class="badge" style="{{m.badge}}">{{m.short}}</span>
+          <span><span style="display:block;font-size:13px;font-weight:600">{{m.name}}</span><span style="display:block;font-size:11px;color:#6b6155">{{m.sub}}</span></span>
+        </button>
+      </sc-for>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:0 24px 30px">
+      <div role="group" aria-label="Clavier" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px">
+        <sc-for list="{{keys}}" as="k" hint-placeholder-count="12"><button class="key" aria-label="{{k.aria}}" onClick="{{k.press}}">{{k.label}}</button></sc-for>
+      </div>
+      <button onClick="{{go}}" disabled="{{off}}" style="margin-top:10px;width:100%;height:54px;border-radius:999px;border:0;font:inherit;font-size:15px;font-weight:600;cursor:pointer;{{ctaStyle}}">{{cta}}</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{pending}}" hint-placeholder-val="{{false}}">
+    <section aria-live="polite" style="padding:70px 24px 0;text-align:center">
+      <div style="margin:0 auto;width:88px;height:88px;border-radius:50%;background:{{mBg}};display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="{{mFg}}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"></rect><path d="M11 18h2"></path></svg></div>
+      <h1 class="serif" style="margin:22px 0 0;font-size:24px;font-weight:500">Validez sur votre téléphone</h1>
+      <p style="margin:10px auto 0;max-width:290px;font-size:14px;line-height:1.55;color:#6b6155">Confirmez le dépôt de <b class="num" style="color:#1a140e">{{amount}} FCFA</b> avec votre code secret {{mName}}.</p>
+      <div style="margin-top:20px;display:inline-flex;align-items:center;gap:10px;font-size:13px;color:#8a6614"><span style="width:16px;height:16px;border-radius:50%;border:2px solid #ead18a;border-top-color:#8a6614;animation:spin 0.9s linear infinite"></span>En attente de confirmation</div>
+    </section>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 30px;display:flex;flex-direction:column;gap:10px">
+      <button onClick="{{confirm}}" style="height:54px;border-radius:999px;border:1px solid #e8e0d0;background:#fff;font:inherit;font-size:14px;color:#6b6155;cursor:pointer">J’ai validé sur mon téléphone</button>
+      <button onClick="{{cancel}}" style="height:46px;border:0;background:transparent;font:inherit;font-size:14px;font-weight:500;color:#7a4f12;cursor:pointer">Annuler</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{done}}" hint-placeholder-val="{{false}}">
+    <section style="padding:70px 24px 0;text-align:center">
+      <div style="margin:0 auto;width:88px;height:88px;border-radius:50%;background:#e4f3ea;color:#157a43;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg></div>
+      <h1 class="serif" style="margin:22px 0 0;font-size:24px;font-weight:500">Dépôt confirmé</h1>
+      <p style="margin:10px auto 0;font-size:14px;color:#6b6155"><b class="num" style="color:#1a140e">{{amount}} FCFA</b> crédités sur votre compte espèces.</p>
+      <div style="margin:22px auto 0;padding:14px 16px;border-radius:18px;background:#fff;border:1px solid #e8e0d0;display:flex;justify-content:space-between;font-size:13.5px"><span style="color:#6b6155">Nouveau solde</span><b class="num">{{newBal}} FCFA</b></div>
+    </section>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 30px;display:flex;flex-direction:column;gap:10px">
+      <a href="Marches.dc.html" style="height:54px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Investir maintenant</a>
+      <a href="Portefeuille.dc.html" style="height:46px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500">Retour au portefeuille</a>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { amt: '100000', method: 'momo', stage: 'form' };
+  }
+  renderVals() {
+    const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const { amt, method, stage } = this.state;
+    const n = Number(amt || 0);
+    const ok = n >= 5000;
+    const defs = [
+      { id: 'momo', short: 'MoMo', name: 'MTN MoMo', sub: '6•• •• •• 41', badge: 'background:#ffcb05;color:#1a140e;', bg: '#ffcb05', fg: '#1a140e' },
+      { id: 'om', short: 'OM', name: 'Orange Money', sub: '6•• •• •• 07', badge: 'background:#ff7900;color:#fff;', bg: '#ff7900', fg: '#fff' }
+    ];
+    const m = defs.find((d) => d.id === method);
+    const press = (d) => () => { const next = (this.state.amt + d).replace(/^0+/, ''); if (next.length <= 8) this.setState({ amt: next }); };
+    return {
+      form: stage === 'form', pending: stage === 'pending', done: stage === 'done',
+      amount: fmt(n),
+      amtColor: n ? '#1a140e' : '#c8bda9',
+      newBal: fmt(54000 + n),
+      mName: m.name, mBg: m.bg, mFg: m.fg,
+      quick: [25000, 50000, 100000, 250000].map((v) => ({
+        label: (v / 1000) + ' k',
+        style: n === v ? 'border:1px solid #1c130b;background:#1c130b;color:#fbf6ea' : 'border:1px solid #e8e0d0;background:#fff;color:#1a140e',
+        pick: () => this.setState({ amt: String(v) })
+      })),
+      methods: defs.map((d) => ({
+        ...d, aria: d.id === method ? 'true' : 'false',
+        box: d.id === method ? 'border:2px solid #1c130b;padding:9px 11px' : 'border:1px solid #e8e0d0',
+        pick: () => this.setState({ method: d.id })
+      })),
+      keys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '000', '0', '⌫'].map((k) => ({
+        label: k, aria: k === '⌫' ? 'Effacer' : k,
+        press: k === '⌫' ? () => this.setState({ amt: this.state.amt.slice(0, -1) }) : press(k)
+      })),
+      off: !ok,
+      cta: ok ? 'Déposer ' + fmt(n) + ' FCFA' : 'Minimum 5 000 FCFA',
+      ctaStyle: ok ? 'background:#c9a23a;color:#1c130b' : 'background:#e8e0d0;color:#8a7f72;cursor:default',
+      go: () => { if (ok) this.setState({ stage: 'pending' }); },
+      confirm: () => this.setState({ stage: 'done' }),
+      cancel: () => this.setState({ stage: 'form' })
+    };
+  }
+}
+</script>
+</body>
+</html>

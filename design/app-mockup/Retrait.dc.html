@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Retirer des fonds</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.key{height:50px;border:0;border-radius:16px;background:transparent;font:inherit;font-size:23px;color:#1a140e;cursor:pointer}
+.dot{width:13px;height:13px;border-radius:50%}
+.r{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #efe8da;font-size:13.5px}
+.r:last-child{border-bottom:0}
+.r span:first-child{color:#6b6155}
+</style>
+</helmet>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+  <header style="padding:54px 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="Portefeuille.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <div style="flex:1;font-size:14px;font-weight:600;text-align:center;margin-right:42px">Retirer des fonds</div>
+  </header>
+
+  <sc-if value="{{notDone}}" hint-placeholder-val="{{true}}">
+    <section style="padding:26px 24px 0;text-align:center">
+      <div style="font-size:12.5px;color:#6b6155">Montant à retirer</div>
+      <div class="num serif" aria-live="polite" style="margin-top:6px;font-size:44px;font-weight:500;letter-spacing:-0.02em;color:{{amtColor}}">{{amount}}<span style="font-size:18px;color:#8a7f72;margin-left:6px;font-family:'Geist',sans-serif">FCFA</span></div>
+      <button onClick="{{all}}" style="margin-top:6px;border:0;background:#f4e9c8;border-radius:999px;padding:6px 12px;font:inherit;font-size:12.5px;color:#7a4f12;cursor:pointer">Disponible 54 000 FCFA · tout retirer</button>
+    </section>
+    <div style="margin:18px 20px 0;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:#fff;border:1px solid #e8e0d0">
+      <span style="width:36px;height:36px;border-radius:10px;background:#ffcb05;color:#1a140e;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">MoMo</span>
+      <span style="flex:1"><span style="display:block;font-size:11.5px;color:#6b6155">Vers</span><span style="display:block;font-size:14px;font-weight:500">MTN MoMo · +237 6•• •• •• 41</span></span>
+      <span style="font-size:11.5px;color:#157a43;font-weight:500">Vérifié</span>
+    </div>
+    <p style="margin:10px 24px 0;font-size:12px;color:#8a7f72;text-align:center">Sans frais · reçu sous 24 h ouvrées</p>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:0 24px 30px">
+      <div role="group" aria-label="Clavier" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px">
+        <sc-for list="{{keys}}" as="k" hint-placeholder-count="12"><button class="key" aria-label="{{k.aria}}" onClick="{{k.press}}">{{k.label}}</button></sc-for>
+      </div>
+      <button onClick="{{go}}" disabled="{{off}}" style="margin-top:10px;width:100%;height:54px;border-radius:999px;border:0;font:inherit;font-size:15px;font-weight:600;cursor:pointer;{{ctaStyle}}">{{cta}}</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{pin}}" hint-placeholder-val="{{false}}">
+    <button aria-label="Annuler" onClick="{{cancel}}" style="position:absolute;inset:0;border:0;background:rgba(18,12,6,0.55);cursor:pointer;z-index:3"></button>
+    <section role="dialog" aria-modal="true" aria-labelledby="pin-t" style="position:absolute;left:0;right:0;bottom:0;z-index:4;background:#fbf9f5;border-radius:28px 28px 0 0;padding:12px 24px 30px">
+      <div style="width:40px;height:5px;border-radius:999px;background:#d9cdb6;margin:0 auto 14px"></div>
+      <h2 id="pin-t" class="serif" style="margin:0;text-align:center;font-size:21px;font-weight:500">Confirmez avec votre code PIN</h2>
+      <p class="num" style="margin:6px 0 0;text-align:center;font-size:13px;color:#6b6155">Retrait de {{amount}} FCFA vers MTN MoMo</p>
+      <div aria-label="{{progress}}" style="margin:16px 0 0;display:flex;justify-content:center;gap:14px">
+        <sc-for list="{{dots}}" as="d" hint-placeholder-count="6"><span class="dot" style="{{d}}"></span></sc-for>
+      </div>
+      <div role="group" aria-label="Clavier PIN" style="margin-top:14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px">
+        <sc-for list="{{pinKeys}}" as="k" hint-placeholder-count="12"><button class="key" aria-label="{{k.aria}}" onClick="{{k.press}}">{{k.label}}</button></sc-for>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{done}}" hint-placeholder-val="{{false}}">
+    <section style="padding:60px 24px 0;text-align:center">
+      <div style="margin:0 auto;width:88px;height:88px;border-radius:50%;background:#e4f3ea;color:#157a43;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg></div>
+      <h1 class="serif" style="margin:22px 0 0;font-size:24px;font-weight:500">Retrait demandé</h1>
+      <p style="margin:10px auto 0;max-width:290px;font-size:14px;line-height:1.55;color:#6b6155">EDC Investment traite votre demande. Vous serez notifié dès réception sur votre MoMo.</p>
+    </section>
+    <section aria-label="Récapitulatif" style="margin:24px 20px 0;padding:6px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:20px">
+      <div class="r"><span>Montant</span><b class="num">{{amount}} FCFA</b></div>
+      <div class="r"><span>Vers</span><span>MTN MoMo · 6•• •• •• 41</span></div>
+      <div class="r"><span>Délai estimé</span><span>Sous 24 h ouvrées</span></div>
+      <div class="r"><span>Solde restant</span><span class="num">{{rest}} FCFA</span></div>
+    </section>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 30px">
+      <a href="Portefeuille.dc.html" style="height:54px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Retour au portefeuille</a>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { amt: '30000', stage: 'form', pin: '' };
+  }
+  renderVals() {
+    const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const { amt, stage, pin } = this.state;
+    const n = Number(amt || 0);
+    const over = n > 54000;
+    const ok = n >= 1000 && !over;
+    const press = (d) => () => { const next = (this.state.amt + d).replace(/^0+/, ''); if (next.length <= 7) this.setState({ amt: next }); };
+    const pinPress = (d) => () => {
+      const next = this.state.pin + d;
+      if (next.length === 6) this.setState({ pin: '', stage: 'done' });
+      else this.setState({ pin: next });
+    };
+    const kb = (fn, back) => ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'].map((k) => ({
+      label: k, aria: k === '⌫' ? 'Effacer' : (k || 'vide'),
+      press: k === '⌫' ? back : (k ? fn(k) : () => {})
+    }));
+    return {
+      notDone: stage !== 'done', pin: stage === 'pin', done: stage === 'done',
+      amount: fmt(n),
+      rest: fmt(Math.max(0, 54000 - n)),
+      amtColor: over ? '#c0263d' : (n ? '#1a140e' : '#c8bda9'),
+      all: () => this.setState({ amt: '54000' }),
+      keys: kb(press, () => this.setState({ amt: this.state.amt.slice(0, -1) })),
+      pinKeys: kb(pinPress, () => this.setState({ pin: this.state.pin.slice(0, -1) })),
+      progress: pin.length + ' chiffres sur 6',
+      dots: [0, 1, 2, 3, 4, 5].map((i) => i < pin.length ? 'background:#1c130b;' : 'border:2px solid #d9cdb6;box-sizing:border-box;'),
+      off: !ok,
+      cta: over ? 'Solde insuffisant' : (ok ? 'Retirer ' + fmt(n) + ' FCFA' : 'Minimum 1 000 FCFA'),
+      ctaStyle: ok ? 'background:#1c130b;color:#fbf6ea' : 'background:#e8e0d0;color:#8a7f72;cursor:default',
+      go: () => { if (ok) this.setState({ stage: 'pin', pin: '' }); },
+      cancel: () => this.setState({ stage: 'form', pin: '' })
+    };
+  }
+}
+</script>
+</body>
+</html>
