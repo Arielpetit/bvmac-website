@@ -13,6 +13,7 @@ import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { NavigationProgress } from "@/components/layout/NavigationProgress";
 import { BackToTop } from "@/components/motion/BackToTop";
+import { ChatWidget } from "@/components/ai/ChatWidget";
 
 // Self-hosted at build time by next/font (no request to Google from the browser).
 const fraunces = Fraunces({ subsets: ["latin", "latin-ext"], axes: ["SOFT", "opsz"], variable: "--font-fraunces", display: "swap" });
@@ -68,6 +69,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[lo
               </main>
               <Footer locale={locale} dict={dict} />
               <BackToTop />
+              <ChatWidget />
               <CookieConsent />
             </SmoothScroll>
           </ConsentProvider>

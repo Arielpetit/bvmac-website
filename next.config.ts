@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,
+  images: {
+    // q90 for the full-bleed hero photo (darkened backgrounds show q75 artifacts)
+    qualities: [75, 90],
+  },
   turbopack: {
     root: process.cwd(),
     rules: {

@@ -19,7 +19,7 @@ export function CookieConsent() {
   return (
     <>
       {!consent && !settingsOpen && (
-        <div role="region" aria-label={t.title} className="fixed inset-x-0 bottom-0 z-[65] p-3 md:bottom-5 md:left-auto md:right-5 md:max-w-[560px] md:p-0">
+        <div role="region" aria-label={t.title} className="fixed inset-x-0 bottom-0 z-[65] p-3 md:bottom-5 md:left-5 md:right-auto md:max-w-[520px] md:p-0">
           <div>
             <div className="rounded-[var(--radius-card)] border border-line bg-surface p-6 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.45)]">
               <div className="flex-1">
