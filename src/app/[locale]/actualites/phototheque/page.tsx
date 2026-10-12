@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
-import { ALBUMS } from "@/data/media";
+import { getAlbums } from "@/lib/api";
 import { ContentPage } from "@/components/content/ContentPage";
 import { PhotoGallery } from "@/components/content/PhotoGallery";
 
@@ -17,9 +17,10 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/actualit
 
 export default async function PhotosPage({ params }: PageProps<"/[locale]/actualites/phototheque">) {
   const { locale, dict } = await resolveLocale(params);
+  const albums = await getAlbums();
   return (
     <ContentPage locale={locale} dict={dict} group="news" title={dict.nav.items.photos} intro={INTRO[locale]} image="/photos/ceremony-trading-floor.webp">
-      <PhotoGallery albums={ALBUMS} />
+      <PhotoGallery albums={albums} />
     </ContentPage>
   );
 }

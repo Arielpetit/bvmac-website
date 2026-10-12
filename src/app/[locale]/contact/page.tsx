@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight, Clock, Mail, MapPin, Newspaper, Phone } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { localePath } from "@/lib/paths";
-import { CONTACT } from "@/lib/navigation";
+import { getContact } from "@/lib/api";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ContactForms } from "@/components/content/ContactForms";
 import { FacebookIcon, LinkedinIcon, XIcon, YoutubeIcon } from "@/components/ui/SocialIcons";
@@ -15,6 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ContactPage({ params }: PageProps<"/[locale]/contact">) {
   const { locale, dict } = await resolveLocale(params);
+  const CONTACT = await getContact();
   const socials = [
     [CONTACT.social.facebook, FacebookIcon, "Facebook"],
     [CONTACT.social.x, XIcon, "X"],

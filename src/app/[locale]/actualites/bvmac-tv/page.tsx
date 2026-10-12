@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
-import { VIDEOS } from "@/data/media";
+import { getVideos } from "@/lib/api";
 import { ContentPage } from "@/components/content/ContentPage";
 import { VideoGrid } from "@/components/content/VideoGrid";
 
@@ -17,9 +17,10 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/actualit
 
 export default async function TvPage({ params }: PageProps<"/[locale]/actualites/bvmac-tv">) {
   const { locale, dict } = await resolveLocale(params);
+  const videos = await getVideos();
   return (
     <ContentPage locale={locale} dict={dict} group="news" title={dict.nav.items.tv} intro={INTRO[locale]} frenchBody={false}>
-      <VideoGrid videos={VIDEOS} />
+      <VideoGrid videos={videos} />
     </ContentPage>
   );
 }

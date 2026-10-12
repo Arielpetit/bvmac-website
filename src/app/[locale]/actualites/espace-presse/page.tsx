@@ -4,7 +4,7 @@ import { Download, FileText, Mail, Phone } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
 import { formatFcfa, formatNumber } from "@/lib/format";
-import { CONTACT } from "@/lib/navigation";
+import { getContact } from "@/lib/api";
 import { KEY_FIGURES } from "@/data/content";
 import { MARKET_SUMMARY } from "@/data/market";
 import { getNotices } from "@/lib/api";
@@ -25,6 +25,7 @@ const LOGOS = [
 
 export default async function PressPage({ params }: PageProps<"/[locale]/actualites/espace-presse">) {
   const { locale, dict } = await resolveLocale(params);
+  const CONTACT = await getContact();
   const releases = (await getNotices()).filter((n) => n.type === "communique").slice(0, 4);
   const facts = [
     ["Capital social", formatFcfa(KEY_FIGURES.capital, locale)],
