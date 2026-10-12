@@ -737,7 +737,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </Reveal>
         )}
         <div className={marketNews.length >= 3 ? "hidden gap-10 sm:grid lg:grid-cols-[1.4fr_1fr]" : "grid gap-10 lg:grid-cols-[1.4fr_1fr]"}>
-          <Reveal>{marketNews[0] && <NewsCard item={marketNews[0]} locale={locale} large />}</Reveal>
+          <Reveal className="h-full">{marketNews[0] && <NewsCard item={marketNews[0]} locale={locale} large />}</Reveal>
           <Stagger className="grid gap-10 sm:grid-cols-2 lg:grid-cols-1">
             {marketNews.slice(1, 3).map((n) => (
               <StaggerItem key={n.slug}>
