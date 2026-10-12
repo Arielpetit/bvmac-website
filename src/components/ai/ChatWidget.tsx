@@ -204,7 +204,7 @@ export function ChatWidget() {
   return (
     <>
       {/* Launcher */}
-      <div className="fixed bottom-5 right-5 z-[70] flex items-end gap-3">
+      <div data-chat-launcher className="fixed bottom-5 right-5 z-[70] flex items-end gap-3">
         <AnimatePresence>
           {hint && !open && (
             <motion.div initial={{ opacity: 0, x: 12, scale: 0.9 }} animate={{ opacity: 1, x: 0, scale: 1 }} exit={{ opacity: 0, x: 12, scale: 0.9 }} transition={{ duration: 0.35, ease: EASE }} className="relative mb-2 hidden items-center gap-2 rounded-2xl rounded-br-sm bg-surface py-2.5 pl-4 pr-2 text-sm text-heading shadow-[0_16px_40px_-12px_rgb(var(--shadow-color)/0.45)] ring-1 ring-line sm:flex">

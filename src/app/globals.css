@@ -463,3 +463,8 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+/* The mobile menu covers the page; keep the chat launcher out of its way. */
+html[data-menu="open"] [data-chat-launcher] {
+  display: none;
+}
