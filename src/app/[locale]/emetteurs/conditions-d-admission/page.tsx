@@ -30,7 +30,7 @@ export default async function AdmissionPage({ params }: PageProps<"/[locale]/eme
     <ContentPage locale={locale} dict={dict} group="issuers" title={dict.nav.items.admission} intro="Critères d’accès au marché par type de titre et compartiment de la cote.">
       <div className="grid gap-16">
         <Reveal>
-          <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+          <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
             <table className="w-full min-w-[720px] text-sm">
               <caption className="px-6 pt-5 text-left"><span className="text-h3">Comparatif des conditions d’admission</span></caption>
               <thead>

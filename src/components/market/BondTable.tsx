@@ -98,7 +98,30 @@ export function BondTable({ bonds, asOf }: { bonds: Bond[]; asOf: string }) {
       {filtered.length === 0 ? (
         <EmptyState message={dict.common.noResults} />
       ) : (
-        <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+        <>
+        <ul className="grid gap-3 md:hidden">
+          {filtered.map((b) => (
+            <li key={b.isin}>
+              <button type="button" onClick={() => setSelected(b)} className="w-full rounded-[var(--radius-card)] border border-line bg-surface p-4 text-left transition-colors hover:bg-surface-alt/50">
+                <span className="flex items-start justify-between gap-3">
+                  <span className="min-w-0">
+                    <span className="block font-medium text-heading">{b.name}</span>
+                    <span className="code block truncate text-muted">{b.isin}</span>
+                  </span>
+                  <span className="shrink-0 text-right">
+                    <span className="figure block text-heading">{formatNumber(b.close, locale, 2)} %</span>
+                    <span className="block text-xs text-muted">{t.close}</span>
+                  </span>
+                </span>
+                <span className="mt-3 flex items-center justify-between gap-3 text-sm">
+                  <span className="flex min-w-0 items-center gap-2"><Flag code={b.country} className="h-3 w-[18px] shrink-0" /><span className="truncate">{b.issuer}</span></span>
+                  <span className="figure shrink-0 text-muted">{t.maturity} {b.maturity ?? "—"}</span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="relative hidden overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface md:block" data-lenis-prevent>
           <table className="w-full min-w-[820px] text-sm">
             <caption className="sr-only">{dict.nav.items.bonds}</caption>
             <thead className="bg-surface-alt">
@@ -137,6 +160,7 @@ export function BondTable({ bonds, asOf }: { bonds: Bond[]; asOf: string }) {
             </tbody>
           </table>
         </div>
+        </>
       )}
 
       <Sheet open={!!selected} onClose={() => setSelected(null)} title={selected?.name ?? ""} closeLabel={dict.common.close}>

@@ -35,7 +35,7 @@ export function MonthlyTable({ cap, traded }: { cap: Point[]; traded: Point[] })
           <Download aria-hidden="true" className="size-4" strokeWidth={1.6} /> CSV
         </button>
       </div>
-      <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+      <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
         <table className="w-full min-w-[520px] text-sm">
           <caption className="sr-only">{L[1]}</caption>
           <thead className="bg-surface-alt">

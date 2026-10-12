@@ -130,7 +130,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
           <option value="">{t.allSectors}</option>
           {sectors.map((s) => <option key={s}>{s}</option>)}
         </select>
-        <div ref={colsRef} className="relative">
+        <div ref={colsRef} className="relative hidden md:block">
           <button type="button" aria-expanded={colsOpen} onClick={() => setColsOpen((o) => !o)} className="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm hover:border-line-strong">
             <Columns3 aria-hidden="true" className="size-4" strokeWidth={1.6} /> {t.columns}
           </button>
@@ -159,7 +159,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
         <EmptyState message={dict.common.noResults} action={<button type="button" className="link text-sm" onClick={() => { setQuery(""); setCountry(""); setSector(""); }}>{dict.common.clearFilters}</button>} />
       ) : (
         <>
-          <div className="hidden overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface md:block" data-lenis-prevent>
+          <div className="relative hidden overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface md:block" data-lenis-prevent>
             <table className="w-full min-w-[960px] text-sm">
               <caption className="sr-only">{dict.nav.items.equities}</caption>
               <thead className="bg-surface-alt">

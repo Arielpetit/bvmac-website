@@ -116,15 +116,15 @@ export function HeroMarketCard({
         <p className="mt-1 text-right text-[10px] uppercase tracking-[0.14em] text-brand-sand/40">{t.trend}</p>
       </div>
 
-      <dl className="relative mt-4 grid grid-cols-3 divide-x divide-white/10 rounded-2xl bg-black/20 py-3.5 ring-1 ring-white/[0.06]">
+      <dl className="relative mt-4 grid divide-y divide-white/10 rounded-2xl bg-black/20 py-1.5 ring-1 ring-white/[0.06] sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:py-3.5">
         {[
           [t.traded, formatFcfaCompact(traded, locale)],
           [t.bonds, formatFcfaCompact(bonds, locale)],
           [t.listed, t.listedValue(equitiesCount, bondsCount)],
         ].map(([label, value]) => (
-          <div key={label} className="px-3.5">
+          <div key={label} className="flex items-baseline justify-between gap-3 px-3.5 py-2 sm:block sm:py-0">
             <dt className="text-[10.5px] leading-tight text-brand-sand/55">{label}</dt>
-            <dd className="figure mt-1.5 text-[13px] font-medium text-brand-ivory">{value}</dd>
+            <dd className="figure text-[13px] font-medium text-brand-ivory sm:mt-1.5">{value}</dd>
           </div>
         ))}
       </dl>
@@ -140,7 +140,7 @@ export function HeroMarketCard({
                 <span className="min-w-0">
                   <span className="flex items-baseline justify-between gap-2">
                     <span className="truncate text-sm font-medium text-brand-ivory group-hover:text-brand-gold-light">{r.shortName}</span>
-                    <span className="figure text-xs text-brand-sand/60">{formatNumber(r.closePrice, locale)} FCFA</span>
+                    <span className="figure shrink-0 whitespace-nowrap text-xs text-brand-sand/60">{formatNumber(r.closePrice, locale)} FCFA</span>
                   </span>
                   <span className="mt-1.5 block h-1 overflow-hidden rounded-full bg-white/10">
                     <motion.span className="block h-full rounded-full bg-gradient-to-r from-brand-gold-dark to-brand-gold-light" initial={{ width: 0 }} animate={{ width: `${(y / maxYield) * 100}%` }} transition={{ delay: 1.3 + i * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }} />

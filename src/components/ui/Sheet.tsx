@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
 
 // Side sheet (modal dialog) used for details such as a bond line or favourites.
 export function Sheet({ open, onClose, title, children, closeLabel = "Fermer" }: { open: boolean; onClose: () => void; title: string; children: React.ReactNode; closeLabel?: string }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  // Portal to <body>: a transformed ancestor (e.g. a Reveal wrapper) would otherwise trap `fixed` positioning.
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
   useEffect(() => {
     if (!open) return;
     const previous = document.activeElement as HTMLElement | null;
@@ -21,7 +24,8 @@ export function Sheet({ open, onClose, title, children, closeLabel = "Fermer" }:
     };
   }, [open, onClose]);
 
-  return (
+  if (!mounted) return null;
+  return createPortal(
     <AnimatePresence>
       {open && (
         <div className="fixed inset-0 z-[75]">
@@ -48,6 +52,7 @@ export function Sheet({ open, onClose, title, children, closeLabel = "Fermer" }:
           </motion.aside>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }

@@ -34,7 +34,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/polit
       <h2 id="responsable" className="text-h2">Responsable du traitement</h2>
       <p>Bourse des Valeurs Mobilières de l’Afrique Centrale, B.P. 442 Douala, Cameroun. Délégué à la protection des données : [à désigner], [adresse e-mail dédiée].</p>
       <h2 id="registre" className="text-h2">Traitements de données</h2>
-      <div className="not-prose my-6 overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+      <div className="not-prose my-6 relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
         <table className="w-full min-w-[900px] text-sm">
           <caption className="sr-only">Traitements de données personnelles</caption>
           <thead>

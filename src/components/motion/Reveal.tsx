@@ -3,6 +3,9 @@
 import { motion, type Variants } from "motion/react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+// Trigger once the block's top crosses 85% of the viewport. A ratio threshold (amount) can never
+// be met by blocks taller than the screen, e.g. long lists on mobile, leaving them invisible.
+const VIEWPORT = { once: true, margin: "0px 0px -15% 0px" } as const;
 
 // Fades and lifts content into place the first time it enters the viewport.
 export function Reveal({
@@ -11,14 +14,12 @@ export function Reveal({
   y = 28,
   className,
   as = "div",
-  amount = 0.2,
 }: {
   children: React.ReactNode;
   delay?: number;
   y?: number;
   className?: string;
   as?: "div" | "section" | "li" | "article" | "header" | "span";
-  amount?: number;
 }) {
   const Tag = motion[as];
   return (
@@ -26,7 +27,7 @@ export function Reveal({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount }}
+      viewport={VIEWPORT}
       transition={{ duration: 0.9, ease: EASE, delay }}
     >
       {children}
@@ -56,7 +57,7 @@ export function Stagger({
 }) {
   const Tag = motion[as];
   return (
-    <Tag className={className} variants={container} custom={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }}>
+    <Tag className={className} variants={container} custom={stagger} initial="hidden" whileInView="show" viewport={VIEWPORT}>
       {children}
     </Tag>
   );

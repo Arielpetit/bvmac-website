@@ -249,7 +249,7 @@ function MobileSheet({ onClose }: { onClose: () => void }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
-      className="fixed inset-0 z-[70] flex flex-col bg-background"
+      className="fixed inset-0 z-[80] flex flex-col bg-background"
     >
       <div className="container-site flex h-[72px] items-center justify-between">
         <Logo variant="medal" className="size-10" alt="BVMAC" />
