@@ -77,13 +77,13 @@ class Component extends DCLogic {
   }
   renderVals() {
     const all = [
-      { name: 'BGFI HC', sector: 'Banque', country: 'Gabon', price: '89 000', logo: '/_blob/dad075d0e86d2f40aa8c230910e920ed' },
-      { name: 'BANGE', sector: 'Banque', country: 'Guinée éq.', price: '228 085', logo: '/_blob/b458ecaefb92226c22f38ba2b544b23f' },
-      { name: 'SEMC', sector: 'Boissons', country: 'Cameroun', price: '53 000', logo: '/_blob/5db7833cc651236a156346fb03a776ce' },
-      { name: 'SOCAPALM', sector: 'Agro-industrie', country: 'Cameroun', price: '49 500', logo: '/_blob/d99733952378c2f0b677faef5b0f9f3a' },
-      { name: 'SAFACAM', sector: 'Agro-industrie', country: 'Cameroun', price: '38 500', logo: '/_blob/5d754d569f2a9eb85783b50b38e4ff00' },
-      { name: 'La Régionale', sector: 'Microfinance', country: 'Cameroun', price: '38 000', logo: '/_blob/e2a82fbfd1ed1a49495e5a9ba8a5b891' },
-      { name: 'SCG-Ré', sector: 'Réassurance', country: 'Gabon', price: '20 000', logo: '/_blob/7ef65fcd5636225925680793a7130b18' }
+      { name: 'BGFI HC', sector: 'Banque', country: 'Gabon', price: '89 000', logo: './assets/dad075d0e86d2f40aa8c230910e920ed.png' },
+      { name: 'BANGE', sector: 'Banque', country: 'Guinée éq.', price: '228 085', logo: './assets/b458ecaefb92226c22f38ba2b544b23f.png' },
+      { name: 'SEMC', sector: 'Boissons', country: 'Cameroun', price: '53 000', logo: './assets/5db7833cc651236a156346fb03a776ce.png' },
+      { name: 'SOCAPALM', sector: 'Agro-industrie', country: 'Cameroun', price: '49 500', logo: './assets/d99733952378c2f0b677faef5b0f9f3a.png' },
+      { name: 'SAFACAM', sector: 'Agro-industrie', country: 'Cameroun', price: '38 500', logo: './assets/5d754d569f2a9eb85783b50b38e4ff00.png' },
+      { name: 'La Régionale', sector: 'Microfinance', country: 'Cameroun', price: '38 000', logo: './assets/e2a82fbfd1ed1a49495e5a9ba8a5b891.png' },
+      { name: 'SCG-Ré', sector: 'Réassurance', country: 'Gabon', price: '20 000', logo: './assets/7ef65fcd5636225925680793a7130b18.png' }
     ];
     const sel = this.state.country;
     const rows = all.filter((r) => !sel || r.country === sel);

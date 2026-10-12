@@ -78,10 +78,10 @@ class Component extends DCLogic {
   }
   renderVals() {
     const all = [
-      { id: 'bgfi', name: 'BGFI HC', sector: 'Banque', price: '89 000', logo: '/_blob/dad075d0e86d2f40aa8c230910e920ed', spark: '0,8 8,10 14,6 22,12 30,9 38,13 46,11 56,15', color: '#a8925f' },
-      { id: 'socapalm', name: 'SOCAPALM', sector: 'Agro-industrie', price: '49 500', logo: '/_blob/d99733952378c2f0b677faef5b0f9f3a', spark: '0,15 8,13 14,14 22,8 30,10 38,6 46,7 56,5', color: '#157a43' },
-      { id: 'safacam', name: 'SAFACAM', sector: 'Agro-industrie', price: '38 500', logo: '/_blob/5d754d569f2a9eb85783b50b38e4ff00', spark: '0,6 8,9 14,7 22,12 30,10 38,14 46,12 56,13', color: '#a8925f' },
-      { id: 'scg', name: 'SCG-Ré', sector: 'Réassurance', price: '20 000', logo: '/_blob/7ef65fcd5636225925680793a7130b18', spark: '0,10 8,8 14,12 22,9 30,11 38,8 46,10 56,9', color: '#a8925f' }
+      { id: 'bgfi', name: 'BGFI HC', sector: 'Banque', price: '89 000', logo: './assets/dad075d0e86d2f40aa8c230910e920ed.png', spark: '0,8 8,10 14,6 22,12 30,9 38,13 46,11 56,15', color: '#a8925f' },
+      { id: 'socapalm', name: 'SOCAPALM', sector: 'Agro-industrie', price: '49 500', logo: './assets/d99733952378c2f0b677faef5b0f9f3a.png', spark: '0,15 8,13 14,14 22,8 30,10 38,6 46,7 56,5', color: '#157a43' },
+      { id: 'safacam', name: 'SAFACAM', sector: 'Agro-industrie', price: '38 500', logo: './assets/5d754d569f2a9eb85783b50b38e4ff00.png', spark: '0,6 8,9 14,7 22,12 30,10 38,14 46,12 56,13', color: '#a8925f' },
+      { id: 'scg', name: 'SCG-Ré', sector: 'Réassurance', price: '20 000', logo: './assets/7ef65fcd5636225925680793a7130b18.png', spark: '0,10 8,8 14,12 22,9 30,11 38,8 46,10 56,9', color: '#a8925f' }
     ];
     const { editing, removed } = this.state;
     const stocks = all.filter((s) => !removed[s.id]).map((s) => ({
