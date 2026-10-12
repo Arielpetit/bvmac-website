@@ -20,11 +20,11 @@ a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
 .tab.on{color:#1c130b;font-weight:600}
 </style>
 </helmet>
-<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
  <div data-lenis-prevent style="position:absolute;top:0;left:0;right:0;bottom:84px;overflow-y:auto;padding-bottom:24px">
 
   <!-- Hero -->
-  <section style="background:#1c130b;color:#efe6d4;padding:56px 20px 22px;border-radius:0 0 28px 28px;position:relative;overflow:hidden">
+  <section style="background:#1c130b;color:#efe6d4;padding:calc(18px + env(safe-area-inset-top,0px)) 20px 22px;border-radius:0 0 28px 28px;position:relative;overflow:hidden">
     <div aria-hidden="true" style="position:absolute;right:-70px;top:-90px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,58,0.35),rgba(201,162,58,0) 70%)"></div>
     <div style="display:flex;align-items:center;gap:12px;position:relative">
       <a href="Moi.dc.html" aria-label="Mon compte" style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#ead18a,#c9a23a);color:#1c130b;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',Georgia,serif;font-size:16px;font-weight:500;box-shadow:0 0 0 2px rgba(234,209,138,0.25)">AK</a>
@@ -61,13 +61,6 @@ a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
         <button aria-pressed="{{p.aria}}" onClick="{{p.pick}}" style="border:0;font:inherit;font-size:12px;padding:6px 12px;border-radius:999px;cursor:pointer;{{p.style}}">{{p.label}}</button>
       </sc-for>
     </div>
-  </section>
-
-  <!-- Market of the day: figures not shown anywhere else -->
-  <section aria-label="Marché du jour" style="margin:16px 20px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:#fff;border:1px solid #e8e0d0;border-radius:20px">
-    <div style="padding:12px 14px"><div style="font-size:11px;color:#6b6155">Valeur échangée</div><div class="num" style="font-size:15px;font-weight:600;margin-top:3px">7,5 M</div><div style="font-size:10.5px;color:#8a7f72">FCFA</div></div>
-    <div style="padding:12px 14px;border-left:1px solid #efe8da"><div style="font-size:11px;color:#6b6155">Encours oblig.</div><div class="num" style="font-size:15px;font-weight:600;margin-top:3px">1 226,6</div><div style="font-size:10.5px;color:#8a7f72">Md FCFA</div></div>
-    <a href="Marches.dc.html" style="padding:12px 14px;border-left:1px solid #efe8da;color:#1a140e"><div style="font-size:11px;color:#6b6155">Titres cotés</div><div class="num" style="font-size:15px;font-weight:600;margin-top:3px">7 · 31</div><div style="font-size:10.5px;color:#8a7f72">actions · oblig.</div></a>
   </section>
 
   <!-- Live operation -->

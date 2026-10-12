@@ -18,23 +18,24 @@ a{color:#ead18a;text-decoration:none}a:hover{color:#fbf6ea}
 .lang{height:30px;padding:0 11px;border-radius:999px;font:inherit;font-size:12px;cursor:pointer}
 </style>
 </helmet>
-<div style="width:390px;height:844px;position:relative;overflow:hidden;background:#120c06;font-family:'Geist',system-ui,sans-serif;color:#efe6d4">
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#120c06;font-family:'Geist',system-ui,sans-serif;color:#efe6d4">
   <div aria-hidden="true" style="position:absolute;right:-120px;top:-120px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,58,0.32),rgba(201,162,58,0) 68%)"></div>
   <div aria-hidden="true" style="position:absolute;left:-140px;bottom:120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,58,0.14),rgba(201,162,58,0) 70%)"></div>
 
-  <div role="group" aria-label="Langue" style="position:absolute;top:56px;right:20px;display:flex;gap:6px">
+  <div role="group" aria-label="Langue" style="position:absolute;top:calc(18px + env(safe-area-inset-top,0px));right:20px;display:flex;gap:6px">
     <sc-for list="{{langs}}" as="l" hint-placeholder-count="3">
       <button class="lang" aria-pressed="{{l.aria}}" onClick="{{l.pick}}" style="{{l.style}}">{{l.code}}</button>
     </sc-for>
   </div>
 
-  <section style="position:relative;padding:150px 28px 0">
+  <div style="position:absolute;inset:0;overflow-y:auto;display:flex;flex-direction:column;justify-content:center">
+  <section style="position:relative;padding:calc(64px + env(safe-area-inset-top,0px)) 28px 0">
     <img src="./assets/4821813fde8f9178dd300928139609f5.png" alt="BVMAC" style="width:76px;height:76px">
     <h1 class="serif" style="margin:26px 0 0;font-size:36px;line-height:1.08;font-weight:500;color:#fbf6ea">La bourse de l’Afrique centrale, <span style="font-style:italic;color:#ead18a">dans votre poche.</span></h1>
     <p style="margin:14px 0 0;font-size:15px;line-height:1.55;color:rgba(239,230,212,0.72)">Cours officiels, avis du marché, alertes et une école pour apprendre à investir — dans les six pays de la CEMAC.</p>
   </section>
 
-  <form style="position:absolute;left:0;right:0;bottom:0;padding:0 24px 40px">
+  <form style="position:relative;padding:36px 24px 28px">
     <label for="tel" style="display:block;font-size:13px;color:rgba(239,230,212,0.7);margin-bottom:8px">Votre numéro de téléphone</label>
     <div style="display:flex;gap:8px">
       <button type="button" aria-label="{{countryLabel}}" onClick="{{nextCountry}}" style="height:54px;padding:0 12px;border-radius:16px;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.06);color:#fbf6ea;font:inherit;font-size:15px;display:flex;align-items:center;gap:8px;cursor:pointer;min-width:96px">
@@ -48,6 +49,7 @@ a{color:#ead18a;text-decoration:none}a:hover{color:#fbf6ea}
     <a href="Main.dc.html" style="margin-top:8px;height:48px;display:flex;align-items:center;justify-content:center;font-size:14.5px;color:#efe6d4">Explorer sans compte</a>
     <p style="margin:8px 0 0;text-align:center;font-size:11.5px;line-height:1.5;color:rgba(239,230,212,0.5)">En continuant, vous acceptez les <a href="APropos.dc.html" style="text-decoration:underline">conditions d’utilisation</a> et la <a href="APropos.dc.html" style="text-decoration:underline">politique de confidentialité</a>.</p>
   </form>
+  </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
