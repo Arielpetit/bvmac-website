@@ -774,7 +774,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <span className="max-w-[14rem] text-sm text-brand-sand/70">{t.qr}</span>
             </Reveal>
           </div>
-          <Reveal delay={0.15} className="mx-auto">
+          <Reveal delay={0.15} className="mx-auto max-sm:[zoom:0.72]">
             <AppShowcase
               capitalisation={formatNumber(summary.equityCapitalisation / 1e9, locale, 1)}
               area={capHistory.slice(-60).map((pt) => pt.value)}
