@@ -80,20 +80,19 @@ export function HeroMarketCard({
       <span aria-hidden="true" className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent" />
       <span aria-hidden="true" className="absolute -right-24 -top-24 size-64 rounded-full bg-brand-gold/15 blur-3xl" />
 
-      <div className="relative flex items-start justify-between gap-4">
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.16em] text-brand-gold-light/80">{t.cap}</p>
-          <p className="mt-2.5 flex items-baseline gap-2">
-            <span className="font-serif-display text-[2.75rem] leading-none text-brand-ivory"><CountUp value={capitalisation} kind="billions" /></span>
-            <span className="text-sm text-brand-sand/70">{locale === "en" ? "FCFA bn" : locale === "es" ? "mil M FCFA" : "Md FCFA"}</span>
-          </p>
-          <p className="mt-2 text-xs text-brand-sand/55">{t.session} {formatDate(date, locale, "short")}</p>
-        </div>
-        <a href={bocUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-white/[0.06] px-3.5 text-xs text-brand-ivory ring-1 ring-white/15 transition-colors hover:bg-brand-gold hover:text-espresso hover:ring-transparent">
+      {/* Label and bulletin share the top row; the figure gets its own full-width line so it never wraps. */}
+      <div className="relative flex items-center justify-between gap-3">
+        <p className="min-w-0 text-[11px] uppercase leading-snug tracking-[0.16em] text-brand-gold-light/80">{t.cap}</p>
+        <a href={bocUrl} target="_blank" rel="noopener noreferrer" title={t.boc} className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-full bg-white/[0.06] px-3.5 text-xs text-brand-ivory ring-1 ring-white/15 transition-colors hover:bg-brand-gold hover:text-espresso hover:ring-transparent max-[379px]:w-9 max-[379px]:px-0">
           <FileDown className="size-3.5" aria-hidden="true" />
-          {t.boc}
+          <span className="max-[379px]:sr-only">{t.boc}</span>
         </a>
       </div>
+      <p className="relative mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        <span className="whitespace-nowrap font-serif-display text-[2.5rem] leading-none text-brand-ivory sm:text-[2.75rem]"><CountUp value={capitalisation} kind="billions" /></span>
+        <span className="whitespace-nowrap text-sm text-brand-sand/70">{locale === "en" ? "FCFA bn" : locale === "es" ? "mil M FCFA" : "Md FCFA"}</span>
+      </p>
+      <p className="relative mt-2 text-xs text-brand-sand/55">{t.session} {formatDate(date, locale, "short")}</p>
 
       <div className="relative mt-5">
         <svg viewBox={`0 0 ${W} ${H}`} className="h-28 w-full overflow-visible" aria-hidden="true">
@@ -124,7 +123,7 @@ export function HeroMarketCard({
         ].map(([label, value]) => (
           <div key={label} className="flex items-baseline justify-between gap-3 px-3.5 py-2 sm:block sm:py-0">
             <dt className="text-[10.5px] leading-tight text-brand-sand/55">{label}</dt>
-            <dd className="figure text-[13px] font-medium text-brand-ivory sm:mt-1.5">{value}</dd>
+            <dd className="figure whitespace-nowrap text-right text-[13px] font-medium text-brand-ivory sm:mt-1.5 sm:text-left">{value}</dd>
           </div>
         ))}
       </dl>

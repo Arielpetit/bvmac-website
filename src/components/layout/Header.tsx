@@ -90,17 +90,14 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
       >
         <div className="container-site flex h-[76px] items-center justify-between gap-6">
           <Link href={localePath(locale, "/")} className="relative z-10 flex shrink-0 items-center" aria-label={`BVMAC – ${dict.nav.home}`}>
-            <Logo variant="medal" className="size-11 sm:hidden" alt="" priority />
-            <span className="hidden sm:block">
-              {onDark ? (
-                <Logo variant="dark" className="h-[52px] w-auto" alt="" priority />
-              ) : (
-                <>
-                  <Logo variant="light" className="h-[52px] w-auto dark:hidden" alt="" priority />
-                  <Logo variant="dark" className="hidden h-[52px] w-auto dark:block" alt="" />
-                </>
-              )}
-            </span>
+            {onDark ? (
+              <Logo variant="dark" className="h-11 w-auto sm:h-[52px]" alt="" priority />
+            ) : (
+              <>
+                <Logo variant="light" className="h-11 w-auto sm:h-[52px] dark:hidden" alt="" priority />
+                <Logo variant="dark" className="hidden h-11 w-auto sm:h-[52px] dark:block" alt="" />
+              </>
+            )}
           </Link>
 
           <nav aria-label={dict.a11y.mainNav} className="hidden lg:block">
