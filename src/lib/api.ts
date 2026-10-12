@@ -2,6 +2,8 @@
 // Today they return the data captured from www.bvm-ac.org (src/data); in
 // production they call the BVMAC market-data API and the headless CMS.
 
+import { fetchBulletins, fetchNews, fetchNotices, fetchTenders } from "@/lib/content";
+import { TENDERS } from "@/data/institution";
 import { AGENDA, EQUITIES, LAST_SESSION, MARKET_SUMMARY, changePct, type Equity } from "@/data/market";
 import { BOC_ARCHIVE, BROKERS, DOCUMENTS, NEWS, NOTICES } from "@/data/content";
 import { BONDS } from "@/data/real";
@@ -61,24 +63,30 @@ export async function getAgenda() {
   return AGENDA.slice().sort((a, b) => b.date.localeCompare(a.date));
 }
 
+// Notices, news, bulletins and tenders come from the admin (Supabase) and fall
+// back to the static data when it is unavailable.
 export async function getNotices() {
-  return NOTICES.slice().sort((a, b) => b.date.localeCompare(a.date));
+  return ((await fetchNotices()) ?? NOTICES).slice().sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export async function getNotice(id: string) {
-  return NOTICES.find((n) => n.id === id);
+  return (await getNotices()).find((n) => n.id === id);
 }
 
 export async function getNews() {
-  return NEWS.slice().sort((a, b) => b.date.localeCompare(a.date));
+  return ((await fetchNews()) ?? NEWS).slice().sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export async function getNewsItem(slug: string) {
-  return NEWS.find((n) => n.slug === slug);
+  return (await getNews()).find((n) => n.slug === slug);
 }
 
 export async function getBocArchive() {
-  return BOC_ARCHIVE;
+  return ((await fetchBulletins()) ?? BOC_ARCHIVE).slice().sort((a, b) => b.date.localeCompare(a.date));
+}
+
+export async function getTenders() {
+  return (await fetchTenders()) ?? TENDERS;
 }
 
 export async function getBrokers() {

@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
 import { formatDate } from "@/lib/format";
-import { TENDERS } from "@/data/institution";
+import { getTenders } from "@/lib/api";
 import { ContentPage } from "@/components/content/ContentPage";
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { cn } from "@/lib/cn";
@@ -14,9 +14,10 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/la-bvmac
 
 export default async function TendersPage({ params }: PageProps<"/[locale]/la-bvmac/appels-d-offres">) {
   const { locale, dict } = await resolveLocale(params);
-  const open = TENDERS.filter((t) => t.open);
-  const closed = TENDERS.filter((t) => !t.open);
-  const list = (items: typeof TENDERS) => (
+  const tenders = await getTenders();
+  const open = tenders.filter((t) => t.open);
+  const closed = tenders.filter((t) => !t.open);
+  const list = (items: typeof tenders) => (
     <Stagger as="ul" className="grid gap-3">
       {items.map((t) => (
         <StaggerItem as="li" key={t.ref}>
