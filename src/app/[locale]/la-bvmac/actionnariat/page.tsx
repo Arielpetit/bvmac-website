@@ -25,7 +25,7 @@ export default async function ShareholdingPage({ params }: PageProps<"/[locale]/
           <ShareholdingChart parts={SHAREHOLDING.parts} />
         </Card>
         <div>
-          <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+          <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
           <table className="w-full min-w-[440px] text-sm">
             <caption className="px-4 pt-4 text-left text-sm text-muted">Tableau des données du graphique</caption>
             <thead className="bg-surface-alt">

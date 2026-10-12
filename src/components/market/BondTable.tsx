@@ -98,7 +98,7 @@ export function BondTable({ bonds, asOf }: { bonds: Bond[]; asOf: string }) {
       {filtered.length === 0 ? (
         <EmptyState message={dict.common.noResults} />
       ) : (
-        <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+        <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
           <table className="w-full min-w-[820px] text-sm">
             <caption className="sr-only">{dict.nav.items.bonds}</caption>
             <thead className="bg-surface-alt">

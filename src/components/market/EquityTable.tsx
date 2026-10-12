@@ -159,7 +159,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
         <EmptyState message={dict.common.noResults} action={<button type="button" className="link text-sm" onClick={() => { setQuery(""); setCountry(""); setSector(""); }}>{dict.common.clearFilters}</button>} />
       ) : (
         <>
-          <div className="hidden overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface md:block" data-lenis-prevent>
+          <div className="relative hidden overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface md:block" data-lenis-prevent>
             <table className="w-full min-w-[960px] text-sm">
               <caption className="sr-only">{dict.nav.items.equities}</caption>
               <thead className="bg-surface-alt">
