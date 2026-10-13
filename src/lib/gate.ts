@@ -6,7 +6,8 @@
 //   GATE_USERS          comma-separated testers, each "email:salt:hash" (see scripts/gate-user.mjs)
 //   GATE_COOKIE_DOMAIN  e.g. ".skyengpro.site" so the app on a sibling subdomain shares the session
 export const GATE_COOKIE = "bvmac_access";
-export const GATE_MAX_AGE = 60 * 60 * 24 * 7;
+// Session length: one day, fixed from the moment of sign-in.
+export const GATE_MAX_AGE = 60 * 60 * 24;
 const ITERATIONS = 100_000;
 
 const encoder = new TextEncoder();

@@ -91,11 +91,11 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
         <div className="container-site flex h-[76px] items-center justify-between gap-6">
           <Link href={localePath(locale, "/")} className="relative z-10 flex shrink-0 items-center" aria-label={`BVMAC – ${dict.nav.home}`}>
             {onDark ? (
-              <Logo variant="dark" className="h-11 w-auto sm:h-[52px]" alt="" priority />
+              <Logo variant="dark" className="h-[52px] w-auto sm:h-16" alt="" priority />
             ) : (
               <>
-                <Logo variant="light" className="h-11 w-auto sm:h-[52px] dark:hidden" alt="" priority />
-                <Logo variant="dark" className="hidden h-11 w-auto sm:h-[52px] dark:block" alt="" />
+                <Logo variant="light" className="h-[52px] w-auto sm:h-16 dark:hidden" alt="" priority />
+                <Logo variant="dark" className="hidden h-[52px] w-auto sm:h-16 dark:block" alt="" />
               </>
             )}
           </Link>
