@@ -4,9 +4,13 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-06",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  // run_worker_first: files pass through the access gate in src/proxy.ts instead of being served directly.
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS", "run_worker_first": true },
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "bvmac-website" }],
   // Public address of this deployment (the DNS record and certificate are created on deploy).
   "routes": [{ "pattern": "bvmac.skyengpro.site", "custom_domain": true }],
+  // Access gate (src/lib/gate.ts): the sign-in cookie is shared with bvmac-app on the same parent domain.
+  // GATE_SECRET and GATE_USERS are secrets: npx wrangler secret put GATE_SECRET
+  "vars": { "GATE_COOKIE_DOMAIN": ".skyengpro.site" },
   "observability": { "enabled": true }
 }
