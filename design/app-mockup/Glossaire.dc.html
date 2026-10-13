@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Glossaire</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.term{width:100%;display:flex;align-items:center;gap:12px;padding:15px 16px;border:0;background:transparent;font:inherit;text-align:left;color:#1a140e;cursor:pointer}
+.item{border-bottom:1px solid #efe8da}
+.item:last-child{border-bottom:0}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+ <div data-lenis-prevent style="position:absolute;inset:0;overflow-y:auto;padding-bottom:30px">
+  <header style="padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="Ecole.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <h1 class="serif" style="margin:0;font-size:24px;font-weight:500">Glossaire</h1>
+  </header>
+  <label style="margin:16px 20px 0;display:flex;align-items:center;gap:10px;height:46px;padding:0 16px;background:#fff;border:1px solid #e8e0d0;border-radius:999px">
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a6614" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+    <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Rechercher un terme</span>
+    <input value="{{q}}" onChange="{{onType}}" placeholder="Rechercher un terme" style="border:0;outline:0;background:transparent;font:inherit;font-size:14.5px;flex:1;color:#1a140e">
+  </label>
+  <p style="margin:12px 24px 8px;font-size:12.5px;color:#6b6155">{{count}}</p>
+  <div style="margin:0 20px;background:#fff;border:1px solid #e8e0d0;border-radius:20px;overflow:hidden">
+    <sc-for list="{{terms}}" as="t" hint-placeholder-count="8">
+      <div class="item">
+        <button class="term" aria-expanded="{{t.aria}}" onClick="{{t.toggle}}">
+          <span style="flex:1;font-size:15px;font-weight:500">{{t.name}}</span>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="{{t.chev}}"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <sc-if value="{{t.open}}" hint-placeholder-val="{{false}}"><p style="margin:-4px 16px 16px;font-size:13.5px;line-height:1.55;color:#3f362c">{{t.def}}</p></sc-if>
+      </div>
+    </sc-for>
+  </div>
+ </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { q: '', open: 'BOC' };
+  }
+  renderVals() {
+    const all = [
+      ['Action', 'Titre de propriété d’une part du capital d’une société. Il donne droit à une part des bénéfices (dividende) et au vote en assemblée.'],
+      ['BOC', 'Bulletin Officiel de la Cote : document publié par la BVMAC après chaque séance, avec les cours, volumes et la capitalisation.'],
+      ['Capitalisation boursière', 'Valeur de marché d’une société : nombre d’actions multiplié par le cours. Pour le marché, somme des capitalisations des sociétés cotées.'],
+      ['COSUMAF', 'Commission de Surveillance du Marché Financier de l’Afrique Centrale, régulateur du marché financier régional.'],
+      ['Coupon couru', 'Part des intérêts d’une obligation acquise depuis le dernier paiement de coupon, payée par l’acheteur au vendeur.'],
+      ['Cours de référence', 'Cours de clôture de la séance précédente, qui sert de base au calcul de la variation du jour.'],
+      ['Dividende', 'Part du bénéfice d’une société distribuée à ses actionnaires, généralement une fois par an.'],
+      ['Obligation', 'Titre de créance : vous prêtez à un État ou une entreprise qui vous verse des intérêts (coupons) puis rembourse à l’échéance.'],
+      ['Société de bourse (SDB)', 'Intermédiaire agréé par la COSUMAF qui transmet vos ordres et tient votre compte-titres.']
+    ];
+    const q = this.state.q.trim().toLowerCase();
+    const list = all.filter(([n, d]) => !q || n.toLowerCase().includes(q) || d.toLowerCase().includes(q));
+    return {
+      q: this.state.q,
+      count: list.length + ' terme' + (list.length > 1 ? 's' : ''),
+      onType: (e) => this.setState({ q: e.target.value }),
+      terms: list.map(([name, def]) => {
+        const open = this.state.open === name;
+        return {
+          name, def, open,
+          aria: open ? 'true' : 'false',
+          chev: open ? 'transform:rotate(180deg)' : '',
+          toggle: () => this.setState({ open: open ? null : name })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

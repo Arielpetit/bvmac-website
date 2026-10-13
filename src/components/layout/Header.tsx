@@ -90,17 +90,14 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
       >
         <div className="container-site flex h-[76px] items-center justify-between gap-6">
           <Link href={localePath(locale, "/")} className="relative z-10 flex shrink-0 items-center" aria-label={`BVMAC – ${dict.nav.home}`}>
-            <Logo variant="medal" className="size-11 sm:hidden" alt="" priority />
-            <span className="hidden sm:block">
-              {onDark ? (
-                <Logo variant="dark" className="h-[52px] w-auto" alt="" priority />
-              ) : (
-                <>
-                  <Logo variant="light" className="h-[52px] w-auto dark:hidden" alt="" priority />
-                  <Logo variant="dark" className="hidden h-[52px] w-auto dark:block" alt="" />
-                </>
-              )}
-            </span>
+            {onDark ? (
+              <Logo variant="dark" className="h-11 w-auto sm:h-[52px]" alt="" priority />
+            ) : (
+              <>
+                <Logo variant="light" className="h-11 w-auto sm:h-[52px] dark:hidden" alt="" priority />
+                <Logo variant="dark" className="hidden h-11 w-auto sm:h-[52px] dark:block" alt="" />
+              </>
+            )}
           </Link>
 
           <nav aria-label={dict.a11y.mainNav} className="hidden lg:block">
@@ -227,17 +224,37 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
         </AnimatePresence>
       </header>
 
-      <AnimatePresence>{drawer && <MobileSheet onClose={() => setDrawer(false)} />}</AnimatePresence>
+      <AnimatePresence>{drawer && <MobileSheet onClose={() => setDrawer(false)} onSearch={() => { setDrawer(false); setSearchOpen(true); }} />}</AnimatePresence>
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} index={searchIndex} />
     </>
   );
 }
 
-function MobileSheet({ onClose }: { onClose: () => void }) {
+const GROUP_ICONS: Record<NavGroup["key"], string> = {
+  markets: "Activity",
+  invest: "Compass",
+  issuers: "Briefcase",
+  learn: "GraduationCap",
+  news: "Newspaper",
+  about: "Landmark",
+};
+
+function MobileSheet({ onClose, onSearch }: { onClose: () => void; onSearch: () => void }) {
   const { locale, dict } = useI18n();
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const isActive = useActiveGroup();
+  const [expanded, setExpanded] = useState<string | null>(() => NAV.find((g) => isActive(g))?.key ?? null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  useEffect(() => closeRef.current?.focus(), []);
+  useEffect(() => {
+    closeRef.current?.focus();
+    // Lock page scroll and let fixed widgets (chat launcher) step aside while the menu is open.
+    const html = document.documentElement;
+    html.style.overflow = "hidden";
+    html.dataset.menu = "open";
+    return () => {
+      html.style.overflow = "";
+      delete html.dataset.menu;
+    };
+  }, []);
 
   return (
     <motion.div
@@ -245,42 +262,51 @@ function MobileSheet({ onClose }: { onClose: () => void }) {
       role="dialog"
       aria-modal="true"
       aria-label={dict.a11y.mainNav}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
-      className="fixed inset-0 z-[70] flex flex-col bg-background"
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.25, ease: EASE }}
+      className="fixed inset-0 z-[80] flex flex-col bg-background"
     >
-      <div className="container-site flex h-[72px] items-center justify-between">
-        <Logo variant="medal" className="size-10" alt="BVMAC" />
-        <div className="flex items-center gap-2">
-          <SessionChip withTime={false} />
-          <button ref={closeRef} type="button" onClick={onClose} className="inline-flex size-11 items-center justify-center rounded-full hover:bg-surface-alt">
-            <X className="size-6" strokeWidth={1.6} aria-hidden="true" />
-            <span className="sr-only">{dict.a11y.closeMenu}</span>
-          </button>
-        </div>
+      <div className="container-site flex h-[72px] shrink-0 items-center justify-between border-b border-line">
+        <Link href={localePath(locale, "/")} onClick={onClose} aria-label="BVMAC">
+          <Logo variant="light" className="h-9 w-auto dark:hidden" alt="BVMAC" />
+          <Logo variant="dark" className="hidden h-9 w-auto dark:block" alt="BVMAC" />
+        </Link>
+        <button ref={closeRef} type="button" onClick={onClose} className="inline-flex size-10 items-center justify-center rounded-full border border-line bg-surface text-heading transition-colors hover:bg-surface-alt">
+          <X className="size-5" strokeWidth={1.6} aria-hidden="true" />
+          <span className="sr-only">{dict.a11y.closeMenu}</span>
+        </button>
       </div>
-      <nav className="container-site flex-1 overflow-y-auto pb-6" aria-label={dict.a11y.mainNav} data-lenis-prevent>
-        <ul>
+
+      <nav className="container-site flex-1 overflow-y-auto py-5" aria-label={dict.a11y.mainNav} data-lenis-prevent>
+        <button
+          type="button"
+          onClick={onSearch}
+          className="mb-5 flex h-12 w-full items-center gap-3 rounded-full border border-line bg-surface px-4 text-left text-sm text-muted shadow-soft"
+        >
+          <Search aria-hidden="true" className="size-[18px] text-accent-text" strokeWidth={1.8} />
+          <span className="truncate">{dict.common.searchPlaceholder}</span>
+        </button>
+
+        <ul className="grid gap-1">
           {NAV.map((group, i) => {
             const isOpen = expanded === group.key;
+            const active = isActive(group);
             return (
-              <motion.li
-                key={group.key}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.04 * i, duration: 0.4, ease: EASE }}
-                className="border-b border-line"
-              >
+              <motion.li key={group.key} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.03 * i, duration: 0.35, ease: EASE }}>
                 <button
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => setExpanded(isOpen ? null : group.key)}
-                  className="flex min-h-16 w-full items-center justify-between font-serif-display text-[1.75rem] text-heading"
+                  className={cn("flex min-h-14 w-full items-center gap-3.5 rounded-2xl px-2 text-left transition-colors", isOpen ? "bg-surface-alt" : "hover:bg-surface-alt/60")}
                 >
-                  {dict.nav[group.key]}
-                  <ChevronDown aria-hidden="true" strokeWidth={1.5} className={cn("size-6 transition-transform", isOpen && "rotate-180")} />
+                  <span className={cn("flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors", isOpen ? "bg-action text-action-text" : "bg-accent-soft text-accent-text")}>
+                    <NavIcon name={GROUP_ICONS[group.key]} className="size-[18px]" />
+                  </span>
+                  <span className="flex-1 text-[1.0625rem] font-medium text-heading">{dict.nav[group.key]}</span>
+                  {active && <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />}
+                  <ChevronDown aria-hidden="true" strokeWidth={1.8} className={cn("size-[18px] text-muted transition-transform duration-300", isOpen && "rotate-180 text-heading")} />
                 </button>
                 <AnimatePresence initial={false}>
                   {isOpen && (
@@ -289,13 +315,14 @@ function MobileSheet({ onClose }: { onClose: () => void }) {
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: EASE }}
-                      className="grid overflow-hidden pb-3"
+                      className="ml-[1.6rem] grid overflow-hidden border-l border-line pl-4"
                     >
-                      {group.items.map((item) => (
-                        <li key={item.href}>
-                          <Link href={localePath(locale, item.href)} onClick={onClose} className="flex min-h-12 items-center gap-3 rounded-xl px-2 text-text hover:bg-surface-alt">
-                            <NavIcon name={item.icon} className="size-[18px] text-accent-text" />
-                            {dict.nav.items[item.key]}
+                      {group.items.map((item, k) => (
+                        <li key={item.href} className={cn(k === 0 && "pt-2", k === group.items.length - 1 && "pb-3")}>
+                          <Link href={localePath(locale, item.href)} onClick={onClose} className="group flex min-h-11 items-center gap-3 rounded-xl px-2.5 text-[0.9375rem] text-text transition-colors hover:bg-surface-alt hover:text-heading">
+                            <NavIcon name={item.icon} className="size-4 text-accent-text" />
+                            <span className="flex-1">{dict.nav.items[item.key]}</span>
+                            <ArrowRight aria-hidden="true" className="size-3.5 text-muted opacity-0 transition-opacity group-hover:opacity-100" />
                           </Link>
                         </li>
                       ))}
@@ -305,16 +332,30 @@ function MobileSheet({ onClose }: { onClose: () => void }) {
               </motion.li>
             );
           })}
-          <li>
-            <Link href={localePath(locale, "/contact")} onClick={onClose} className="flex min-h-16 items-center font-serif-display text-[1.75rem] text-heading">
-              {dict.nav.contact}
+          <motion.li initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.03 * NAV.length, duration: 0.35, ease: EASE }}>
+            <Link href={localePath(locale, "/contact")} onClick={onClose} className="flex min-h-14 items-center gap-3.5 rounded-2xl px-2 transition-colors hover:bg-surface-alt/60">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-text">
+                <NavIcon name="Mail" className="size-[18px]" />
+              </span>
+              <span className="flex-1 text-[1.0625rem] font-medium text-heading">{dict.nav.contact}</span>
+              <ArrowUpRight aria-hidden="true" strokeWidth={1.8} className="size-[18px] text-muted" />
             </Link>
-          </li>
+          </motion.li>
         </ul>
       </nav>
-      <div className="container-site flex items-center justify-between border-t border-line py-4">
-        <LanguageMenu up />
-        <ThemeToggle className="text-heading hover:bg-surface-alt" />
+
+      <div className="container-site shrink-0 border-t border-line bg-surface pb-[max(1rem,env(safe-area-inset-bottom))] pt-4">
+        <Link href={localePath(locale, "/marches")} onClick={onClose} className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-action font-medium text-action-text transition-colors hover:bg-action-hover">
+          {dict.market.seeMarket}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </Link>
+        <div className="mt-3 flex items-center justify-between gap-3">
+          <SessionChip withTime={false} />
+          <div className="flex items-center gap-1">
+            <LanguageMenu up />
+            <ThemeToggle className="text-heading hover:bg-surface-alt" />
+          </div>
+        </div>
       </div>
     </motion.div>
   );

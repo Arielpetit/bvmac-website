@@ -128,6 +128,7 @@
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.6;
+    overflow-wrap: break-word;
     font-feature-settings: "ss01", "cv11";
   }
   h1,
@@ -298,6 +299,8 @@
   .prose-bvmac {
     font-size: 1.0625rem;
     line-height: 1.75;
+    /* Long regulation references (e.g. N°01/22/CEMAC/UMAC/CM/COSUMAF) must not widen narrow screens. */
+    overflow-wrap: anywhere;
   }
   .prose-bvmac p {
     margin-bottom: 1.1rem;
@@ -461,4 +464,9 @@ html.lenis body {
 }
 .lenis.lenis-stopped {
   overflow: hidden;
+}
+
+/* The mobile menu covers the page; keep the chat launcher out of its way. */
+html[data-menu="open"] [data-chat-launcher] {
+  display: none;
 }

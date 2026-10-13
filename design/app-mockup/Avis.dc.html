@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Avis et agenda</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:#8a7f72;text-decoration:none}
+.tab.on{color:#1c130b;font-weight:600}
+.chip{height:32px;padding:0 14px;border-radius:999px;font:inherit;font-size:12.5px;white-space:nowrap;cursor:pointer}
+.notice{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid #efe8da;color:#1a140e}
+.tag{font-size:11px;font-weight:500;padding:2px 9px;border-radius:999px}
+.ref{font-family:'Geist Mono',monospace;font-size:10.5px;color:#8a7f72}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+ <div data-lenis-prevent style="position:absolute;top:0;left:0;right:0;bottom:84px;overflow-y:auto;padding-bottom:24px">
+
+  <header style="padding:calc(18px + env(safe-area-inset-top,0px)) 20px 0">
+    <h1 class="serif" style="margin:0;font-size:30px;font-weight:500">Marchés</h1>
+    <div role="tablist" aria-label="Rubrique" style="margin-top:14px;display:flex;background:#f4efe5;border-radius:999px;padding:4px">
+      <a href="Marches.dc.html" role="tab" aria-selected="false" style="flex:1;height:36px;border-radius:999px;font-size:13px;color:#6b6155;display:flex;align-items:center;justify-content:center">Actions · 7</a>
+      <a href="Obligations.dc.html" role="tab" aria-selected="false" style="flex:1;height:36px;border-radius:999px;font-size:13px;color:#6b6155;display:flex;align-items:center;justify-content:center">Obligations · 31</a>
+      <span role="tab" aria-selected="true" style="flex:1;height:36px;border-radius:999px;background:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(32,20,8,0.12)">Avis</span>
+    </div>
+  </header>
+
+  <a href="BOC.dc.html" style="margin:14px 20px 0;display:flex;align-items:center;gap:14px;padding:16px;border-radius:22px;background:#1c130b;color:#efe6d4;position:relative;overflow:hidden">
+    <span aria-hidden="true" style="position:absolute;right:-40px;top:-50px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,58,0.35),rgba(201,162,58,0) 70%)"></span>
+    <span style="flex:1;position:relative">
+      <span style="display:block;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:#ead18a">Bulletin Officiel de la Cote</span>
+      <span class="serif" style="display:block;font-size:18px;color:#fbf6ea;margin-top:3px">Séance du jeudi 8 octobre</span>
+      <span style="display:block;font-size:12px;color:rgba(239,230,212,0.6);margin-top:2px">Cours, volumes et capitalisation</span>
+    </span>
+    <span style="position:relative;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:999px;background:#c9a23a;color:#1c130b;font-size:13px;font-weight:600">Ouvrir</span>
+  </a>
+
+  <section style="padding:18px 20px 0">
+    <div style="display:flex;align-items:baseline;justify-content:space-between">
+      <h2 class="serif" style="margin:0;font-size:18px;font-weight:500">Prochaines opérations</h2>
+      <a href="Agenda.dc.html" style="font-size:12.5px">Tout l’agenda</a>
+    </div>
+    <div style="margin-top:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+      <a href="Agenda.dc.html" style="background:#fff;border:1px solid #e8e0d0;border-radius:18px;padding:12px;display:flex;gap:10px;align-items:center;color:#1a140e">
+        <span style="width:44px;height:48px;border-radius:12px;background:#f4e9c8;color:#8a6614;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0"><span class="serif num" style="font-size:18px;line-height:1">22</span><span style="font-size:9.5px;text-transform:uppercase;margin-top:2px">Oct</span></span>
+        <span style="min-width:0"><span style="display:block;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#8a7f72">Assemblée</span><span style="display:block;font-size:13.5px;font-weight:600">SCG-Ré</span></span>
+      </a>
+      <a href="Souscrire.dc.html" style="background:#fff;border:1px solid #e8e0d0;border-radius:18px;padding:12px;display:flex;gap:10px;align-items:center;color:#1a140e">
+        <span style="width:44px;height:48px;border-radius:12px;background:#f4e9c8;color:#8a6614;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0"><span class="serif num" style="font-size:18px;line-height:1">02</span><span style="font-size:9.5px;text-transform:uppercase;margin-top:2px">Nov</span></span>
+        <span style="min-width:0"><span style="display:block;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#8a7f72">Introduction</span><span style="display:block;font-size:13.5px;font-weight:600">RENAPROV</span></span>
+      </a>
+    </div>
+  </section>
+
+  <section style="padding:18px 20px 0">
+    <div role="group" aria-label="Filtrer par type" style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none">
+      <sc-for list="{{chips}}" as="c" hint-placeholder-count="5">
+        <button class="chip" aria-pressed="{{c.aria}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+      </sc-for>
+    </div>
+    <div style="margin-top:6px">
+      <sc-for list="{{notices}}" as="n" hint-placeholder-count="3">
+        <a class="notice" href="AvisDetail.dc.html">
+          <span style="width:40px;text-align:center;flex-shrink:0"><span class="serif num" style="display:block;font-size:22px;line-height:1.1">{{n.day}}</span><span style="font-size:10.5px;text-transform:uppercase;color:#8a7f72">{{n.month}}</span></span>
+          <span style="flex:1;min-width:0"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="tag" style="{{n.tagStyle}}">{{n.type}}</span><span class="ref">{{n.ref}}</span></span><span style="display:block;margin-top:6px;font-size:14px;line-height:1.35">{{n.title}}</span></span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+ </div>
+
+  <nav aria-label="Navigation principale" style="position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,0.96);border-top:1px solid #e8e0d0;display:flex;padding:10px 8px 0">
+    <a class="tab" href="Main.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"></path></svg>Accueil</a>
+    <a class="tab on" href="Marches.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-6"></path></svg>Marchés</a>
+    <a class="tab" href="Portefeuille.dc.html" style="color:#1c130b;font-weight:500"><span style="width:52px;height:52px;margin-top:-26px;border-radius:50%;background:#c9a23a;color:#1c130b;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(138,102,20,0.6),0 0 0 5px #fbf9f5"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"></rect><path d="M3 10h18M16 15h2"></path></svg></span>Portefeuille</a>
+    <a class="tab" href="Ecole.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>École</a>
+    <a class="tab" href="Moi.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>Compte</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { type: '' };
+  }
+  renderVals() {
+    const styles = {
+      'Communiqué': 'background:#e6efff;color:#2a4fa3;',
+      'Avis': 'background:#f4e9c8;color:#7a4f12;',
+      'Décision': 'background:#efe7fb;color:#5b3aa0;',
+      'Convocation': 'background:#e4f3ea;color:#157a43;',
+      'Opération sur titres': 'background:#f4efe5;color:#6b6155;'
+    };
+    const all = [
+      { day: '01', month: 'Oct', type: 'Communiqué', ref: '', title: 'Communiqué officiel – RENAPROV Finance S.A.' },
+      { day: '21', month: 'Sept', type: 'Avis', ref: 'N°060/2026/BVMAC/DG', title: 'Transaction sur dossier' },
+      { day: '03', month: 'Sept', type: 'Décision', ref: 'N°059/2026/BVMAC/DG', title: 'Introduction en bourse des actions de RENAPROV Finance S.A.' },
+      { day: '25', month: 'Août', type: 'Convocation', ref: 'N°057/2026/BVMAC/DG', title: 'Assemblée générale ordinaire de SCG-Ré' },
+      { day: '17', month: 'Août', type: 'Opération sur titres', ref: 'N°056/2026/BVMAC/DG', title: 'Radiation de la valeur « ALIOS 6,00 % brut 2023-2026 »' }
+    ];
+    const sel = this.state.type;
+    const opts = [['', 'Tous'], ['Avis', 'Avis'], ['Communiqué', 'Communiqués'], ['Décision', 'Décisions'], ['Convocation', 'Convocations']];
+    return {
+      notices: all.filter((n) => !sel || n.type === sel).map((n) => ({ ...n, tagStyle: styles[n.type] })),
+      chips: opts.map(([v, label]) => ({
+        label,
+        aria: v === sel ? 'true' : 'false',
+        style: v === sel ? 'border:1px solid #1c130b;background:#1c130b;color:#fbf6ea;' : 'border:1px solid #e8e0d0;background:#fff;color:#1a140e;',
+        pick: () => this.setState({ type: v })
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

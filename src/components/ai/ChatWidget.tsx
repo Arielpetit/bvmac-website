@@ -204,7 +204,7 @@ export function ChatWidget() {
   return (
     <>
       {/* Launcher */}
-      <div className="fixed bottom-5 right-5 z-[70] flex items-end gap-3">
+      <div data-chat-launcher className="fixed bottom-4 right-4 z-[70] flex items-end gap-3 sm:bottom-5 sm:right-5">
         <AnimatePresence>
           {hint && !open && (
             <motion.div initial={{ opacity: 0, x: 12, scale: 0.9 }} animate={{ opacity: 1, x: 0, scale: 1 }} exit={{ opacity: 0, x: 12, scale: 0.9 }} transition={{ duration: 0.35, ease: EASE }} className="relative mb-2 hidden items-center gap-2 rounded-2xl rounded-br-sm bg-surface py-2.5 pl-4 pr-2 text-sm text-heading shadow-[0_16px_40px_-12px_rgb(var(--shadow-color)/0.45)] ring-1 ring-line sm:flex">
@@ -223,7 +223,7 @@ export function ChatWidget() {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.94 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          className="relative inline-flex size-16 items-center justify-center rounded-full shadow-[0_18px_44px_-10px_rgb(0_0_0/0.55)]"
+          className="relative inline-flex size-14 items-center justify-center rounded-full sm:size-16 shadow-[0_18px_44px_-10px_rgb(0_0_0/0.55)]"
         >
           {!open && <span aria-hidden="true" className="absolute inset-0 animate-ping rounded-full bg-brand-gold/40 [animation-duration:2.4s]" />}
           <AnimatePresence mode="wait" initial={false}>
@@ -251,18 +251,18 @@ export function ChatWidget() {
             exit={{ opacity: 0, y: 28, scale: 0.94 }}
             transition={{ duration: 0.35, ease: EASE }}
             style={{ transformOrigin: "bottom right" }}
-            className="fixed inset-x-3 bottom-24 top-3 z-[70] flex flex-col overflow-hidden rounded-[var(--radius-panel)] bg-surface shadow-[0_50px_140px_-30px_rgb(0_0_0/0.6)] ring-1 ring-line sm:inset-x-auto sm:right-5 sm:top-auto sm:h-[min(640px,calc(100dvh-8rem))] sm:w-[420px]"
+            className="fixed inset-x-3 bottom-[5.25rem] z-[70] flex h-[min(32rem,calc(100dvh-7rem))] flex-col overflow-hidden rounded-[var(--radius-card)] sm:rounded-[var(--radius-panel)] bg-surface shadow-[0_50px_140px_-30px_rgb(0_0_0/0.6)] ring-1 ring-line sm:inset-x-auto sm:bottom-24 sm:right-5 sm:h-[min(640px,calc(100dvh-8rem))] sm:w-[420px]"
           >
-            <header className="grain relative isolate overflow-hidden bg-espresso px-5 pb-5 pt-4 text-brand-sand">
+            <header className="grain relative isolate overflow-hidden bg-espresso px-4 py-3 text-brand-sand sm:px-5 sm:pb-5 sm:pt-4">
               <span aria-hidden="true" className="grid-lines absolute inset-0 -z-10" />
               <span aria-hidden="true" className="absolute -right-16 -top-20 -z-10 size-52 rounded-full bg-brand-gold/25 blur-3xl" />
-              <div className="flex items-center gap-3.5">
+              <div className="flex items-center gap-3 sm:gap-3.5">
                 <span className="relative">
-                  <BvmacAvatar className="size-12" thinking={streaming} />
+                  <BvmacAvatar className="size-10 sm:size-12" thinking={streaming} />
                   <span className="absolute bottom-0 right-0 size-3 rounded-full bg-[#2fbf71] ring-2 ring-espresso" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="font-serif-display truncate text-xl leading-tight text-brand-ivory">{u.name} <span className="font-sans text-xs font-normal text-brand-sand/60">· {t.title}</span></p>
+                  <p className="font-serif-display truncate text-lg leading-tight text-brand-ivory sm:text-xl">{u.name} <span className="font-sans text-xs font-normal text-brand-sand/60">· {t.title}</span></p>
                   <p className="mt-0.5 truncate text-xs text-brand-sand/65">{u.online}</p>
                 </div>
                 {messages.length > 0 && (
@@ -276,16 +276,16 @@ export function ChatWidget() {
               </div>
             </header>
 
-            <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto bg-background px-4 py-5" data-lenis-prevent>
+            <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto bg-background px-3 py-4 sm:px-4 sm:py-5" data-lenis-prevent>
               {messages.length === 0 && (
-                <div className="space-y-5">
+                <div className="space-y-4 sm:space-y-5">
                   <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="flex items-end gap-2">
                     <BvmacAvatar className="size-8" />
-                    <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-surface px-4 py-3 text-sm leading-relaxed text-text shadow-soft ring-1 ring-line">{t.greeting}</div>
+                    <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-surface px-3.5 py-2.5 text-[13px] leading-relaxed sm:px-4 sm:py-3 sm:text-sm text-text shadow-soft ring-1 ring-line">{t.greeting}</div>
                   </motion.div>
                   <div>
                     <p className="mb-2 px-1 text-[11px] font-medium uppercase tracking-[0.12em] text-muted">{u.start}</p>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid gap-2 sm:grid-cols-2">
                       {t.suggestions.map((s, k) => {
                         const Icon = SUGGESTION_ICONS[k % SUGGESTION_ICONS.length];
                         return (
@@ -296,9 +296,9 @@ export function ChatWidget() {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.25 + k * 0.07 }}
-                            className="group flex flex-col gap-3 rounded-2xl bg-surface p-3.5 text-left text-[13px] leading-snug text-heading ring-1 ring-line transition-all hover:-translate-y-0.5 hover:shadow-soft hover:ring-brand-gold/60"
+                            className="group flex items-center gap-2.5 rounded-xl bg-surface p-2 text-left text-xs leading-snug sm:flex-col sm:items-start sm:gap-3 sm:rounded-2xl sm:p-3.5 sm:text-[13px] text-heading ring-1 ring-line transition-all hover:-translate-y-0.5 hover:shadow-soft hover:ring-brand-gold/60"
                           >
-                            <span className="flex size-8 items-center justify-center rounded-xl bg-accent-soft text-accent-text transition-colors group-hover:bg-action group-hover:text-action-text"><Icon className="size-4" strokeWidth={1.7} aria-hidden="true" /></span>
+                            <span className="flex size-6 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent-text transition-colors sm:size-8 sm:rounded-xl group-hover:bg-action group-hover:text-action-text"><Icon className="size-3.5 sm:size-4" strokeWidth={1.7} aria-hidden="true" /></span>
                             {s}
                           </motion.button>
                         );
@@ -356,7 +356,7 @@ export function ChatWidget() {
               })}
             </div>
 
-            <footer className="border-t border-line bg-surface p-3">
+            <footer className="border-t border-line bg-surface p-2.5 sm:p-3">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -371,18 +371,18 @@ export function ChatWidget() {
                   maxLength={500}
                   placeholder={t.placeholder}
                   aria-label={t.placeholder}
-                  className="h-10 min-w-0 flex-1 bg-transparent text-sm text-text outline-none placeholder:text-muted focus-visible:outline-none"
+                  className="h-9 min-w-0 flex-1 bg-transparent text-sm sm:h-10 text-text outline-none placeholder:text-muted focus-visible:outline-none"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || streaming}
                   aria-label={t.send}
-                  className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-gold text-espresso transition-all hover:bg-brand-gold-light disabled:bg-line disabled:text-muted"
+                  className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-gold sm:size-10 text-espresso transition-all hover:bg-brand-gold-light disabled:bg-line disabled:text-muted"
                 >
                   <ArrowUp className="size-5" strokeWidth={2.2} aria-hidden="true" />
                 </button>
               </form>
-              <p className="mt-2 px-2 text-center text-[10px] leading-tight text-muted">{t.disclaimer}</p>
+              <p className="mt-1.5 px-2 text-center text-[10px] leading-tight text-muted sm:mt-2">{t.disclaimer}</p>
             </footer>
           </motion.div>
         )}

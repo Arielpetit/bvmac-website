@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Modifier le code PIN</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.key{height:58px;border:0;border-radius:18px;background:transparent;font:inherit;font-size:25px;color:#1a140e;cursor:pointer}
+.dot{width:14px;height:14px;border-radius:50%}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+  <header style="padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="Securite.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <h1 class="serif" style="margin:0;font-size:22px;font-weight:500">Modifier le code PIN</h1>
+  </header>
+
+  <ol aria-label="Étapes" style="list-style:none;margin:20px 20px 0;padding:0;display:flex;gap:8px">
+    <sc-for list="{{steps}}" as="s" hint-placeholder-count="3"><li style="flex:1;height:4px;border-radius:999px;{{s}}"></li></sc-for>
+  </ol>
+
+  <section style="padding:40px 24px 0;text-align:center">
+    <span style="margin:0 auto;width:56px;height:56px;border-radius:18px;background:{{icoBg}};color:{{icoFg}};display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{icon}}"></path></svg></span>
+    <h2 class="serif" style="margin:18px 0 0;font-size:23px;font-weight:500">{{title}}</h2>
+    <p style="margin:8px 0 0;font-size:13.5px;color:#6b6155">{{sub}}</p>
+    <sc-if value="{{typing}}" hint-placeholder-val="{{true}}">
+      <div aria-label="{{progress}}" style="margin-top:24px;display:flex;justify-content:center;gap:14px">
+        <sc-for list="{{dots}}" as="d" hint-placeholder-count="6"><span class="dot" style="{{d}}"></span></sc-for>
+      </div>
+    </sc-if>
+  </section>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:0 24px 30px">
+    <sc-if value="{{typing}}" hint-placeholder-val="{{true}}">
+      <div role="group" aria-label="Clavier" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px">
+        <sc-for list="{{keys}}" as="k" hint-placeholder-count="12">
+          <button class="key" aria-label="{{k.aria}}" onClick="{{k.press}}">{{k.label}}</button>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{done}}" hint-placeholder-val="{{false}}">
+      <a href="Securite.dc.html" style="height:54px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Terminé</a>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { stage: 0, pin: '' };
+  }
+  renderVals() {
+    const { stage, pin } = this.state;
+    const done = stage === 3;
+    const titles = ['Code PIN actuel', 'Nouveau code PIN', 'Confirmez le nouveau code'];
+    const subs = ['Saisissez votre code à 6 chiffres', 'Évitez les dates de naissance et suites simples', 'Saisissez-le une seconde fois'];
+    const press = (d) => () => {
+      const next = this.state.pin + d;
+      if (next.length === 6) this.setState({ stage: this.state.stage + 1, pin: '' });
+      else this.setState({ pin: next });
+    };
+    return {
+      done, typing: !done,
+      title: done ? 'Code PIN modifié' : titles[stage],
+      sub: done ? 'Il est requis pour chaque ordre, paiement et retrait.' : subs[stage],
+      icon: done ? 'm5 12 5 5L20 7' : 'M5 11h14v10H5zM8 11V8a4 4 0 0 1 8 0v3',
+      icoBg: done ? '#e4f3ea' : '#f4e9c8',
+      icoFg: done ? '#157a43' : '#8a6614',
+      progress: pin.length + ' chiffres sur 6',
+      steps: [0, 1, 2].map((i) => i < stage ? 'background:#157a43;' : (i === stage ? 'background:#1c130b;' : 'background:#e8e0d0;')),
+      dots: [0, 1, 2, 3, 4, 5].map((i) => i < pin.length ? 'background:#1c130b;' : 'border:2px solid #d9cdb6;box-sizing:border-box;'),
+      keys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'].map((k) => ({
+        label: k,
+        aria: k === '⌫' ? 'Effacer' : (k || 'vide'),
+        press: k === '⌫' ? () => this.setState({ pin: this.state.pin.slice(0, -1) }) : (k ? press(k) : () => {})
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

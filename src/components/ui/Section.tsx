@@ -19,13 +19,20 @@ export function Section({
       id={id}
       aria-labelledby={labelledBy}
       className={cn(
-        "relative py-20 md:py-28",
+        "relative isolate overflow-hidden py-16 md:py-24",
         tone === "alt" && "bg-surface-alt",
         tone === "surface" && "bg-surface",
         tone === "dark" && "bg-espresso text-brand-sand",
         className,
       )}
     >
+      {(tone === "default" || tone === "alt") && (
+        // Faint dot field and gold glow behind the section heading; content areas stay plain.
+        <>
+          <span aria-hidden="true" className="dots absolute left-0 top-0 -z-10 h-72 w-[min(640px,90%)] opacity-60 [mask-image:radial-gradient(ellipse_at_20%_20%,black_10%,transparent_70%)]" />
+          <span aria-hidden="true" className="absolute -right-32 -top-32 -z-10 size-[420px] rounded-full bg-brand-gold/[0.07] blur-3xl" />
+        </>
+      )}
       <div className="container-site">{children}</div>
     </section>
   );

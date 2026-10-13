@@ -6,7 +6,7 @@ import { DOCUMENTS } from "@/data/content";
 export function FeeTable({ caption, rows, note, effective }: { caption: string; rows: { item: string; basis: string; value?: string }[]; note?: string; effective?: string }) {
   return (
     <div>
-      <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+      <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
         <table className="w-full min-w-[560px] text-sm">
           <caption className="px-6 pt-5 text-left">
             <span className="text-h3 block">{caption}</span>

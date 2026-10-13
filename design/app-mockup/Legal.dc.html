@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Informations légales</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.seg{flex:1;height:36px;border:0;border-radius:999px;font:inherit;font-size:13px;cursor:pointer}
+h3{margin:22px 0 6px;font-size:15px;font-weight:600}
+.body p{margin:0;font-size:13.5px;line-height:1.65;color:#3f362c}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+ <div data-lenis-prevent style="position:absolute;top:0;left:0;right:0;bottom:84px;overflow-y:auto;padding-bottom:24px">
+  <header style="padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="APropos.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <h1 class="serif" style="margin:0;font-size:22px;font-weight:500">Informations légales</h1>
+  </header>
+  <div role="tablist" style="margin:18px 20px 0;display:flex;gap:4px;padding:4px;border-radius:999px;background:#f4efe5">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="2"><button class="seg" role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button></sc-for>
+  </div>
+  <article class="body" style="padding:6px 24px 0">
+    <p style="margin-top:16px;font-size:12px;color:#6b6155">Version en vigueur au {{updated}}</p>
+    <sc-for list="{{sections}}" as="s" hint-placeholder-count="5">
+      <h3>{{s.h}}</h3>
+      <p>{{s.p}}</p>
+    </sc-for>
+  </article>
+ </div>
+ <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 30px;background:#fbf9f5;border-top:1px solid #e8e0d0">
+   <button onClick="{{download}}" style="width:100%;height:46px;border-radius:999px;border:1px solid #e8e0d0;background:#fff;font:inherit;font-size:14px;font-weight:500;color:#1a140e;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Télécharger en PDF</button>
+ </div>
+ <sc-if value="{{toast}}" hint-placeholder-val="{{false}}"><div role="status" style="position:absolute;left:20px;right:20px;bottom:100px;z-index:5;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:16px;background:#1c130b;color:#fbf6ea;font-size:13.5px;box-shadow:0 16px 40px -12px rgba(28,19,11,0.55)"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ead18a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg>{{toast}}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'privacy', toast: null };
+  }
+  toast(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: null }), 2500); }
+  componentWillUnmount() { clearTimeout(this._t); }
+  renderVals() {
+    const docs = {
+      privacy: [
+        ['Responsable du traitement', 'La Bourse des Valeurs Mobilières de l’Afrique Centrale (BVMAC), B.P. 442 Douala, Cameroun, traite vos données dans le cadre de l’application mobile.'],
+        ['Données collectées', 'Numéro de téléphone, nom, préférences, valeurs suivies et alertes. Les pièces d’identité transmises pour l’ouverture d’un compte-titres sont adressées à la société de bourse choisie.'],
+        ['Finalités', 'Fournir les cours et publications, envoyer les alertes demandées, faciliter la mise en relation avec une société de bourse et améliorer le service (statistiques anonymisées, avec votre accord).'],
+        ['Durée de conservation', 'Pendant la durée d’utilisation du compte, puis 5 ans pour les obligations légales liées aux opérations sur titres.'],
+        ['Vos droits', 'Accès, rectification, suppression et retrait du consentement, conformément à la loi n°2024/017. Écrivez à bvmac@bvmac.cm ou gérez vos choix dans Compte.']
+      ],
+      terms: [
+        ['Objet', 'Les présentes conditions encadrent l’utilisation de l’application BVMAC, service d’information sur le marché financier régional de l’Afrique centrale.'],
+        ['Données de marché', 'Les cours sont issus du Bulletin Officiel de la Cote et fournis à titre indicatif, en différé. Ils ne constituent pas un conseil en investissement.'],
+        ['Ordres de bourse', 'Les ordres sont transmis à votre société de bourse agréée par la COSUMAF, qui en assure l’exécution et la tenue de votre compte-titres.'],
+        ['Sécurité', 'Vous êtes responsable de la confidentialité de votre code PIN. Signalez sans délai toute perte d’appareil.'],
+        ['Droit applicable', 'Les présentes conditions sont régies par la réglementation du marché financier de la CEMAC.']
+      ]
+    };
+    const tab = this.state.tab;
+    return {
+      toast: this.state.toast,
+      updated: '1er octobre 2026',
+      tabs: [['privacy', 'Confidentialité'], ['terms', 'Conditions']].map(([k, label]) => ({
+        label, sel: tab === k ? 'true' : 'false',
+        style: tab === k ? 'background:#fff;color:#1a140e;font-weight:600;box-shadow:0 1px 3px rgba(28,19,11,0.12)' : 'background:transparent;color:#6b6155',
+        pick: () => this.setState({ tab: k })
+      })),
+      sections: docs[tab].map(([h, p]) => ({ h, p })),
+      download: () => this.toast('PDF enregistré dans Téléchargements')
+    };
+  }
+}
+</script>
+</body>
+</html>

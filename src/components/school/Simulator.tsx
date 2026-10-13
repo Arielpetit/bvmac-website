@@ -167,7 +167,7 @@ export function Simulator({ quotes }: { quotes: Quote[] }) {
           {positions.length === 0 ? (
             <p className="mt-2 text-sm text-muted">Aucune position. Choisissez une valeur et une quantité pour commencer.</p>
           ) : (
-            <div className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-line" data-lenis-prevent>
+            <div className="mt-4 relative overflow-x-auto rounded-[var(--radius-card)] border border-line" data-lenis-prevent>
               <table className="w-full min-w-[560px] text-sm">
                 <caption className="sr-only">Positions virtuelles</caption>
                 <thead>

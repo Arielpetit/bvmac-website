@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – École de bourse</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:#8a7f72;text-decoration:none}
+.tab.on{color:#1c130b;font-weight:600}
+.path{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #efe8da;color:#1a140e}
+.pnum{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:600;font-size:14px}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+ <div data-lenis-prevent style="position:absolute;top:0;left:0;right:0;bottom:84px;overflow-y:auto;padding-bottom:30px">
+
+  <header style="padding:calc(18px + env(safe-area-inset-top,0px)) 20px 0;display:flex;align-items:center;justify-content:space-between">
+    <h1 class="serif" style="margin:0;font-size:30px;font-weight:500">École de bourse</h1>
+    <span style="display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:#fff;border:1px solid #e8e0d0;font-size:13px;font-weight:600">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#e0902a" stroke="#c46f12" stroke-width="1.4" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-3-2-5-3-7-1 2-2 3-3 3 0-3-1-6-4-9 0 4-4 6-4 12 0 4 3 8 7 8z"></path></svg>4 jours</span>
+  </header>
+
+  <section style="margin:16px 20px 0;padding:18px;border-radius:24px;background:#1c130b;color:#efe6d4;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden">
+    <span aria-hidden="true" style="position:absolute;left:-40px;bottom:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,58,0.3),rgba(201,162,58,0) 70%)"></span>
+    <svg role="img" aria-label="Progression : 5 leçons sur 14" width="84" height="84" viewBox="0 0 84 84" style="flex-shrink:0;position:relative">
+      <circle cx="42" cy="42" r="34" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="8"></circle>
+      <circle cx="42" cy="42" r="34" fill="none" stroke="#c9a23a" stroke-width="8" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="137.3" transform="rotate(-90 42 42)"></circle>
+      <text x="42" y="47" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="20" fill="#fbf6ea">5/14</text>
+    </svg>
+    <div style="position:relative">
+      <div style="font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:#ead18a">Niveau 2 · Apprenti investisseur</div>
+      <div class="serif" style="font-size:19px;color:#fbf6ea;margin-top:4px">Encore 3 leçons pour votre certificat</div>
+      <div style="display:flex;gap:6px;margin-top:10px">
+        <span title="Premier pas" style="width:30px;height:30px;border-radius:50%;background:#c9a23a;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1c130b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg></span>
+        <span title="Lecteur du BOC" style="width:30px;height:30px;border-radius:50%;background:#c9a23a;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1c130b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"></path><path d="M14 3v4h4"></path></svg></span>
+        <span title="Série de 3 jours" style="width:30px;height:30px;border-radius:50%;background:#c9a23a;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="#1c130b"><path d="M12 22c4 0 7-3 7-7 0-3-2-5-3-7-1 2-2 3-3 3 0-3-1-6-4-9 0 4-4 6-4 12 0 4 3 8 7 8z"></path></svg></span>
+        <span style="width:30px;height:30px;border-radius:50%;border:1px dashed rgba(234,209,138,0.5);display:flex;align-items:center;justify-content:center;font-size:11px;color:#ead18a">+9</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:18px 20px 0">
+    <h2 class="serif" style="margin:0;font-size:18px;font-weight:500">Reprendre</h2>
+    <a href="Lecon.dc.html" style="margin-top:10px;display:block;background:#fff;border:1px solid #e8e0d0;border-radius:20px;padding:16px;color:#1a140e">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8a6614;font-weight:600">Leçon 6 · 5 min</span>
+        <span style="font-size:12px;color:#6b6155">Quiz inclus</span>
+      </div>
+      <div class="serif" style="font-size:20px;margin-top:6px">Lire le Bulletin Officiel de la Cote</div>
+      <div style="margin-top:12px;height:6px;border-radius:999px;background:#efe8da;overflow:hidden"><div style="width:60%;height:100%;background:linear-gradient(90deg,#8a6614,#c9a23a)"></div></div>
+      <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:12.5px;color:#6b6155">60 % terminé</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 18px;border-radius:999px;background:#1c130b;color:#fbf6ea;font-size:13.5px;font-weight:600">Continuer
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      </div>
+    </a>
+  </section>
+
+  <section style="padding:18px 20px 0">
+    <div style="display:flex;align-items:baseline;justify-content:space-between">
+      <h2 class="serif" style="margin:0;font-size:18px;font-weight:500">Parcours</h2>
+      <a href="Glossaire.dc.html" style="font-size:12.5px">Glossaire</a>
+    </div>
+    <div style="margin-top:4px">
+      <a class="path" href="Parcours.dc.html"><span class="pnum" style="background:#e4f3ea;color:#157a43"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg></span><span style="flex:1"><span style="display:block;font-weight:600;font-size:14.5px">Les bases de la bourse</span><span style="display:block;font-size:12px;color:#6b6155">4 leçons · terminé</span></span></a>
+      <a class="path" href="Parcours.dc.html"><span class="pnum" style="background:#f4e9c8;color:#8a6614">2</span><span style="flex:1"><span style="display:block;font-weight:600;font-size:14.5px">Investir à la BVMAC</span><span style="display:block;font-size:12px;color:#6b6155">1 / 5 leçons</span></span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a7f72" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+      <a class="path" href="Parcours.dc.html" style="border-bottom:0"><span class="pnum" style="background:#f4efe5;color:#8a7f72"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></span><span style="flex:1"><span style="display:block;font-weight:600;font-size:14.5px;color:#6b6155">Les obligations</span><span style="display:block;font-size:12px;color:#8a7f72">5 leçons · après le parcours 2</span></span></a>
+    </div>
+  </section>
+
+ </div>
+
+  <nav aria-label="Navigation principale" style="position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,0.96);border-top:1px solid #e8e0d0;display:flex;padding:10px 8px 0">
+    <a class="tab" href="Main.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"></path></svg>Accueil</a>
+    <a class="tab" href="Marches.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-6"></path></svg>Marchés</a>
+    <a class="tab" href="Portefeuille.dc.html" style="color:#1c130b;font-weight:500"><span style="width:52px;height:52px;margin-top:-26px;border-radius:50%;background:#c9a23a;color:#1c130b;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(138,102,20,0.6),0 0 0 5px #fbf9f5"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"></rect><path d="M3 10h18M16 15h2"></path></svg></span>Portefeuille</a>
+    <a class="tab on" href="Ecole.dc.html" aria-current="page"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>École</a>
+    <a class="tab" href="Moi.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>Compte</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

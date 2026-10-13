@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Obligations</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:#8a7f72;text-decoration:none}
+.tab.on{color:#1c130b;font-weight:600}
+.bond{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #efe8da;color:#1a140e}
+.flag{width:22px;height:15px;border-radius:3px;overflow:hidden;display:inline-flex;flex-shrink:0;vertical-align:-2px}
+.flag span{flex:1}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+
+  <header style="padding:calc(18px + env(safe-area-inset-top,0px)) 20px 0">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h1 class="serif" style="margin:0;font-size:30px;font-weight:500">Marchés</h1>
+      <a href="Recherche.dc.html" aria-label="Rechercher" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a>
+    </div>
+    <div role="tablist" aria-label="Type de titre" style="margin-top:14px;display:flex;background:#f4efe5;border-radius:999px;padding:4px">
+      <a href="Marches.dc.html" role="tab" aria-selected="false" style="flex:1;height:36px;border-radius:999px;font-size:13px;color:#6b6155;display:flex;align-items:center;justify-content:center">Actions · 7</a>
+      <span role="tab" aria-selected="true" style="flex:1;height:36px;border-radius:999px;background:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(32,20,8,0.12)">Obligations · 31</span>
+      <a href="Avis.dc.html" role="tab" aria-selected="false" style="flex:1;height:36px;border-radius:999px;font-size:13px;color:#6b6155;display:flex;align-items:center;justify-content:center">Avis</a>
+    </div>
+  </header>
+
+  <section style="margin:14px 20px 0;padding:14px 16px;border-radius:20px;background:#1c130b;color:#efe6d4;display:flex;justify-content:space-between;align-items:center">
+    <div><div style="font-size:11.5px;color:rgba(239,230,212,0.6)">Encours obligataire</div><div class="num" style="font-size:22px;color:#fbf6ea;font-weight:500;margin-top:2px">1 226,6 <span style="font-size:13px;color:rgba(239,230,212,0.7)">Md FCFA</span></div></div>
+    <div style="display:flex;gap:4px;align-items:flex-end;height:34px" aria-hidden="true"><span style="width:10px;height:34px;border-radius:3px;background:#c9a23a"></span><span style="width:10px;height:18px;border-radius:3px;background:#8a6614"></span><span style="width:10px;height:16px;border-radius:3px;background:#ead18a"></span><span style="width:10px;height:4px;border-radius:3px;background:#efe6d4"></span></div>
+  </section>
+  <div style="margin:8px 20px 0;padding:10px 12px;border-radius:12px;background:#f4efe5;font-size:12px;color:#6b6155;display:flex;gap:8px;align-items:flex-start">
+    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a6614" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6M12 7.5h.01"></path></svg>
+    <span>Le cours d’une obligation s’exprime en % de sa valeur nominale.</span>
+  </div>
+
+  <section style="padding:6px 20px 0">
+    <div style="display:flex;justify-content:space-between;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8a7f72;padding:8px 0 2px"><span>Ligne · émetteur</span><span>Cours · échéance</span></div>
+    <div style="background:#fff;border:1px solid #e8e0d0;border-radius:20px;padding:0 14px">
+      <a class="bond" href="ObligationDetail.dc.html"><span style="flex:1;min-width:0"><span style="display:block;font-weight:600;font-size:14.5px">EOG.15 24/27</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b6155;margin-top:2px"><span class="flag"><span style="background:#009e60"></span><span style="background:#fcd116"></span><span style="background:#3a75c4"></span></span>État du Gabon</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:15px">97,00 %</span><span style="display:block;font-size:12px;color:#6b6155">2027</span></span></a>
+      <a class="bond" href="ObligationDetail.dc.html"><span style="flex:1;min-width:0"><span style="display:block;font-weight:600;font-size:14.5px">ACEP01 24/27</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b6155;margin-top:2px"><span class="flag"><span style="background:#007a5e"></span><span style="background:#ce1126"></span><span style="background:#fcd116"></span></span>ACEP Cameroun</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:15px">100,00 %</span><span style="display:block;font-size:12px;color:#6b6155">2027</span></span></a>
+      <a class="bond" href="ObligationDetail.dc.html"><span style="flex:1;min-width:0"><span style="display:block;font-weight:600;font-size:14.5px">EOBDE01 20/27</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b6155;margin-top:2px"><span class="flag"><span style="background:#009543"></span><span style="background:#fbde4a"></span><span style="background:#dc241f"></span></span>BDEAC</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:15px">100,00 %</span><span style="display:block;font-size:12px;color:#6b6155">2027</span></span></a>
+      <a class="bond" href="ObligationDetail.dc.html"><span style="flex:1;min-width:0"><span style="display:block;font-weight:600;font-size:14.5px">EOG.12 24/27</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b6155;margin-top:2px"><span class="flag"><span style="background:#009e60"></span><span style="background:#fcd116"></span><span style="background:#3a75c4"></span></span>État du Gabon</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:15px">98,00 %</span><span style="display:block;font-size:12px;color:#6b6155">2027</span></span></a>
+      <a class="bond" href="ObligationDetail.dc.html" style="border-bottom:0"><span style="flex:1;min-width:0"><span style="display:block;font-weight:600;font-size:14.5px">BDEAC 06 24/27</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b6155;margin-top:2px"><span class="flag"><span style="background:#009543"></span><span style="background:#fbde4a"></span><span style="background:#dc241f"></span></span>BDEAC</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:15px">100,00 %</span><span style="display:block;font-size:12px;color:#6b6155">2027</span></span></a>
+    </div>
+  </section>
+
+  <nav aria-label="Navigation principale" style="position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,0.96);border-top:1px solid #e8e0d0;display:flex;padding:10px 8px 0">
+    <a class="tab" href="Main.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"></path></svg>Accueil</a>
+    <a class="tab on" href="Marches.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-6"></path></svg>Marchés</a>
+    <a class="tab" href="Portefeuille.dc.html" style="color:#1c130b;font-weight:500"><span style="width:52px;height:52px;margin-top:-26px;border-radius:50%;background:#c9a23a;color:#1c130b;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(138,102,20,0.6),0 0 0 5px #fbf9f5"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"></rect><path d="M3 10h18M16 15h2"></path></svg></span>Portefeuille</a>
+    <a class="tab" href="Ecole.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>École</a>
+    <a class="tab" href="Moi.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>Compte</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

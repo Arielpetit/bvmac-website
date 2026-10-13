@@ -17,6 +17,7 @@ import {
   LineChart,
   PieChart,
   Sparkles,
+  Play,
   TrendingUp,
 } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
@@ -32,7 +33,7 @@ import { PriceChange } from "@/components/ui/PriceChange";
 import { Flag } from "@/components/ui/Flag";
 import { Sparkline } from "@/components/market/Sparkline";
 import { NoticeRow } from "@/components/content/NoticeRow";
-import { NewsCard } from "@/components/content/NewsCard";
+import { NewsCard, NewsTile } from "@/components/content/NewsCard";
 import { VideoCard } from "@/components/content/VideoCard";
 import { SessionChip } from "@/components/layout/SessionChip";
 import { HeroMarketCard } from "@/components/home/HeroMarketCard";
@@ -44,6 +45,7 @@ import { Reveal, Stagger, StaggerItem, WordReveal } from "@/components/motion/Re
 import { CountUp } from "@/components/motion/CountUp";
 import { ParallaxImage } from "@/components/motion/Parallax";
 import { Marquee } from "@/components/motion/Marquee";
+import { Guilloche } from "@/components/brand/Guilloche";
 
 const copy = {
   fr: {
@@ -362,7 +364,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       {/* KEY FIGURES */}
-      <section aria-label={t.figures.join(", ")} className="relative bg-background pb-16 pt-12 md:pb-20 md:pt-14">
+      <section aria-label={t.figures.join(", ")} className="relative bg-background pb-12 pt-12 md:pb-16 md:pt-14">
         <div aria-hidden="true" className="dots absolute inset-x-0 top-0 h-72 opacity-50" />
         <div className="container-site relative grid gap-4 lg:grid-cols-2">
           {/* Equity capitalisation */}
@@ -443,9 +445,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       {/* PERSONAS — bento */}
-      <Section labelledBy="do-title">
+      <Section tone="alt" labelledBy="do-title">
         <SectionHeading id="do-title" overline={t.doEyebrow} title={t.doTitle} />
-        <Stagger className="grid gap-5 md:grid-cols-2 lg:grid-cols-12">
+        <Stagger className="grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-12">
           {t.personas.map((persona, i) => {
             const Icon = personaIcons[i];
             const Art = [InvestArt, RaiseArt, NoticesArt, LearnArt][i];
@@ -456,7 +458,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <StaggerItem key={persona.title} className={span}>
                 <Link
                   href={p(persona.href)}
-                  className={`card-lift group relative flex h-full min-h-[400px] flex-col justify-between overflow-hidden rounded-[var(--radius-panel)] border p-7 md:p-9 ${
+                  className={`card-lift group relative flex h-full min-h-[200px] flex-col justify-between overflow-hidden rounded-[var(--radius-card)] border p-4 sm:min-h-[320px] sm:p-7 md:min-h-[400px] md:rounded-[var(--radius-panel)] md:p-9 ${
                     theme === "dark" ? "border-transparent bg-espresso text-brand-sand" : theme === "gold" ? "border-transparent bg-gradient-to-br from-[#f3e2b0] via-[#e9cf86] to-[#d4b25a] text-espresso" : "border-line bg-surface"
                   }`}
                 >
@@ -464,18 +466,18 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   {dark && <span aria-hidden="true" className="absolute -right-24 -top-24 size-72 rounded-full bg-brand-gold/20 blur-[80px] transition-opacity duration-700 group-hover:opacity-100 md:opacity-70" />}
                   {theme === "light" && <span aria-hidden="true" className="dots absolute inset-0 opacity-70" />}
                   <span className="relative flex items-start justify-between">
-                    <span className={`flex size-12 items-center justify-center rounded-2xl ${dark ? "bg-white/10 text-brand-gold-light" : theme === "gold" ? "bg-espresso/10 text-espresso" : "bg-accent-soft text-accent-text"}`}>
-                      <Icon aria-hidden="true" className="size-6" strokeWidth={1.5} />
+                    <span className={`flex size-10 items-center justify-center rounded-xl sm:size-12 sm:rounded-2xl ${dark ? "bg-white/10 text-brand-gold-light" : theme === "gold" ? "bg-espresso/10 text-espresso" : "bg-accent-soft text-accent-text"}`}>
+                      <Icon aria-hidden="true" className="size-5 sm:size-6" strokeWidth={1.5} />
                     </span>
-                    <span className={`flex size-11 items-center justify-center rounded-full border transition-all duration-300 group-hover:rotate-45 ${dark ? "border-white/20 text-brand-gold-light group-hover:border-transparent group-hover:bg-brand-gold group-hover:text-espresso" : theme === "gold" ? "border-espresso/20 group-hover:bg-espresso group-hover:text-brand-gold-light" : "border-line text-accent-text group-hover:border-transparent group-hover:bg-action group-hover:text-action-text"}`}>
+                    <span className={`hidden size-11 items-center justify-center rounded-full border transition-all sm:flex duration-300 group-hover:rotate-45 ${dark ? "border-white/20 text-brand-gold-light group-hover:border-transparent group-hover:bg-brand-gold group-hover:text-espresso" : theme === "gold" ? "border-espresso/20 group-hover:bg-espresso group-hover:text-brand-gold-light" : "border-line text-accent-text group-hover:border-transparent group-hover:bg-action group-hover:text-action-text"}`}>
                       <ArrowUpRight aria-hidden="true" className="size-5" />
                     </span>
                   </span>
-                  <Art className="pointer-events-none absolute right-5 top-20 w-[48%] max-w-[340px] transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.04] max-md:w-[60%] max-md:opacity-30 md:right-8" />
-                  <span className="relative max-w-[min(100%,22rem)] pt-36">
-                    <span className={`block font-serif-display text-3xl md:text-4xl ${dark ? "text-brand-ivory" : "text-heading"} ${theme === "gold" ? "!text-espresso" : ""}`}>{persona.title}</span>
-                    <span className={`mt-3 block ${dark ? "text-brand-sand/75" : theme === "gold" ? "text-espresso/75" : "text-muted"}`}>{persona.text}</span>
-                    <span className={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium ${dark ? "text-brand-gold-light" : theme === "gold" ? "text-espresso" : "text-link"}`}>
+                  <Art className="pointer-events-none absolute right-5 top-20 w-[48%] max-w-[340px] transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.04] max-md:w-[60%] max-md:opacity-30 max-sm:right-2 max-sm:top-2 max-sm:w-[55%] max-sm:opacity-20 md:right-8" />
+                  <span className="relative max-w-[min(100%,22rem)] pt-10 sm:pt-36">
+                    <span className={`block font-serif-display text-xl leading-tight sm:text-3xl md:text-4xl ${dark ? "text-brand-ivory" : "text-heading"} ${theme === "gold" ? "!text-espresso" : ""}`}>{persona.title}</span>
+                    <span className={`mt-3 hidden sm:block ${dark ? "text-brand-sand/75" : theme === "gold" ? "text-espresso/75" : "text-muted"}`}>{persona.text}</span>
+                    <span className={`mt-3 inline-flex items-center gap-1 text-xs font-medium sm:mt-5 sm:gap-1.5 sm:text-sm ${dark ? "text-brand-gold-light" : theme === "gold" ? "text-espresso" : "text-link"}`}>
                       {persona.cta}
                       <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" />
                     </span>
@@ -713,8 +715,29 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* NEWS */}
       <Section labelledBy="news-title">
         <SectionHeading id="news-title" overline={t.newsEyebrow} title={t.newsTitle} action={<Link href={p("/actualites")} className="link text-sm">{t.newsAll}</Link>} />
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
-          <Reveal>{marketNews[0] && <NewsCard item={marketNews[0]} locale={locale} large />}</Reveal>
+        {marketNews.length >= 3 && (
+          <Reveal className="grid grid-cols-2 gap-3 sm:hidden">
+            <NewsTile item={marketNews[1]} locale={locale} className="aspect-square" />
+            <NewsTile item={marketNews[0]} locale={locale} tall className="row-span-2" />
+            <NewsTile item={marketNews[2]} locale={locale} className="aspect-square" />
+            <a href={CONTACT.social.youtube} target="_blank" rel="noopener noreferrer" className="group relative col-span-2 flex items-center gap-4 overflow-hidden rounded-[var(--radius-card)] bg-espresso p-3 pr-5 text-brand-sand">
+              <span className="relative aspect-[4/3] w-28 shrink-0 overflow-hidden rounded-xl">
+                <Image src="/photos/ceremony-trading-floor-2.webp" alt="" fill sizes="112px" className="object-cover opacity-80" />
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <span className="flex size-9 items-center justify-center rounded-full bg-brand-gold text-espresso"><Play aria-hidden="true" className="size-4 translate-x-px fill-current" /></span>
+                </span>
+              </span>
+              <span className="min-w-0">
+                <span className="block font-serif-display text-base leading-snug text-brand-ivory">{t.tvTitle}</span>
+                <span className="mt-0.5 block text-xs text-brand-sand/70">{t.tvCaption}</span>
+              </span>
+              <ArrowUpRight aria-hidden="true" className="ml-auto size-4 shrink-0 text-brand-gold-light" />
+              <span className="sr-only">{dict.a11y.external}</span>
+            </a>
+          </Reveal>
+        )}
+        <div className={marketNews.length >= 3 ? "hidden gap-10 sm:grid lg:grid-cols-[1.4fr_1fr]" : "grid gap-10 lg:grid-cols-[1.4fr_1fr]"}>
+          <Reveal className="h-full">{marketNews[0] && <NewsCard item={marketNews[0]} locale={locale} large />}</Reveal>
           <Stagger className="grid gap-10 sm:grid-cols-2 lg:grid-cols-1">
             {marketNews.slice(1, 3).map((n) => (
               <StaggerItem key={n.slug}>
@@ -723,7 +746,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             ))}
           </Stagger>
         </div>
-        <Reveal className="mt-14">
+        <Reveal className={marketNews.length >= 3 ? "mt-14 hidden sm:block" : "mt-14"}>
           <VideoCard title={t.tvTitle} caption={t.tvCaption} channelUrl={CONTACT.social.youtube} poster="/photos/ceremony-trading-floor-2.webp" />
         </Reveal>
       </Section>
@@ -742,7 +765,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 <StaggerItem key={point} as="li" className="rounded-full border border-white/15 px-4 py-2 text-sm text-brand-ivory">{point}</StaggerItem>
               ))}
             </Stagger>
-            <Reveal delay={0.25} className="mt-10 flex flex-wrap items-center gap-3">
+            <Reveal delay={0.25} className="mt-10 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
               <StoreBadge store="google" href={CONTACT.playStore} locale={locale} />
               {CONTACT.appStore ? <StoreBadge store="apple" href={CONTACT.appStore} locale={locale} /> : <StoreBadge store="apple" locale={locale} soon />}
             </Reveal>
@@ -751,7 +774,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <span className="max-w-[14rem] text-sm text-brand-sand/70">{t.qr}</span>
             </Reveal>
           </div>
-          <Reveal delay={0.15} className="mx-auto">
+          <Reveal delay={0.15} className="mx-auto max-sm:[zoom:0.72]">
             <AppShowcase
               capitalisation={formatNumber(summary.equityCapitalisation / 1e9, locale, 1)}
               area={capHistory.slice(-60).map((pt) => pt.value)}
@@ -762,13 +785,30 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       {/* PARTNERS */}
-      <section aria-labelledby="partners-title" className="relative border-b border-line bg-surface py-20">
+      <section aria-labelledby="partners-title" className="relative isolate overflow-hidden border-b border-line bg-surface py-16 md:py-20">
+        <Guilloche className="absolute inset-x-0 top-6 -z-10 h-56 w-full text-brand-gold opacity-[0.22] [mask-image:linear-gradient(90deg,transparent,black_20%,black_80%,transparent)]" />
         <div className="container-site">
           <div className="mx-auto max-w-xl text-center">
             <p className="eyebrow">{t.partnersEyebrow}</p>
             <h2 id="partners-title" className="text-h2 mt-3">{t.partners}</h2>
           </div>
-          <Stagger as="ul" className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal className="mt-10 sm:hidden">
+            <Marquee duration={28} className="-mx-5">
+              {partners.map((partner) => (
+                <span key={partner.name} className="flex">
+                <a href={partner.href} target="_blank" rel="noopener noreferrer" className="mx-1.5 flex w-44 flex-col items-center rounded-[var(--radius-card)] border border-line bg-background p-4 text-center">
+                  <span className="flex h-16 w-full items-center justify-center rounded-xl bg-white p-2 dark:bg-white/95">
+                    {partner.logo ? <Image src={partner.logo} alt={`Logo ${partner.name}`} width={160} height={130} className="h-full w-auto object-contain" /> : <span className="font-serif-display text-heading">{partner.name}</span>}
+                  </span>
+                  <span className="mt-3 text-sm font-medium text-heading">{partner.name}</span>
+                  <span className="mt-1 line-clamp-2 text-[11px] leading-snug text-muted">{partner.desc}</span>
+                  <span className="sr-only">{dict.a11y.external}</span>
+                </a>
+                </span>
+              ))}
+            </Marquee>
+          </Reveal>
+          <Stagger as="ul" className="mt-12 hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-4">
             {partners.map((partner) => (
               <StaggerItem as="li" key={partner.name}>
                 <a href={partner.href} target="_blank" rel="noopener noreferrer" className="card-lift group flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-background p-7 text-center">

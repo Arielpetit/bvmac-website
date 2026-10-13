@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Ordre transmis</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.kv{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #efe8da;font-size:14px}
+.kv:last-child{border-bottom:0}
+.kv dt{color:#6b6155}
+.kv dd{margin:0;font-weight:500;text-align:right}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+  <div aria-hidden="true" style="position:absolute;left:50%;top:40px;width:420px;height:420px;margin-left:-210px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,58,0.22),rgba(201,162,58,0) 65%)"></div>
+
+  <section style="position:relative;padding:calc(72px + env(safe-area-inset-top,0px)) 24px 0;text-align:center">
+    <span style="margin:0 auto;width:88px;height:88px;border-radius:50%;background:#1c130b;color:#ead18a;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 10px rgba(201,162,58,0.18)"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg></span>
+    <h1 class="serif" style="margin:26px 0 0;font-size:30px;font-weight:500">Ordre transmis</h1>
+    <p style="margin:10px auto 0;max-width:300px;font-size:14.5px;line-height:1.55;color:#6b6155">Votre société de bourse l’a reçu. Nous vous prévenons dès qu’il est exécuté.</p>
+  </section>
+
+  <dl style="position:relative;margin:26px 20px 0;padding:6px 18px;background:#fff;border:1px solid #e8e0d0;border-radius:22px">
+    <div class="kv"><dt>Opération</dt><dd>Achat · 10 BGFI HC</dd></div>
+    <div class="kv"><dt>Cours limite</dt><dd class="num">89 000 FCFA</dd></div>
+    <div class="kv"><dt>Validité</dt><dd>Jour</dd></div>
+    <div class="kv"><dt>Société de bourse</dt><dd>EDC Investment</dd></div>
+    <div class="kv"><dt>Référence</dt><dd style="font-family:'Geist Mono',monospace;font-size:13px">EDC-OR-261012-0731</dd></div>
+  </dl>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 34px">
+    <a href="Portefeuille.dc.html" style="height:54px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600">Suivre mon ordre</a>
+    <a href="Main.dc.html" style="margin-top:8px;height:48px;display:flex;align-items:center;justify-content:center;font-size:14.5px;color:#1a140e">Retour à l’accueil</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

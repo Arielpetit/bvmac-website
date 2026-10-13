@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Accueil</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:#8a7f72;text-decoration:none}
+.tab.on{color:#1c130b;font-weight:600}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+ <div data-lenis-prevent style="position:absolute;top:0;left:0;right:0;bottom:84px;overflow-y:auto;padding-bottom:24px">
+
+  <!-- Hero -->
+  <section style="background:#1c130b;color:#efe6d4;padding:calc(18px + env(safe-area-inset-top,0px)) 20px 22px;border-radius:0 0 28px 28px;position:relative;overflow:hidden">
+    <div aria-hidden="true" style="position:absolute;right:-70px;top:-90px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,58,0.35),rgba(201,162,58,0) 70%)"></div>
+    <div style="display:flex;align-items:center;gap:12px;position:relative">
+      <a href="Moi.dc.html" aria-label="Mon compte" style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#ead18a,#c9a23a);color:#1c130b;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',Georgia,serif;font-size:16px;font-weight:500;box-shadow:0 0 0 2px rgba(234,209,138,0.25)">AK</a>
+      <a href="Moi.dc.html" style="flex:1;color:inherit">
+        <span style="display:block;font-size:12px;color:rgba(239,230,212,0.65)">Bonjour,</span>
+        <span class="serif" style="display:block;font-size:20px;color:#fbf6ea">Aminata</span>
+      </a>
+      <a href="Recherche.dc.html" aria-label="Rechercher" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.06);color:#fbf6ea;display:flex;align-items:center;justify-content:center">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+      </a>
+      <a href="NotifCentre.dc.html" aria-label="Notifications, 2 non lues" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.06);color:#fbf6ea;display:flex;align-items:center;justify-content:center;position:relative">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10 21h4"></path></svg>
+        <span style="position:absolute;top:9px;right:10px;width:7px;height:7px;border-radius:50%;background:#e9b949;box-shadow:0 0 0 2px #1c130b"></span>
+      </a>
+    </div>
+
+    <div style="margin-top:20px;display:flex;align-items:center;gap:8px;position:relative">
+      <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(76,194,126,0.14);color:#7fdca5;font-size:11.5px;font-weight:500;padding:4px 10px;border-radius:999px"><span style="width:6px;height:6px;border-radius:50%;background:#4cc27e"></span>Séance ouverte</span>
+      <span style="font-size:11.5px;color:rgba(239,230,212,0.55)">Données différées</span>
+    </div>
+    <div style="margin-top:14px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(234,209,138,0.85);position:relative">Capitalisation actions</div>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-top:6px;position:relative">
+      <span class="num" style="font-size:44px;line-height:1;color:#fbf6ea;font-weight:500;letter-spacing:-0.02em">1 795,9</span>
+      <span style="font-size:14px;color:rgba(239,230,212,0.7)">Md FCFA</span>
+    </div>
+    <div style="margin-top:6px;font-size:12px;color:rgba(239,230,212,0.55);position:relative">Séance du 8 oct. 2026</div>
+    <svg aria-hidden="true" viewBox="0 0 350 70" style="width:100%;height:64px;margin-top:10px;display:block">
+      <defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9a23a" stop-opacity="0.35"></stop><stop offset="1" stop-color="#c9a23a" stop-opacity="0"></stop></linearGradient></defs>
+      <path d="{{area}}" fill="url(#hg)"></path>
+      <path d="{{line}}" fill="none" stroke="#ead18a" stroke-width="2" stroke-linejoin="round"></path>
+    </svg>
+    <div style="display:flex;gap:6px;margin-top:10px;position:relative">
+      <sc-for list="{{periods}}" as="p" hint-placeholder-count="5">
+        <button aria-pressed="{{p.aria}}" onClick="{{p.pick}}" style="border:0;font:inherit;font-size:12px;padding:6px 12px;border-radius:999px;cursor:pointer;{{p.style}}">{{p.label}}</button>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- Live operation -->
+  <a href="Souscrire.dc.html" style="margin:14px 20px 0;display:flex;align-items:center;gap:14px;padding:14px;border-radius:20px;background:linear-gradient(135deg,#f3e2b0,#dcbd6a);color:#1c130b">
+    <span style="width:46px;height:46px;border-radius:14px;background:#1c130b;color:#ead18a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14 9 9l4 4 7-7"></path><path d="M15 6h5v5"></path></svg></span>
+    <span style="flex:1;min-width:0">
+      <span style="display:block;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:rgba(28,19,11,0.65)">Introduction en bourse</span>
+      <span class="serif" style="display:block;font-size:17px;margin-top:2px">RENAPROV Finance S.A.</span>
+      <span style="display:block;font-size:12px;color:rgba(28,19,11,0.7);margin-top:1px">Première cotation le 2 nov. 2026</span>
+    </span>
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+  </a>
+
+  <!-- Favourites -->
+  <section style="padding:16px 20px 0">
+    <div style="display:flex;align-items:baseline;justify-content:space-between">
+      <h2 class="serif" style="margin:0;font-size:19px;font-weight:500">Mes favoris</h2>
+      <a href="Favoris.dc.html" style="font-size:12.5px">Tout voir</a>
+    </div>
+    <div style="margin-top:10px;background:#fff;border:1px solid #e8e0d0;border-radius:20px;padding:4px 14px">
+      <a href="Valeur.dc.html" style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #efe8da;color:#1a140e">
+        <img src="./assets/dad075d0e86d2f40aa8c230910e920ed.png" alt="" style="width:36px;height:36px;border-radius:10px;object-fit:contain;background:#fff;border:1px solid #efe8da">
+        <span style="flex:1"><span style="display:block;font-weight:600;font-size:14px">BGFI HC</span><span style="display:block;font-size:11.5px;color:#6b6155">Banque · Gabon</span></span>
+        <svg aria-hidden="true" width="56" height="20" viewBox="0 0 56 20"><polyline points="0,8 8,10 14,6 22,12 30,9 38,13 46,11 56,15" fill="none" stroke="#a8925f" stroke-width="1.5"></polyline></svg>
+        <span style="text-align:right;width:74px"><span class="num" style="display:block;font-weight:600;font-size:14px">89 000</span><span class="num" style="display:block;font-size:11.5px;color:#6b6155">0,00 %</span></span>
+      </a>
+      <a href="Valeur.dc.html" style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #efe8da;color:#1a140e">
+        <img src="./assets/d99733952378c2f0b677faef5b0f9f3a.png" alt="" style="width:36px;height:36px;border-radius:10px;object-fit:contain;background:#fff;border:1px solid #efe8da">
+        <span style="flex:1"><span style="display:block;font-weight:600;font-size:14px">SOCAPALM</span><span style="display:block;font-size:11.5px;color:#6b6155">Agro-industrie</span></span>
+        <svg aria-hidden="true" width="56" height="20" viewBox="0 0 56 20"><polyline points="0,15 8,13 14,14 22,8 30,10 38,6 46,7 56,5" fill="none" stroke="#157a43" stroke-width="1.5"></polyline></svg>
+        <span style="text-align:right;width:74px"><span class="num" style="display:block;font-weight:600;font-size:14px">49 500</span><span class="num" style="display:block;font-size:11.5px;color:#6b6155">0,00 %</span></span>
+      </a>
+      <a href="Valeur.dc.html" style="display:flex;align-items:center;gap:12px;padding:11px 0;color:#1a140e">
+        <img src="./assets/5d754d569f2a9eb85783b50b38e4ff00.png" alt="" style="width:36px;height:36px;border-radius:10px;object-fit:contain;background:#fff;border:1px solid #efe8da">
+        <span style="flex:1"><span style="display:block;font-weight:600;font-size:14px">SAFACAM</span><span style="display:block;font-size:11.5px;color:#6b6155">Agro-industrie</span></span>
+        <svg aria-hidden="true" width="56" height="20" viewBox="0 0 56 20"><polyline points="0,6 8,9 14,7 22,12 30,10 38,14 46,12 56,13" fill="none" stroke="#a8925f" stroke-width="1.5"></polyline></svg>
+        <span style="text-align:right;width:74px"><span class="num" style="display:block;font-weight:600;font-size:14px">38 500</span><span class="num" style="display:block;font-size:11.5px;color:#6b6155">0,00 %</span></span>
+      </a>
+    </div>
+  </section>
+
+ </div>
+
+  <!-- Tab bar -->
+  <nav aria-label="Navigation principale" style="position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,0.96);border-top:1px solid #e8e0d0;display:flex;padding:10px 8px 0">
+    <a class="tab on" href="Main.dc.html" aria-current="page"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"></path></svg>Accueil</a>
+    <a class="tab" href="Marches.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-6"></path></svg>Marchés</a>
+    <a class="tab" href="Portefeuille.dc.html" style="color:#1c130b;font-weight:500"><span style="width:52px;height:52px;margin-top:-26px;border-radius:50%;background:#c9a23a;color:#1c130b;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(138,102,20,0.6),0 0 0 5px #fbf9f5"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"></rect><path d="M3 10h18M16 15h2"></path></svg></span>Portefeuille</a>
+    <a class="tab" href="Ecole.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>École</a>
+    <a class="tab" href="Moi.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>Compte</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { period: '6M' };
+  }
+  renderVals() {
+    const series = {
+      '1S': [40, 42, 38, 44, 41, 46, 43, 47, 45, 48, 46, 50],
+      '1M': [52, 48, 50, 44, 46, 40, 42, 38, 41, 36, 39, 35, 37, 34],
+      '6M': [58, 56, 50, 52, 30, 26, 18, 28, 24, 36, 30, 40, 34, 42, 36, 38, 44, 40, 46, 42, 48, 44, 50, 46, 52],
+      '1A': [62, 60, 55, 58, 50, 46, 48, 40, 34, 38, 28, 24, 30, 36, 32, 40, 38, 44, 42, 48, 46, 52],
+      'Tout': [66, 64, 62, 63, 58, 60, 55, 52, 54, 48, 44, 46, 40, 36, 30, 28, 34, 38, 42, 46, 44, 50, 52]
+    };
+    const ys = series[this.state.period];
+    const step = 350 / (ys.length - 1);
+    const pts = ys.map((y, i) => `${Math.round(i * step)} ${y}`);
+    const line = 'M' + pts.join(' L');
+    return {
+      line,
+      area: line + ' L350 70 L0 70 Z',
+      periods: ['1S', '1M', '6M', '1A', 'Tout'].map((label) => {
+        const on = label === this.state.period;
+        return {
+          label,
+          aria: on ? 'true' : 'false',
+          style: on ? 'background:#c9a23a;color:#1c130b;font-weight:600;' : 'background:transparent;color:rgba(239,230,212,0.6);',
+          pick: () => this.setState({ period: label })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

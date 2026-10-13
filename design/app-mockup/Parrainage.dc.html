@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Parrainage</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.share{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:#1a140e;background:transparent;border:0;font-family:inherit;cursor:pointer}
+.share span.c{width:54px;height:54px;border-radius:18px;display:flex;align-items:center;justify-content:center}
+.stepn{width:28px;height:28px;border-radius:50%;background:#f4e9c8;color:#8a6614;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+
+  <header style="padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="Moi.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <h1 class="serif" style="margin:0;font-size:22px;font-weight:500">Parrainage</h1>
+  </header>
+
+  <section style="margin:16px 20px 0;padding:20px;border-radius:24px;background:#1c130b;color:#efe6d4;position:relative;overflow:hidden">
+    <span aria-hidden="true" style="position:absolute;right:-50px;top:-60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,58,0.38),rgba(201,162,58,0) 70%)"></span>
+    <div class="serif" style="font-size:23px;color:#fbf6ea;line-height:1.2;position:relative">Faites découvrir la bourse à vos proches</div>
+    <p style="margin:8px 0 0;font-size:13.5px;color:rgba(239,230,212,0.7);line-height:1.5;position:relative">Ils apprennent gratuitement avec l’École de bourse. Vous débloquez le badge <b style="color:#ead18a">Ambassadeur</b>.</p>
+    <div style="margin-top:16px;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 16px;border-radius:14px;background:rgba(255,255,255,0.07);border:1px dashed rgba(234,209,138,0.5);position:relative">
+      <span style="flex:1"><span style="display:block;font-size:11px;color:rgba(239,230,212,0.6)">Votre code</span><span style="display:block;font-family:'Geist Mono',monospace;font-size:17px;letter-spacing:0.08em;color:#fbf6ea">AMINATA-K7</span></span>
+      <button onClick="{{copy}}" style="height:38px;padding:0 14px;border-radius:999px;border:0;background:#c9a23a;color:#1c130b;font:inherit;font-size:13px;font-weight:600;cursor:pointer">{{copyLabel}}</button>
+    </div>
+  </section>
+
+  <div role="group" aria-label="Partager" style="margin:18px 20px 0;display:flex">
+    <button class="share" onClick="{{share}}"><span class="c" style="background:#e3f6ea;color:#1a8f4a"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6z"></path></svg></span>WhatsApp</button>
+    <button class="share" onClick="{{share}}"><span class="c" style="background:#f4efe5;color:#7a4f12"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4z"></path></svg></span>SMS</button>
+    <button class="share" onClick="{{share}}"><span class="c" style="background:#f4efe5;color:#7a4f12"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></span>Lien</button>
+    <button class="share" onClick="{{share}}"><span class="c" style="background:#f4efe5;color:#7a4f12"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg></span>Autre</button>
+  </div>
+
+  <section style="margin:18px 20px 0;padding:16px;border-radius:20px;background:#fff;border:1px solid #e8e0d0">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:15px;font-weight:600">Badge Ambassadeur</span><span style="font-size:13px;color:#6b6155">2 / 3 amis</span></div>
+    <div style="margin-top:10px;display:flex;gap:6px"><span style="flex:1;height:6px;border-radius:999px;background:#c9a23a"></span><span style="flex:1;height:6px;border-radius:999px;background:#c9a23a"></span><span style="flex:1;height:6px;border-radius:999px;background:#efe8da"></span></div>
+    <ol style="list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:13.5px;color:#3f362c">
+      <li style="display:flex;gap:10px;align-items:center"><span class="stepn">1</span>Partagez votre code</li>
+      <li style="display:flex;gap:10px;align-items:center"><span class="stepn">2</span>Votre proche termine sa première leçon</li>
+      <li style="display:flex;gap:10px;align-items:center"><span class="stepn">3</span>Vous gagnez tous les deux un badge</li>
+    </ol>
+  </section>
+
+  <sc-if value="{{toast}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="position:absolute;left:20px;right:20px;bottom:34px;z-index:5;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:16px;background:#1c130b;color:#fbf6ea;font-size:13.5px;box-shadow:0 16px 40px -12px rgba(28,19,11,0.55)"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ead18a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg>{{toast}}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { copied: false, toast: null };
+  }
+  toast(msg) {
+    this.setState({ toast: msg });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: null }), 2500);
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+  renderVals() {
+    return {
+      toast: this.state.toast,
+      copyLabel: this.state.copied ? 'Copié' : 'Copier',
+      copy: () => { this.setState({ copied: true }); this.toast('Code AMINATA-K7 copié'); },
+      share: () => this.toast('Invitation prête à être envoyée')
+    };
+  }
+}
+</script>
+</body>
+</html>

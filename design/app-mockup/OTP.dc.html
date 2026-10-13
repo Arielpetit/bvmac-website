@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Code SMS</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.box{flex:1;height:58px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.key{height:56px;border:0;border-radius:16px;background:transparent;font:inherit;font-size:24px;color:#1a140e;cursor:pointer}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+  <header style="padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0">
+    <a href="Bienvenue.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+  </header>
+  <section style="padding:24px 24px 0">
+    <h1 class="serif" style="margin:0;font-size:28px;font-weight:500;line-height:1.15">Entrez le code reçu par SMS</h1>
+    <p style="margin:10px 0 0;font-size:14.5px;color:#6b6155">Envoyé au <b style="color:#1a140e;font-weight:600">+237 6•• •• •• 41</b> · <a href="Bienvenue.dc.html">Modifier</a></p>
+    <div aria-label="Code à 6 chiffres" style="margin-top:26px;display:flex;gap:8px">
+      <sc-for list="{{boxes}}" as="b" hint-placeholder-count="6"><span class="box" style="{{b.style}}">{{b.d}}</span></sc-for>
+    </div>
+    <p style="margin:14px 0 0;font-size:13px;color:#6b6155">{{status}}</p>
+  </section>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:0 24px 30px">
+    <sc-if value="{{done}}" hint-placeholder-val="{{false}}">
+      <a href="Consentement.dc.html" style="height:54px;border-radius:999px;background:#1c130b;color:#fbf6ea;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;margin-bottom:14px">Continuer</a>
+    </sc-if>
+    <div role="group" aria-label="Clavier" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
+      <sc-for list="{{keys}}" as="k" hint-placeholder-count="12">
+        <button class="key" aria-label="{{k.aria}}" onClick="{{k.press}}">{{k.label}}</button>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { code: '' };
+  }
+  renderVals() {
+    const code = this.state.code;
+    const done = code.length === 6;
+    const press = (d) => () => { if (this.state.code.length < 6) this.setState({ code: this.state.code + d }); };
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'].map((k) => ({
+      label: k,
+      aria: k === '⌫' ? 'Effacer' : (k || 'vide'),
+      press: k === '⌫' ? () => this.setState({ code: this.state.code.slice(0, -1) }) : (k ? press(k) : () => {})
+    }));
+    return {
+      done, keys,
+      status: done ? 'Code vérifié.' : 'Renvoyer le code dans 0:42',
+      boxes: [0, 1, 2, 3, 4, 5].map((i) => ({
+        d: code[i] || '',
+        style: done ? 'border:2px solid #157a43;color:#157a43;' : (i === code.length ? 'border:2px solid #1c130b;' : 'border:1px solid #e8e0d0;')
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

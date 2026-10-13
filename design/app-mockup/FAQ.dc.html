@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Questions fréquentes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.q{width:100%;display:flex;align-items:center;gap:12px;padding:16px;border:0;background:transparent;font:inherit;text-align:left;color:#1a140e;cursor:pointer}
+.item{border-bottom:1px solid #efe8da}
+.item:last-child{border-bottom:0}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+ <div data-lenis-prevent style="position:absolute;inset:0;overflow-y:auto;padding-bottom:30px">
+  <header style="padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="APropos.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <h1 class="serif" style="margin:0;font-size:22px;font-weight:500">Questions fréquentes</h1>
+  </header>
+  <div style="margin:18px 20px 0;background:#fff;border:1px solid #e8e0d0;border-radius:20px;overflow:hidden">
+    <sc-for list="{{items}}" as="i" hint-placeholder-count="6">
+      <div class="item">
+        <button class="q" aria-expanded="{{i.aria}}" onClick="{{i.toggle}}">
+          <span style="flex:1;font-size:14.5px;font-weight:500;line-height:1.4">{{i.q}}</span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#f4efe5;color:#7a4f12;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;line-height:1">{{i.sign}}</span>
+        </button>
+        <sc-if value="{{i.open}}" hint-placeholder-val="{{false}}"><p style="margin:-4px 16px 16px;font-size:13.5px;line-height:1.6;color:#3f362c">{{i.a}}</p></sc-if>
+      </div>
+    </sc-for>
+  </div>
+  <a href="Assistant.dc.html" style="margin:16px 20px 0;display:flex;align-items:center;gap:12px;padding:16px;border-radius:20px;background:#1c130b;color:#efe6d4">
+    <img src="./assets/4821813fde8f9178dd300928139609f5.png" alt="" style="width:38px;height:38px">
+    <span style="flex:1"><span style="display:block;font-size:14.5px;font-weight:600;color:#fbf6ea">Pas trouvé votre réponse ?</span><span style="display:block;font-size:12.5px;color:rgba(239,230,212,0.65)">Demandez à l’assistant Bémac</span></span>
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ead18a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+  </a>
+ </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: 0 };
+  }
+  renderVals() {
+    const faq = [
+      ['Puis-je acheter des actions directement dans l’application ?', 'Oui, à condition d’avoir un compte-titres auprès d’une société de bourse agréée. L’application transmet votre ordre à votre société de bourse, qui l’exécute sur le marché.'],
+      ['Combien faut-il pour commencer ?', 'Le minimum dépend du cours de la valeur et des frais de votre société de bourse. L’École de bourse et le portefeuille virtuel permettent de s’exercer gratuitement.'],
+      ['Les cours sont-ils en temps réel ?', 'Les cours affichés sont ceux de la dernière séance, publiés dans le Bulletin Officiel de la Cote. Ils sont signalés « données différées ».'],
+      ['Comment recevoir mes dividendes ?', 'Ils sont versés sur votre compte espèces chez votre société de bourse, qui vous adresse un avis. Vous les retrouvez dans Portefeuille › Relevés.'],
+      ['Mes données sont-elles protégées ?', 'Oui. Elles sont chiffrées et traitées conformément à la loi n°2024/017. Vous gérez vos consentements dans Compte › Confidentialité.'],
+      ['J’ai perdu mon téléphone, que faire ?', 'Depuis un autre appareil, connectez-vous puis retirez l’ancien dans Compte › Sécurité › Appareils connectés, ou contactez la BVMAC.']
+    ];
+    return {
+      items: faq.map(([q, a], idx) => {
+        const open = this.state.open === idx;
+        return { q, a, open, aria: open ? 'true' : 'false', sign: open ? '−' : '+', toggle: () => this.setState({ open: open ? null : idx }) };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

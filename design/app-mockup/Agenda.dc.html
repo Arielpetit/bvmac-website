@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Agenda des opérations</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.chip{height:32px;padding:0 14px;border-radius:999px;font:inherit;font-size:12.5px;white-space:nowrap;cursor:pointer}
+.month{margin:20px 20px 8px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:#8a7f72;font-weight:500}
+.ev{display:flex;align-items:center;gap:14px;margin:0 20px 8px;padding:12px 14px;background:#fff;border:1px solid #e8e0d0;border-radius:18px}
+.date{width:46px;height:50px;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.cal{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.kind{display:block;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-weight:600}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+ <div data-lenis-prevent style="position:absolute;inset:0;overflow-y:auto;padding-bottom:30px">
+
+  <header style="padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0;display:flex;align-items:center;gap:12px">
+    <a href="Avis.dc.html" aria-label="Retour" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+    <h1 class="serif" style="margin:0;font-size:24px;font-weight:500;flex:1">Agenda</h1>
+    <button onClick="{{exportAll}}" style="height:38px;padding:0 14px;border-radius:999px;border:1px solid #e8e0d0;background:#fff;font:inherit;font-size:12.5px;color:#1a140e;display:flex;align-items:center;gap:6px;cursor:pointer"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>Exporter</button>
+  </header>
+
+  <div role="group" aria-label="Filtrer" style="margin:16px 20px 0;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none">
+    <sc-for list="{{chips}}" as="c" hint-placeholder-count="4">
+      <button class="chip" aria-pressed="{{c.aria}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{hasUpcoming}}" hint-placeholder-val="{{true}}"><div class="month">À venir</div></sc-if>
+  <sc-for list="{{upcoming}}" as="e" hint-placeholder-count="2">
+    <div class="ev">
+      <span class="date" style="background:#1c130b;color:#ead18a"><span class="serif num" style="font-size:19px;line-height:1">{{e.day}}</span><span style="font-size:9.5px;text-transform:uppercase;margin-top:2px">{{e.month}}</span></span>
+      <span style="flex:1;min-width:0"><span class="kind" style="{{e.kindStyle}}">{{e.kind}}</span><span style="display:block;font-size:14.5px;font-weight:600;margin-top:2px">{{e.name}}</span><span style="display:block;font-size:12px;color:#6b6155">{{e.sub}}</span></span>
+      <button class="cal" aria-label="{{e.calLabel}}" onClick="{{e.add}}" style="{{e.calStyle}}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{e.calIcon}}"></path></svg></button>
+    </div>
+  </sc-for>
+
+  <sc-if value="{{hasPast}}" hint-placeholder-val="{{true}}"><div class="month">Passées</div></sc-if>
+  <sc-for list="{{past}}" as="e" hint-placeholder-count="3">
+    <div class="ev">
+      <span class="date" style="background:#f4efe5;color:#6b6155"><span class="serif num" style="font-size:19px;line-height:1">{{e.day}}</span><span style="font-size:9.5px;text-transform:uppercase;margin-top:2px">{{e.month}}</span></span>
+      <span style="flex:1;min-width:0"><span class="kind" style="{{e.kindStyle}}">{{e.kind}}</span><span style="display:block;font-size:14.5px;font-weight:600;margin-top:2px">{{e.name}}</span><span class="num" style="display:block;font-size:12px;color:#6b6155">{{e.sub}}</span></span>
+    </div>
+  </sc-for>
+ </div>
+
+  <sc-if value="{{toast}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="position:absolute;left:20px;right:20px;bottom:34px;z-index:5;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:16px;background:#1c130b;color:#fbf6ea;font-size:13.5px;box-shadow:0 16px 40px -12px rgba(28,19,11,0.55)"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ead18a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg>{{toast}}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { kind: '', added: {}, toast: null };
+  }
+  toast(msg) {
+    this.setState({ toast: msg });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: null }), 2500);
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+  renderVals() {
+    const colors = { Introduction: 'color:#8a6614;', 'Assemblée': 'color:#5b3aa0;', Remboursement: 'color:#2a4fa3;', Dividende: 'color:#157a43;' };
+    const events = [
+      { id: 'renaprov', day: '02', month: 'Nov', kind: 'Introduction', name: 'RENAPROV Finance S.A.', sub: 'Première cotation', upcoming: true },
+      { id: 'scg', day: '22', month: 'Oct', kind: 'Assemblée', name: 'SCG-Ré', sub: 'Assemblée générale ordinaire', upcoming: true },
+      { id: 'afcmr', day: '05', month: 'Août', kind: 'Remboursement', name: 'AFCMR', sub: 'Amortissement du principal et intérêts' },
+      { id: 'bange', day: '31', month: 'Juil', kind: 'Dividende', name: 'BANGE', sub: '4 830 FCFA par action' },
+      { id: 'socapalm', day: '20', month: 'Juil', kind: 'Dividende', name: 'SOCAPALM', sub: '2 325 FCFA par action' },
+      { id: 'safacam', day: '20', month: 'Juil', kind: 'Dividende', name: 'SAFACAM', sub: '2 200 FCFA par action' }
+    ];
+    const { kind, added } = this.state;
+    const list = events.filter((e) => !kind || e.kind === kind).map((e) => {
+      const on = !!added[e.id];
+      return {
+        ...e,
+        kindStyle: colors[e.kind],
+        calLabel: on ? 'Ajouté au calendrier' : 'Ajouter au calendrier',
+        calStyle: on ? 'border:0;background:#e4f3ea;color:#157a43;' : 'border:1px solid #e8e0d0;background:#fbf9f5;color:#7a4f12;',
+        calIcon: on ? 'm5 12 5 5L20 7' : 'M12 5v14M5 12h14',
+        add: () => { if (on) return; this.setState({ added: { ...this.state.added, [e.id]: true } }); this.toast(e.name + ' ajouté à votre calendrier'); }
+      };
+    });
+    const upcoming = list.filter((e) => e.upcoming);
+    const past = list.filter((e) => !e.upcoming);
+    const opts = [['', 'Tout'], ['Dividende', 'Dividendes'], ['Assemblée', 'Assemblées'], ['Introduction', 'Introductions'], ['Remboursement', 'Remboursements']];
+    return {
+      upcoming, past,
+      hasUpcoming: upcoming.length > 0,
+      hasPast: past.length > 0,
+      toast: this.state.toast,
+      exportAll: () => this.toast('Agenda exporté (.ics) vers votre calendrier'),
+      chips: opts.map(([v, label]) => ({
+        label,
+        aria: v === kind ? 'true' : 'false',
+        style: v === kind ? 'border:1px solid #1c130b;background:#1c130b;color:#fbf6ea;' : 'border:1px solid #e8e0d0;background:#fff;color:#1a140e;',
+        pick: () => this.setState({ kind: v })
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

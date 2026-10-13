@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>BVMAC – Mon portefeuille</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+a{color:#7a4f12;text-decoration:none}a:hover{color:#5a3412}
+.serif{font-family:'Fraunces',Georgia,serif;letter-spacing:-0.01em}
+.num{font-variant-numeric:tabular-nums}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:#8a7f72;text-decoration:none}
+.tab.on{color:#1c130b;font-weight:600}
+.act{flex:1;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:13.5px;font-weight:600}
+.pos{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #efe8da;color:#1a140e}
+.logo{width:36px;height:36px;border-radius:10px;object-fit:contain;background:#fff;border:1px solid #efe8da;flex-shrink:0}
+</style>
+</helmet>
+<div style="width:100%;height:100vh;height:100dvh;position:relative;overflow:hidden;background:#fbf9f5;font-family:'Geist',system-ui,sans-serif;color:#1a140e">
+ <div data-lenis-prevent style="position:absolute;top:0;left:0;right:0;bottom:84px;overflow-y:auto;padding-bottom:30px">
+
+  <header style="padding:calc(18px + env(safe-area-inset-top,0px)) 20px 0;display:flex;align-items:center;justify-content:space-between">
+    <h1 class="serif" style="margin:0;font-size:30px;font-weight:500">Portefeuille</h1>
+    <a href="Releves.dc.html" aria-label="Relevés et avis d’opéré" style="width:42px;height:42px;border-radius:50%;border:1px solid #e8e0d0;background:#fff;color:#1a140e;display:flex;align-items:center;justify-content:center"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"></path><path d="M14 3v4h4M9 13h6M9 17h4"></path></svg></a>
+  </header>
+
+  <section style="margin:14px 20px 0;padding:18px;border-radius:24px;background:#1c130b;color:#efe6d4;position:relative;overflow:hidden">
+    <span aria-hidden="true" style="position:absolute;right:-60px;top:-70px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,58,0.35),rgba(201,162,58,0) 70%)"></span>
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(239,230,212,0.65);position:relative"><span>Valeur du portefeuille</span><span>EDC Investment · ••2741</span></div>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-top:6px;position:relative">
+      <span class="num" style="font-size:36px;color:#fbf6ea;font-weight:500;letter-spacing:-0.02em">1 286 000</span>
+      <span style="font-size:13px;color:rgba(239,230,212,0.7)">FCFA</span>
+    </div>
+    <div style="font-size:12px;color:rgba(239,230,212,0.6);margin-top:4px;position:relative">Espèces disponibles <b class="num" style="color:#fbf6ea;font-weight:600">54 000 FCFA</b></div>
+    <div style="display:flex;gap:10px;margin-top:16px;position:relative">
+      <a class="act" href="Depot.dc.html" style="background:#c9a23a;color:#1c130b"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Déposer</a>
+      <a class="act" href="Retrait.dc.html" style="background:rgba(255,255,255,0.08);color:#fbf6ea;border:1px solid rgba(255,255,255,0.16)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>Retirer</a>
+    </div>
+  </section>
+
+  <section style="padding:16px 20px 0">
+    <h2 class="serif" style="margin:0;font-size:18px;font-weight:500">Ordres en cours</h2>
+    <div style="margin-top:10px;background:#fff;border:1px solid #e8e0d0;border-radius:18px;padding:12px 14px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:14px"><b style="font-weight:600">Achat</b> · 10 BGFI HC</span>
+        <span style="font-size:11px;font-weight:600;color:#2a4fa3;background:#e6efff;padding:3px 9px;border-radius:999px">Sur le marché</span>
+      </div>
+      <div class="num" style="font-size:12px;color:#6b6155;margin-top:3px">Limite 89 000 · valable jour</div>
+      <ol aria-label="Suivi de l’ordre" style="list-style:none;margin:12px 0 0;padding:0;display:flex;align-items:center;gap:6px;font-size:10.5px;color:#6b6155">
+        <li style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#157a43"></span>Envoyé</li>
+        <li aria-hidden="true" style="flex:1;height:2px;background:#157a43"></li>
+        <li style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#157a43"></span>Validé SDB</li>
+        <li aria-hidden="true" style="flex:1;height:2px;background:#c9a23a"></li>
+        <li style="display:flex;align-items:center;gap:5px;color:#1a140e;font-weight:600"><span style="width:8px;height:8px;border-radius:50%;background:#c9a23a;box-shadow:0 0 0 3px #f4e9c8"></span>Cotation</li>
+        <li aria-hidden="true" style="flex:1;height:2px;background:#e8e0d0"></li>
+        <li style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#e8e0d0"></span>Exécuté</li>
+      </ol>
+    </div>
+  </section>
+
+  <section style="padding:16px 20px 0">
+    <h2 class="serif" style="margin:0;font-size:18px;font-weight:500">Mes titres</h2>
+    <div style="margin-top:2px">
+      <a class="pos" href="Valeur.dc.html"><img class="logo" src="./assets/d99733952378c2f0b677faef5b0f9f3a.png" alt=""><span style="flex:1"><span style="display:block;font-weight:600;font-size:14px">SOCAPALM</span><span class="num" style="display:block;font-size:12px;color:#6b6155">16 titres</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:14px">792 000</span><span class="num" style="display:block;font-size:12px;color:#157a43">+4,21 %</span></span></a>
+      <a class="pos" href="Valeur.dc.html"><img class="logo" src="./assets/e2a82fbfd1ed1a49495e5a9ba8a5b891.png" alt=""><span style="flex:1"><span style="display:block;font-weight:600;font-size:14px">La Régionale</span><span class="num" style="display:block;font-size:12px;color:#6b6155">13 titres</span></span><span style="text-align:right"><span class="num" style="display:block;font-weight:600;font-size:14px">494 000</span><span class="num" style="display:block;font-size:12px;color:#6b6155">0,00 %</span></span></a>
+    </div>
+    <div style="margin-top:10px;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:#e4f3ea;color:#0f5c32;font-size:12.5px">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg>
+      <span>Dividende SOCAPALM reçu · <b class="num">37 200 FCFA</b> le 20 juil.</span>
+    </div>
+  </section>
+
+ </div>
+
+  <nav aria-label="Navigation principale" style="position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,0.96);border-top:1px solid #e8e0d0;display:flex;padding:10px 8px 0">
+    <a class="tab" href="Main.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"></path></svg>Accueil</a>
+    <a class="tab" href="Marches.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-6"></path></svg>Marchés</a>
+    <a class="tab on" href="Portefeuille.dc.html" aria-current="page" style="color:#1c130b;font-weight:600"><span style="width:52px;height:52px;margin-top:-26px;border-radius:50%;background:#1c130b;color:#ead18a;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(28,19,11,0.55),0 0 0 5px #fbf9f5"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"></rect><path d="M3 10h18M16 15h2"></path></svg></span>Portefeuille</a>
+    <a class="tab" href="Ecole.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>École</a>
+    <a class="tab" href="Moi.dc.html"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>Compte</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

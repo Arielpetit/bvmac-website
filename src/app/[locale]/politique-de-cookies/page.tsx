@@ -22,7 +22,7 @@ export default async function CookiesPage({ params }: PageProps<"/[locale]/polit
       <h2 id="principes" className="text-h2">Principes</h2>
       <p>Un cookie est un petit fichier déposé sur votre appareil. La BVMAC limite leur usage au strict nécessaire. Aucun cookie publicitaire n’est utilisé. Refuser est aussi simple qu’accepter, et fermer le bandeau ne vaut pas consentement.</p>
       <h2 id="liste" className="text-h2">Liste des cookies et traceurs</h2>
-      <div className="not-prose my-6 overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+      <div className="not-prose my-6 relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
         <table className="w-full min-w-[760px] text-sm">
           <caption className="sr-only">Cookies utilisés</caption>
           <thead><tr className="border-b border-line">{["Nom", "Catégorie", "Finalité", "Durée", "Émetteur"].map((h) => <th key={h} scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-[0.1em] text-muted">{h}</th>)}</tr></thead>

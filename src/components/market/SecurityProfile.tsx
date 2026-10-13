@@ -97,7 +97,7 @@ export function SecurityProfile({
   );
 
   const pricesTable = (
-    <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface">
+    <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface">
       <table className="w-full min-w-[480px] text-sm">
         <caption className="sr-only">{t.last}</caption>
         <thead className="bg-surface-alt">
