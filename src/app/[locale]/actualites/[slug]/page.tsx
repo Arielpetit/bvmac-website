@@ -16,7 +16,6 @@ import { ShareButtons } from "@/components/content/ShareButtons";
 import { Reveal } from "@/components/motion/Reveal";
 import { ParallaxImage } from "@/components/motion/Parallax";
 
-export const instant = false;
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => NEWS.map((n) => ({ locale, slug: n.slug })));

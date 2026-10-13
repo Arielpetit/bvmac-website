@@ -8,7 +8,6 @@ import { locales } from "@/i18n/config";
 import { SecurityProfile } from "@/components/market/SecurityProfile";
 
 // Every variant is prerendered from generateStaticParams.
-export const instant = false;
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => EQUITIES.map((e) => ({ locale, slug: e.slug })));

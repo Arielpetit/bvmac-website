@@ -13,7 +13,6 @@ import { LessonProgressBar } from "@/components/school/LessonProgressBar";
 import { GlossaryText } from "@/components/school/GlossaryText";
 import { Reveal } from "@/components/motion/Reveal";
 
-export const instant = false;
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => LESSONS.map((l) => ({ locale, slug: l.slug })));

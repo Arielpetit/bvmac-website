@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bvmac-website",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-06",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "bvmac-website" }],
+  // Stores cached pages and "use cache" entries between requests.
+  "kv_namespaces": [{ "binding": "NEXT_INC_CACHE_KV", "id": "5f2d5a834aa945009689f2575c1ff7c5" }],
+  "observability": { "enabled": true }
+}

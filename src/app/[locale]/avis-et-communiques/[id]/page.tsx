@@ -16,7 +16,6 @@ import { NoticeRow, NoticeTypeTag } from "@/components/content/NoticeRow";
 import { SubscribeForm } from "@/components/content/SubscribeForm";
 import { Reveal } from "@/components/motion/Reveal";
 
-export const instant = false;
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => NOTICES.map((n) => ({ locale, id: n.id })));

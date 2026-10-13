@@ -6,7 +6,6 @@ import { locales } from "@/i18n/config";
 import { ContentPage } from "@/components/content/ContentPage";
 import { Certificate } from "@/components/school/Certificate";
 
-export const instant = false;
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => PATHS.map((p) => ({ locale, slug: p.slug })));
