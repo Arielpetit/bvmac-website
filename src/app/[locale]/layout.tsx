@@ -16,6 +16,7 @@ import { BackToTop } from "@/components/motion/BackToTop";
 import { ChatWidget } from "@/components/ai/ChatWidget";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { getAnnouncement } from "@/lib/api";
+import { SITE_URL } from "@/lib/site";
 
 // Self-hosted at build time by next/font (no request to Google from the browser).
 const fraunces = Fraunces({ subsets: ["latin", "latin-ext"], axes: ["SOFT", "opsz"], variable: "--font-fraunces", display: "swap" });
@@ -29,11 +30,26 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const { locale, dict } = await resolveLocale(params);
   return {
-    metadataBase: new URL("https://www.bvmac.cm"),
+    metadataBase: new URL(SITE_URL),
     title: { default: `${dict.meta.siteName} – ${dict.meta.fullName}`, template: `%s · ${dict.meta.siteName}` },
     description: dict.meta.description,
     alternates: { canonical: `/${locale}`, languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])) },
-    openGraph: { siteName: dict.meta.siteName, locale, type: "website", images: ["/photos/bvmac-building.webp"] },
+    openGraph: {
+      siteName: dict.meta.siteName,
+      locale,
+      type: "website",
+      title: `${dict.meta.siteName} – ${dict.meta.fullName}`,
+      description: dict.meta.description,
+      url: `/${locale}`,
+      // 1200 x 630 PNG: link previews (WhatsApp, LinkedIn, Facebook) do not read WebP reliably.
+      images: [{ url: "/og/bvmac-og.png", width: 1200, height: 630, alt: dict.meta.fullName }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${dict.meta.siteName} – ${dict.meta.fullName}`,
+      description: dict.meta.description,
+      images: ["/og/bvmac-og.png"],
+    },
   };
 }
 

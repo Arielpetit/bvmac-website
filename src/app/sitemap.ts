@@ -4,8 +4,9 @@ import { NAV } from "@/lib/navigation";
 import { EQUITIES } from "@/data/market";
 import { LESSONS, PATHS } from "@/data/school";
 import { NEWS, NOTICES } from "@/data/real";
+import { SITE_URL } from "@/lib/site";
 
-const BASE = "https://www.bvmac.cm";
+const BASE = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
