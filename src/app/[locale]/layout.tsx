@@ -42,13 +42,13 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
       description: dict.meta.description,
       url: `/${locale}`,
       // 1200 x 630 PNG: link previews (WhatsApp, LinkedIn, Facebook) do not read WebP reliably.
-      images: [{ url: "/og/bvmac-og.png", width: 1200, height: 630, alt: dict.meta.fullName }],
+      images: [{ url: "/og/bvmac-og.jpg", width: 1200, height: 630, alt: dict.meta.fullName }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${dict.meta.siteName} – ${dict.meta.fullName}`,
       description: dict.meta.description,
-      images: ["/og/bvmac-og.png"],
+      images: ["/og/bvmac-og.jpg"],
     },
   };
 }
