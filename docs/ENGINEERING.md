@@ -2,6 +2,8 @@
 
 Public website and content back office for the Bourse des Valeurs Mobilières de l'Afrique Centrale (BVMAC), built for tender N°030/06/BVMAC/DG/DSI/07-26. Companion app: [skyengpro/bvmac-mobile](https://github.com/skyengpro/bvmac-mobile/blob/master/docs/ENGINEERING.md).
 
+User guide for BVMAC staff and testers: [USER-GUIDE.md](USER-GUIDE.md).
+
 ## Environments
 
 | Environment | Address | Hosting |

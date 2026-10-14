@@ -4,7 +4,7 @@ Website for the Bourse des Valeurs Mobilières de l'Afrique Centrale, built for
 tender N°030/06/BVMAC/DG/DSI/07-26. It follows the "BVMAC Brand Guidelines v0.1"
 and the blueprint in `../docs/`.
 
-Engineering doc: [docs/ENGINEERING.md](docs/ENGINEERING.md) · ADRs: [docs/adr](docs/adr/README.md) · Runbooks: [docs/runbooks](docs/runbooks/README.md)
+User guide: [docs/USER-GUIDE.md](docs/USER-GUIDE.md) · Engineering doc: [docs/ENGINEERING.md](docs/ENGINEERING.md) · ADRs: [docs/adr](docs/adr/README.md) · Runbooks: [docs/runbooks](docs/runbooks/README.md)
 
 ## Run
 
