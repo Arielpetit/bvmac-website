@@ -4,6 +4,8 @@ Website for the Bourse des Valeurs Mobilières de l'Afrique Centrale, built for
 tender N°030/06/BVMAC/DG/DSI/07-26. It follows the "BVMAC Brand Guidelines v0.1"
 and the blueprint in `../docs/`.
 
+Engineering doc: [docs/ENGINEERING.md](docs/ENGINEERING.md) · ADRs: [docs/adr](docs/adr/README.md) · Runbooks: [docs/runbooks](docs/runbooks/README.md)
+
 ## Run
 
 ```bash
@@ -15,7 +17,7 @@ npm run lint
 
 ## Stack
 
-- Next.js 16 (App Router, Cache Components, Turbopack), React 19, TypeScript
+- Next.js 16 (App Router, Turbopack), React 19, TypeScript
 - Tailwind CSS 4 with brand tokens in `src/app/globals.css`
 - Recharts for charts, lucide-react for icons
 - Fonts (Montserrat, IBM Plex Sans, IBM Plex Mono) self-hosted by `next/font` at build time
