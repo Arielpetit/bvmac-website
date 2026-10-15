@@ -75,7 +75,7 @@ export function HeroMarketCard({
       initial={{ opacity: 0, y: 40, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
-      className="relative overflow-hidden rounded-[var(--radius-panel)] bg-gradient-to-b from-[#3a2414] to-espresso p-6 text-brand-sand shadow-[0_40px_90px_-40px_rgb(32_20_8/0.6)] ring-1 ring-brand-gold/20 md:p-7"
+      className="relative overflow-hidden rounded-[var(--radius-panel)] bg-gradient-to-b from-white/[0.09] to-white/[0.03] p-6 text-brand-sand shadow-[0_50px_120px_-40px_rgb(0_0_0/0.9)] ring-1 ring-white/12 backdrop-blur-xl md:p-7"
     >
       <span aria-hidden="true" className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent" />
       <span aria-hidden="true" className="absolute -right-24 -top-24 size-64 rounded-full bg-brand-gold/15 blur-3xl" />

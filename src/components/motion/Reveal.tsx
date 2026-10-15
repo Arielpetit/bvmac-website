@@ -79,11 +79,15 @@ export function WordReveal({ text, className, delay = 0 }: { text: string; class
     <span className={className} aria-label={text}>
       {words.map((w, i) => (
         <span key={i} aria-hidden="true" className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-          {/* CSS animation, not JS: the words show even before the page's script has loaded. */}
-          <span className="word-up inline-block" style={{ animationDelay: `${delay + i * 0.06}s` }}>
+          <motion.span
+            className="inline-block"
+            initial={{ y: "105%" }}
+            animate={{ y: "0%" }}
+            transition={{ duration: 1, ease: EASE, delay: delay + i * 0.06 }}
+          >
             {w}
             {i < words.length - 1 ? " " : ""}
-          </span>
+          </motion.span>
         </span>
       ))}
     </span>
