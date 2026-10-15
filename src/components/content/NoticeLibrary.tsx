@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { ArrowDownUp, BellRing, Rss, Search } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
+import { tc } from "@/i18n/content";
 import { COUNTRIES } from "@/lib/navigation";
 import type { Notice, NoticeType } from "@/data/content";
 import { NOTICE_TYPES } from "@/data/content";
@@ -35,10 +36,10 @@ export function NoticeLibrary({ notices }: { notices: Notice[] }) {
           (!country || n.country === country) &&
           (!from || n.date >= from) &&
           (!to || n.date <= to) &&
-          (!q || `${n.title} ${n.original} ${n.number ?? ""} ${n.issuer ?? ""}`.toLowerCase().includes(q)),
+          (!q || `${n.title} ${tc(n.title, locale)} ${n.original} ${n.number ?? ""} ${n.issuer ?? ""}`.toLowerCase().includes(q)),
       )
       .sort((a, b) => (desc ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date)));
-  }, [notices, query, type, issuer, country, from, to, desc]);
+  }, [notices, query, type, issuer, country, from, to, desc, locale]);
 
   const reset = () => {
     setQuery(""); setType(""); setIssuer(""); setCountry(""); setFrom(""); setTo(""); setLimit(PAGE);
@@ -75,7 +76,7 @@ export function NoticeLibrary({ notices }: { notices: Notice[] }) {
             <label htmlFor="n-issuer" className="mb-1.5 block text-xs font-medium uppercase tracking-[0.1em] text-muted">{L.issuer}</label>
             <select id="n-issuer" value={issuer} onChange={(e) => setIssuer(e.target.value)} className={field}>
               <option value="">{L.all}</option>
-              {issuers.map((i) => <option key={i}>{i}</option>)}
+              {issuers.map((i) => <option key={i} value={i}>{tc(i, locale)}</option>)}
             </select>
           </div>
           <div>

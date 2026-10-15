@@ -10,10 +10,17 @@ import type { Question } from "@/data/school";
 import { isCorrect, useProgress } from "./progress";
 import { cn } from "@/lib/cn";
 
+const L = {
+  fr: { eyebrow: "Vérifiez vos acquis", right: "Bonne réponse", choice: "Votre choix", validate: "Valider", score: "Score", saved: "Leçon enregistrée dans votre progression sur cet appareil.", again: "Recommencer", next: "Leçon suivante →", path: "Voir le parcours", badge: "Badge obtenu", cert: "Voir mon certificat" },
+  en: { eyebrow: "Check what you learned", right: "Correct answer", choice: "Your choice", validate: "Submit", score: "Score", saved: "Lesson saved in your progress on this device.", again: "Try again", next: "Next lesson →", path: "See the path", badge: "Badge earned", cert: "See my certificate" },
+  es: { eyebrow: "Compruebe lo aprendido", right: "Respuesta correcta", choice: "Su elección", validate: "Validar", score: "Puntuación", saved: "Lección guardada en su progreso en este dispositivo.", again: "Volver a empezar", next: "Siguiente lección →", path: "Ver el recorrido", badge: "Insignia obtenida", cert: "Ver mi certificado" },
+};
+
 // Right and wrong answers always show an icon and a word, plus one sentence of explanation.
 // Questions with several correct answers use checkboxes and a "Valider" button.
 export function LessonQuiz({ slug, quiz, nextSlug, pathLessons, badge, pathSlug }: { slug: string; quiz: Question[]; nextSlug?: string; pathLessons: string[]; badge: string; pathSlug: string }) {
   const { locale } = useI18n();
+  const t = L[locale];
   const { progress, complete } = useProgress();
   const [picked, setPicked] = useState<number[][]>(quiz.map(() => []));
   const [locked, setLocked] = useState<boolean[]>(quiz.map(() => false));
@@ -48,7 +55,7 @@ export function LessonQuiz({ slug, quiz, nextSlug, pathLessons, badge, pathSlug 
 
   return (
     <section aria-labelledby="quiz" className="rounded-[var(--radius-panel)] border border-line bg-surface p-6 md:p-10">
-      <p className="eyebrow">Vérifiez vos acquis</p>
+      <p className="eyebrow">{t.eyebrow}</p>
       <h2 id="quiz" className="text-h2 mt-2">Quiz</h2>
       <ol className="mt-8 grid gap-10">
         {quiz.map((q, qi) => {
@@ -88,15 +95,15 @@ export function LessonQuiz({ slug, quiz, nextSlug, pathLessons, badge, pathSlug 
                           {multi && <span aria-hidden="true" className={cn("flex size-5 items-center justify-center rounded-md border", isChosen ? "border-transparent bg-action text-action-text" : "border-line-strong")}>{isChosen && <Check className="size-3.5" />}</span>}
                           {opt}
                         </span>
-                        {show && isAnswer && <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-rise"><Check aria-hidden="true" className="size-4" /> Bonne réponse</span>}
-                        {show && isChosen && !isAnswer && <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-fall"><X aria-hidden="true" className="size-4" /> Votre choix</span>}
+                        {show && isAnswer && <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-rise"><Check aria-hidden="true" className="size-4" /> {t.right}</span>}
+                        {show && isChosen && !isAnswer && <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-fall"><X aria-hidden="true" className="size-4" /> {t.choice}</span>}
                       </button>
                     );
                   })}
                 </div>
                 {multi && !show && (
                   <button type="button" disabled={!picked[qi].length} onClick={() => lock(qi, picked[qi])} className="mt-3 inline-flex h-10 items-center rounded-full bg-action px-5 text-sm font-medium text-action-text disabled:opacity-40">
-                    Valider
+                    {t.validate}
                   </button>
                 )}
                 {show && (
@@ -110,13 +117,13 @@ export function LessonQuiz({ slug, quiz, nextSlug, pathLessons, badge, pathSlug 
       {answered && (
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} role="status" className="mt-10 flex flex-wrap items-center justify-between gap-6 rounded-[var(--radius-card)] bg-espresso p-6 text-brand-sand">
           <div>
-            <p className="font-serif-display text-3xl text-brand-ivory">Score : <span className="figure">{score} / {quiz.length}</span></p>
-            <p className="mt-1 text-sm text-brand-sand/70">Leçon enregistrée dans votre progression sur cet appareil.</p>
+            <p className="font-serif-display text-3xl text-brand-ivory">{t.score} : <span className="figure">{score} / {quiz.length}</span></p>
+            <p className="mt-1 text-sm text-brand-sand/70">{t.saved}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <button type="button" onClick={reset} className="inline-flex h-11 items-center rounded-full border border-white/20 px-5 text-sm hover:border-white/50">Recommencer</button>
+            <button type="button" onClick={reset} className="inline-flex h-11 items-center rounded-full border border-white/20 px-5 text-sm hover:border-white/50">{t.again}</button>
             <Link href={localePath(locale, nextSlug ? `/ecole-de-bourse/lecon/${nextSlug}` : `/ecole-de-bourse/parcours/${pathSlug}`)} className="inline-flex h-11 items-center rounded-full bg-brand-gold px-5 text-sm font-medium text-espresso hover:bg-brand-gold-light">
-              {nextSlug ? "Leçon suivante →" : "Voir le parcours"}
+              {nextSlug ? t.next : t.path}
             </Link>
           </div>
         </motion.div>
@@ -133,9 +140,9 @@ export function LessonQuiz({ slug, quiz, nextSlug, pathLessons, badge, pathSlug 
           >
             <motion.span initial={{ rotate: -30 }} animate={{ rotate: 0 }} className="flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-brand-gold bg-espresso text-brand-gold-light"><Award aria-hidden="true" className="size-7" /></motion.span>
             <span>
-              <span className="block text-xs uppercase tracking-[0.14em] text-brand-gold-light">Badge obtenu</span>
+              <span className="block text-xs uppercase tracking-[0.14em] text-brand-gold-light">{t.badge}</span>
               <span className="block font-medium text-brand-ivory">{badge}</span>
-              <Link href={localePath(locale, `/ecole-de-bourse/certificat/${pathSlug}`)} className="text-xs text-brand-gold-light underline">Voir mon certificat</Link>
+              <Link href={localePath(locale, `/ecole-de-bourse/certificat/${pathSlug}`)} className="text-xs text-brand-gold-light underline">{t.cert}</Link>
             </span>
           </motion.div>
         )}

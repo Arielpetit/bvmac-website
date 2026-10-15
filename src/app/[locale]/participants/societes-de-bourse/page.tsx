@@ -23,10 +23,7 @@ export default async function BrokersPage({ params }: PageProps<"/[locale]/parti
     <ContentPage
       locale={locale}
       dict={dict}
-      group="invest"
-      isGroupRoot
       title={dict.nav.items.brokers}
-      frenchBody={false}
       intro={INTRO[locale]}
     >
       <BrokerDirectory brokers={brokers} totals={BROKER_TOTALS} />

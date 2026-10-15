@@ -19,7 +19,7 @@ export default async function DocsPage({ params }: PageProps<"/[locale]/document
   const { locale, dict } = await resolveLocale(params);
   const documents = await getDocuments();
   return (
-    <ContentPage locale={locale} dict={dict} group="news" title={dict.nav.items.economic} frenchBody={false} intro={INTRO[locale]}>
+    <ContentPage locale={locale} dict={dict} title={dict.nav.items.economic} intro={INTRO[locale]}>
       <DocumentLibrary docs={documents.filter((d) => d.category === "economic")} />
     </ContentPage>
   );

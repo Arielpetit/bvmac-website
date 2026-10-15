@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, BellRing, Building2, CalendarDays, FileText, Hash } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { localePath } from "@/lib/paths";
-import { crumbs } from "@/lib/page-helpers";
 import { formatDate } from "@/lib/format";
 import { getNotice, getNotices } from "@/lib/api";
 import { NOTICES, NOTICE_TYPES } from "@/data/content";
@@ -15,6 +14,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { NoticeRow, NoticeTypeTag } from "@/components/content/NoticeRow";
 import { SubscribeForm } from "@/components/content/SubscribeForm";
 import { Reveal } from "@/components/motion/Reveal";
+import { tc } from "@/i18n/content";
 
 
 export function generateStaticParams() {
@@ -53,14 +53,11 @@ export default async function NoticePage({ params }: PageProps<"/[locale]/avis-e
   return (
     <>
       <PageHeader
-        group="news"
-        title={n.title}
+        title={tc(n.title, locale)}
         overline={n.number ? `Avis N°${n.number}` : NOTICE_TYPES[n.type][locale]}
-        breadcrumbLabel={dict.a11y.breadcrumb}
-        breadcrumb={crumbs(locale, dict, "news", dict.nav.items.notices, [{ label: n.number ? `N°${n.number}` : NOTICE_TYPES[n.type][locale] }])}
         meta={<><NoticeTypeTag type={n.type} locale={locale} /><span className="text-sm capitalize text-muted">{formatDate(n.date, locale)}</span></>}
       />
-      <div className="container-site grid gap-12 py-14 md:py-20 lg:grid-cols-[1.6fr_1fr]">
+      <div className="container-site grid gap-12 pt-10 pb-14 md:pt-12 md:pb-20 lg:grid-cols-[1.6fr_1fr]">
         <Reveal className="grid content-start gap-8">
           <div className="rounded-[var(--radius-card)] border border-line bg-surface p-7">
             <p className="text-xs uppercase tracking-[0.12em] text-muted">{t.original}</p>

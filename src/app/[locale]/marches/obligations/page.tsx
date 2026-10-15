@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
-import { crumbs, pageTitle } from "@/lib/page-helpers";
+import { pageTitle } from "@/lib/page-helpers";
 import { formatDate, formatFcfa } from "@/lib/format";
 import { getBonds, getMarketSummary } from "@/lib/api";
 import { LAST_SESSION } from "@/data/market";
@@ -25,14 +25,11 @@ export default async function BondsPage({ params }: PageProps<"/[locale]/marches
   return (
     <>
       <PageHeader
-        group="markets"
         title={dict.nav.items.bonds}
         intro={T[locale](bonds.length, formatFcfa(summary.bondOutstanding, locale))}
-        breadcrumbLabel={dict.a11y.breadcrumb}
-        breadcrumb={crumbs(locale, dict, "markets", dict.nav.items.bonds)}
         meta={<><SessionChip /><span className="text-sm text-muted">{dict.session.lastUpdate} : {formatDate(LAST_SESSION, locale)}</span></>}
       />
-      <Reveal className="container-site py-14 md:py-20">
+      <Reveal className="container-site pt-10 pb-14 md:pt-12 md:pb-20">
         <BondTable bonds={bonds} asOf={LAST_SESSION} />
       </Reveal>
     </>

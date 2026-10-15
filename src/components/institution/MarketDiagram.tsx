@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useI18n } from "@/i18n/provider";
 import { ExternalLink } from "lucide-react";
 import type { MarketNode } from "@/data/institution";
 import { cn } from "@/lib/cn";
@@ -18,6 +19,7 @@ const LAYOUT: Record<string, string> = {
 };
 
 export function MarketDiagram({ nodes }: { nodes: MarketNode[] }) {
+  const { locale } = useI18n();
   const [active, setActive] = useState("bvmac");
   const current = nodes.find((n) => n.id === active)!;
 
@@ -47,7 +49,7 @@ export function MarketDiagram({ nodes }: { nodes: MarketNode[] }) {
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-center text-xs text-muted">Sélectionnez un acteur pour afficher son rôle.</p>
+        <p className="mt-4 text-center text-xs text-muted">{{ fr: "Sélectionnez un acteur pour afficher son rôle.", en: "Select a participant to see its role.", es: "Seleccione un participante para ver su función." }[locale]}</p>
       </div>
       <div aria-live="polite" className="rounded-[var(--radius-panel)] bg-espresso p-6 text-brand-sand">
         <p className="eyebrow text-brand-gold-light!">{current.role}</p>
@@ -62,7 +64,7 @@ export function MarketDiagram({ nodes }: { nodes: MarketNode[] }) {
         </ul>
         {current.href && (
           <a href={current.href} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-1.5 text-sm text-brand-gold-light underline underline-offset-4">
-            Site officiel <ExternalLink aria-hidden="true" className="size-3.5" />
+            {{ fr: "Site officiel", en: "Official website", es: "Sitio oficial" }[locale]} <ExternalLink aria-hidden="true" className="size-3.5" />
             <span className="sr-only">(site externe, nouvel onglet)</span>
           </a>
         )}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
-import { crumbs, pageTitle } from "@/lib/page-helpers";
+import { pageTitle } from "@/lib/page-helpers";
 import { getEquities, getPriceHistory } from "@/lib/api";
 import { LAST_SESSION } from "@/data/market";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -24,10 +24,9 @@ export default async function EquitiesPage({ params }: PageProps<"/[locale]/marc
   const sparks = Object.fromEntries(await Promise.all(rows.map(async (r) => [r.slug, await getPriceHistory(r.slug, 60)] as const)));
   return (
     <>
-      <PageHeader group="markets" title={dict.nav.items.equities} intro={T[locale]} breadcrumbLabel={dict.a11y.breadcrumb} breadcrumb={crumbs(locale, dict, "markets", dict.nav.items.equities)} meta={<SessionChip />} />
-      <Reveal className="container-site py-14 md:py-20">
+      <PageHeader title={dict.nav.items.equities} intro={T[locale]} meta={<SessionChip />} />
+      <Reveal className="container-site pt-10 pb-14 md:pt-12 md:pb-20">
         <EquityTable rows={rows} sparks={sparks} asOf={LAST_SESSION} />
-        <p className="mt-6 text-xs text-muted">{dict.common.disclaimer}</p>
       </Reveal>
     </>
   );

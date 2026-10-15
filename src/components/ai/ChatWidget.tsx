@@ -382,7 +382,6 @@ export function ChatWidget() {
                   <ArrowUp className="size-5" strokeWidth={2.2} aria-hidden="true" />
                 </button>
               </form>
-              <p className="mt-1.5 px-2 text-center text-[10px] leading-tight text-muted sm:mt-2">{t.disclaimer}</p>
             </footer>
           </motion.div>
         )}

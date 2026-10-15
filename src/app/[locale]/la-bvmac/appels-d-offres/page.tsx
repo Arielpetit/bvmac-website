@@ -4,6 +4,7 @@ import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
 import { formatDate } from "@/lib/format";
 import { getTenders } from "@/lib/api";
+import { tc } from "@/i18n/content";
 import { ContentPage } from "@/components/content/ContentPage";
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { cn } from "@/lib/cn";
@@ -12,8 +13,15 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/la-bvmac
   return pageTitle(params, (d) => d.nav.items.tenders);
 }
 
+const T = {
+  fr: { intro: "Consultations, appels d’offres et offres d’emploi de la BVMAC. Les dossiers complets sont publiés sur le site officiel.", open: "Ouvert", closed: "Clos", published: "Publié le", deadline: "Date limite", file: "Voir le dossier", current: "En cours", past: "Clôturés" },
+  en: { intro: "BVMAC consultations, calls for tenders and job offers. Full files are published on the official website.", open: "Open", closed: "Closed", published: "Published on", deadline: "Deadline", file: "View the file", current: "Open", past: "Closed" },
+  es: { intro: "Consultas, licitaciones y ofertas de empleo de la BVMAC. Los expedientes completos se publican en el sitio oficial.", open: "Abierto", closed: "Cerrado", published: "Publicado el", deadline: "Fecha límite", file: "Ver el expediente", current: "En curso", past: "Cerrados" },
+};
+
 export default async function TendersPage({ params }: PageProps<"/[locale]/la-bvmac/appels-d-offres">) {
   const { locale, dict } = await resolveLocale(params);
+  const l = T[locale];
   const tenders = await getTenders();
   const open = tenders.filter((t) => t.open);
   const closed = tenders.filter((t) => !t.open);
@@ -24,33 +32,33 @@ export default async function TendersPage({ params }: PageProps<"/[locale]/la-bv
           <a href={t.url} target="_blank" rel="noopener noreferrer" className="card-lift group grid gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-6 md:grid-cols-[1fr_auto] md:items-center">
             <div>
               <div className="flex flex-wrap items-center gap-2 text-xs">
-                <span className="rounded-full border border-line px-2.5 py-0.5 font-medium text-heading">{t.type}</span>
+                <span className="rounded-full border border-line px-2.5 py-0.5 font-medium text-heading">{tc(t.type, locale)}</span>
                 <span className={cn("inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 font-medium", t.open ? "bg-rise-bg text-rise" : "bg-surface-alt text-muted")}>
-                  <span className={cn("size-1.5 rounded-full", t.open ? "animate-live bg-rise" : "bg-muted")} />{t.open ? "Ouvert" : "Clos"}
+                  <span className={cn("size-1.5 rounded-full", t.open ? "animate-live bg-rise" : "bg-muted")} />{t.open ? l.open : l.closed}
                 </span>
               </div>
-              <h2 lang="fr" className="mt-3 text-lg font-medium text-heading group-hover:text-link">{t.title}</h2>
+              <h2 className="mt-3 text-lg font-medium text-heading group-hover:text-link">{tc(t.title, locale)}</h2>
               <p className="code mt-1 text-muted">{t.ref}</p>
               <p className="mt-2 text-sm text-muted">
-                Publié le {formatDate(t.published, locale, "short")}
-                {t.deadline && <> · Date limite : {formatDate(t.deadline, locale, "short")}</>}
+                {l.published} {formatDate(t.published, locale, "short")}
+                {t.deadline && <> · {l.deadline} : {formatDate(t.deadline, locale, "short")}</>}
               </p>
             </div>
-            <span className="inline-flex items-center gap-1.5 text-sm text-muted group-hover:text-link">Voir le dossier<ArrowUpRight aria-hidden="true" className="size-4" /><span className="sr-only">{dict.a11y.external}</span></span>
+            <span className="inline-flex items-center gap-1.5 text-sm text-muted group-hover:text-link">{l.file}<ArrowUpRight aria-hidden="true" className="size-4" /><span className="sr-only">{dict.a11y.external}</span></span>
           </a>
         </StaggerItem>
       ))}
     </Stagger>
   );
   return (
-    <ContentPage locale={locale} dict={dict} group="about" title={dict.nav.items.tenders} intro="Consultations, appels d’offres et offres d’emploi de la BVMAC. Les dossiers complets sont publiés sur le site officiel.">
+    <ContentPage locale={locale} dict={dict} title={dict.nav.items.tenders} intro={l.intro}>
       <div className="grid gap-14">
         <section aria-labelledby="open-t">
-          <h2 id="open-t" className="text-h2">En cours <span className="figure text-muted">({open.length})</span></h2>
+          <h2 id="open-t" className="text-h2">{l.current} <span className="figure text-muted">({open.length})</span></h2>
           <div className="mt-6">{list(open)}</div>
         </section>
         <section aria-labelledby="closed-t">
-          <h2 id="closed-t" className="text-h2">Clôturés <span className="figure text-muted">({closed.length})</span></h2>
+          <h2 id="closed-t" className="text-h2">{l.past} <span className="figure text-muted">({closed.length})</span></h2>
           <div className="mt-6">{list(closed)}</div>
         </section>
       </div>

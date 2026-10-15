@@ -12,6 +12,7 @@ import { Sheet } from "@/components/ui/Sheet";
 import { EmptyState } from "@/components/ui/States";
 import { PriceChange } from "@/components/ui/PriceChange";
 import { cn } from "@/lib/cn";
+import { tc } from "@/i18n/content";
 
 const L = {
   fr: { search: "Rechercher une ligne, un émetteur, un ISIN", issuer: "Émetteur", allIssuers: "Tous les émetteurs", line: "Ligne", country: "Pays", ref: "Cours de réf. (%)", close: "Clôture (%)", accrued: "Coupon couru", maturity: "Échéance", status: "Statut", count: "lignes", nominal: "Nominal", period: "Période", demanded: "Qté demandée", offered: "Qté offerte", traded: "Qté transigée", notices: "Avis liés", none: "Aucun avis récent lié à cette ligne.", priceNote: "Le cours d’une obligation s’exprime en pourcentage de sa valeur nominale.", open: "Détails" },
@@ -88,7 +89,7 @@ export function BondTable({ bonds, asOf }: { bonds: Bond[]; asOf: string }) {
         <label className="sr-only" htmlFor="b-issuer">{t.issuer}</label>
         <select id="b-issuer" value={issuer} onChange={(e) => setIssuer(e.target.value)} className="h-11 rounded-full border border-line bg-surface px-4 text-sm">
           <option value="">{t.allIssuers}</option>
-          {issuers.map((i) => <option key={i}>{i}</option>)}
+          {issuers.map((i) => <option key={i} value={i}>{tc(i, locale)}</option>)}
         </select>
         <button type="button" onClick={exportCsv} className="inline-flex h-11 items-center gap-2 rounded-full bg-action px-5 text-sm font-medium text-action-text hover:bg-action-hover">
           <Download aria-hidden="true" className="size-4" strokeWidth={1.6} /> CSV
@@ -114,7 +115,7 @@ export function BondTable({ bonds, asOf }: { bonds: Bond[]; asOf: string }) {
                   </span>
                 </span>
                 <span className="mt-3 flex items-center justify-between gap-3 text-sm">
-                  <span className="flex min-w-0 items-center gap-2"><Flag code={b.country} className="h-3 w-[18px] shrink-0" /><span className="truncate">{b.issuer}</span></span>
+                  <span className="flex min-w-0 items-center gap-2"><Flag code={b.country} className="h-3 w-[18px] shrink-0" /><span className="truncate">{tc(b.issuer, locale)}</span></span>
                   <span className="figure shrink-0 text-muted">{t.maturity} {b.maturity ?? "—"}</span>
                 </span>
               </button>
@@ -143,7 +144,7 @@ export function BondTable({ bonds, asOf }: { bonds: Bond[]; asOf: string }) {
                     <span className="code text-muted">{b.isin}</span>
                   </th>
                   <td className="px-4 py-3.5">
-                    <span className="flex items-center gap-2"><Flag code={b.country} className="h-3 w-[18px]" />{b.issuer}</span>
+                    <span className="flex items-center gap-2"><Flag code={b.country} className="h-3 w-[18px]" />{tc(b.issuer, locale)}</span>
                   </td>
                   <td className="figure px-4 py-3.5 text-right text-heading">{formatNumber(b.close, locale, 2)}</td>
                   <td className="figure px-4 py-3.5 text-right">{formatNumber(b.accrued, locale, 2)}</td>
@@ -167,7 +168,7 @@ export function BondTable({ bonds, asOf }: { bonds: Bond[]; asOf: string }) {
         {selected && (
           <div className="grid gap-6">
             <div className="flex items-center gap-2 text-sm text-muted">
-              <Flag code={selected.country} className="h-3 w-[18px]" /> {selected.issuer} · <span className="code">{selected.isin}</span>
+              <Flag code={selected.country} className="h-3 w-[18px]" /> {tc(selected.issuer, locale)} · <span className="code">{selected.isin}</span>
             </div>
             <div className="rounded-2xl bg-surface-alt p-5">
               <p className="text-xs uppercase tracking-[0.12em] text-muted">{t.close}</p>
@@ -196,7 +197,7 @@ export function BondTable({ bonds, asOf }: { bonds: Bond[]; asOf: string }) {
               {related.length ? (
                 <ul className="mt-3 grid gap-2 text-sm">
                   {related.map((n) => (
-                    <li key={n.id}><a className="link" href={`/${locale}/avis-et-communiques/${n.id}`}>{n.title}</a></li>
+                    <li key={n.id}><a className="link" href={`/${locale}/avis-et-communiques/${n.id}`}>{tc(n.title, locale)}</a></li>
                   ))}
                 </ul>
               ) : (

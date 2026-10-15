@@ -8,7 +8,7 @@ import { useI18n } from "@/i18n/provider";
 import { localePath } from "@/lib/paths";
 import { formatDate, formatNumber } from "@/lib/format";
 import { COUNTRIES } from "@/lib/navigation";
-import { COLUMN_HINTS, STATUS_LABEL } from "@/lib/market-labels";
+import { COLUMN_HINTS, STATUS_LABEL, sectorLabel } from "@/lib/market-labels";
 import type { EquityQuote } from "@/lib/api";
 import { PriceChange } from "@/components/ui/PriceChange";
 import { Hint } from "@/components/ui/Hint";
@@ -128,7 +128,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
         <label className="sr-only" htmlFor="eq-sector">{t.sector}</label>
         <select id="eq-sector" value={sector} onChange={(e) => setSector(e.target.value)} className={select}>
           <option value="">{t.allSectors}</option>
-          {sectors.map((s) => <option key={s}>{s}</option>)}
+          {sectors.map((s) => <option key={s} value={s}>{sectorLabel(s, locale)}</option>)}
         </select>
         <div ref={colsRef} className="relative hidden md:block">
           <button type="button" aria-expanded={colsOpen} onClick={() => setColsOpen((o) => !o)} className="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm hover:border-line-strong">
@@ -208,7 +208,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
                     <CompanyMark slug={r.slug} name={r.shortName} />
                     <span>
                       <span className="block font-medium text-heading">{r.shortName}</span>
-                      <span className="block text-xs text-muted">{r.sector}</span>
+                      <span className="block text-xs text-muted">{sectorLabel(r.sector, locale)}</span>
                     </span>
                   </Link>
                   <div className="text-right">

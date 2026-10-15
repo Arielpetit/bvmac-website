@@ -5,16 +5,14 @@ import type { Dictionary } from "@/i18n";
 import type { EquityQuote } from "@/lib/api";
 import type { Notice } from "@/data/content";
 import type { Point } from "@/data/series";
-import type { NavGroupKey } from "@/lib/navigation";
 import { COUNTRIES } from "@/lib/navigation";
 import { LAST_SESSION } from "@/data/market";
 import { localePath } from "@/lib/paths";
 import { formatDate, formatFcfa, formatNumber } from "@/lib/format";
-import { STATUS_LABEL, formatListedOn } from "@/lib/market-labels";
+import { STATUS_LABEL, formatListedOn, sectorLabel } from "@/lib/market-labels";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { CompanyMark } from "@/components/brand/CompanyMark";
 import { Tabs } from "@/components/ui/Tabs";
-import { Callout } from "@/components/ui/Callout";
 import { CountryChip, Tag } from "@/components/ui/Chip";
 import { PriceChange } from "@/components/ui/PriceChange";
 import { TimeSeriesChart } from "./LazyCharts";
@@ -28,7 +26,6 @@ const T = {
 
 const ISSUER_PAGE = "https://www.bvm-ac.org/espace-emetteurs/emetteurs-actions/";
 // Only images that relate to the issuer; others show the logo-led header.
-const PHOTOS: Record<string, string> = { "bgfi-holding": "/photos/bgfi-ipo-signing.webp" };
 
 export function SecurityProfile({
   e,
@@ -37,7 +34,6 @@ export function SecurityProfile({
   locale,
   dict,
   mode,
-  breadcrumb,
 }: {
   e: EquityQuote;
   history: Point[];
@@ -45,11 +41,9 @@ export function SecurityProfile({
   locale: Locale;
   dict: Dictionary;
   mode: "market" | "issuer";
-  breadcrumb: { label: string; href?: string }[];
 }) {
   const t = T[locale];
   const country = COUNTRIES.find((c) => c.code === e.country)!;
-  const group: NavGroupKey = mode === "market" ? "markets" : "issuers";
   const years = [2025, 2024, 2023, 2022, 2021, 2020, 2019];
 
   const keyData: [string, string][] = [
@@ -63,7 +57,7 @@ export function SecurityProfile({
     [t.status, STATUS_LABEL[locale][e.status]],
   ];
   const companyData: [string, string][] = [
-    [t.sector, e.sector],
+    [t.sector, sectorLabel(e.sector, locale)],
     [t.country, country[locale]],
     [t.hq, e.headquarters],
     [t.founded, e.founded ?? t.na],
@@ -203,13 +197,9 @@ export function SecurityProfile({
   return (
     <>
       <PageHeader
-        group={group}
         title={e.name}
         leading={<CompanyMark slug={e.slug} name={e.shortName} size="xl" />}
         overline={`${e.ticker} · ${e.isin}`}
-        breadcrumbLabel={dict.a11y.breadcrumb}
-        breadcrumb={breadcrumb}
-        image={PHOTOS[e.slug]}
         meta={
           <>
             <a href={`mailto:?subject=${encodeURIComponent(`BVMAC – ${e.shortName}`)}`} className="inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm text-muted hover:bg-surface-alt hover:text-heading">
@@ -229,7 +219,7 @@ export function SecurityProfile({
           <PriceChange value={e.change} locale={locale} className="text-lg" />
           <div className="flex flex-wrap gap-2">
             <CountryChip code={e.country} label={country[locale]} />
-            <Tag>{e.sector}</Tag>
+            <Tag>{sectorLabel(e.sector, locale)}</Tag>
             {e.compartment && <Tag>{e.compartment}</Tag>}
           </div>
         </div>
@@ -238,9 +228,8 @@ export function SecurityProfile({
           {dict.session.closingOf} {formatDate(LAST_SESSION, locale)} · {dict.session.delayed}
         </p>
       </PageHeader>
-      <div className="container-site grid gap-10 py-14 md:py-20">
+      <div className="container-site grid gap-10 pt-10 pb-14 md:pt-12 md:pb-20">
         <Tabs tabs={tabs} />
-        <Callout>{dict.common.disclaimer}</Callout>
       </div>
     </>
   );

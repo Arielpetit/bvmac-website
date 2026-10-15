@@ -13,8 +13,15 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: "Contact" };
 }
 
+const T = {
+  fr: { intro: "Une question sur le marché, une réclamation ou une demande presse : écrivez-nous, vous recevrez une référence de suivi.", hq: "Siège", name: "Bourse des Valeurs Mobilières de l’Afrique Centrale", hours: "Du lundi au vendredi", press: "Journalistes", pressText: "Espace presse : contacts, logos et chiffres clés", building: "Immeuble de la Bourse, Douala", city: "B.P. 442 Douala, Cameroun" },
+  en: { intro: "A question about the market, a complaint or a press enquiry: write to us and you will receive a tracking reference.", hq: "Headquarters", name: "Central African Stock Exchange", hours: "Monday to Friday", press: "Journalists", pressText: "Press room: contacts, logos and key figures", building: "Immeuble de la Bourse, Douala", city: "P.O. Box 442 Douala, Cameroon" },
+  es: { intro: "Una pregunta sobre el mercado, una reclamación o una solicitud de prensa: escríbanos y recibirá una referencia de seguimiento.", hq: "Sede", name: "Bolsa de Valores de África Central", hours: "De lunes a viernes", press: "Periodistas", pressText: "Sala de prensa: contactos, logotipos y cifras clave", building: "Immeuble de la Bourse, Duala", city: "Apdo. 442 Duala, Camerún" },
+};
+
 export default async function ContactPage({ params }: PageProps<"/[locale]/contact">) {
   const { locale, dict } = await resolveLocale(params);
+  const t = T[locale];
   const CONTACT = await getContact();
   const socials = [
     [CONTACT.social.facebook, FacebookIcon, "Facebook"],
@@ -26,21 +33,18 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
     <>
       <PageHeader
         title={dict.nav.contact}
-        intro="Une question sur le marché, une réclamation ou une demande presse : écrivez-nous, vous recevrez une référence de suivi."
-        image="/photos/bvmac-building.webp"
-        breadcrumbLabel={dict.a11y.breadcrumb}
-        breadcrumb={[{ label: dict.nav.home, href: localePath(locale, "/") }, { label: dict.nav.contact }]}
+        intro={t.intro}
       />
-      <div className="container-site grid gap-10 py-14 md:py-20 lg:grid-cols-[1fr_1.5fr]">
+      <div className="container-site grid gap-10 pt-10 pb-14 md:pt-12 md:pb-20 lg:grid-cols-[1fr_1.5fr]">
         <Reveal className="grid h-fit gap-4">
           <div className="rounded-[var(--radius-panel)] bg-espresso p-8 text-brand-sand">
-            <p className="eyebrow text-brand-gold-light!">Siège</p>
-            <h2 className="font-serif-display mt-3 text-2xl text-brand-ivory">Bourse des Valeurs Mobilières de l’Afrique Centrale</h2>
+            <p className="eyebrow text-brand-gold-light!">{t.hq}</p>
+            <h2 className="font-serif-display mt-3 text-2xl text-brand-ivory">{t.name}</h2>
             <ul className="mt-6 grid gap-4 text-sm">
               <li className="flex gap-3"><MapPin aria-hidden="true" className="size-5 shrink-0 text-brand-gold" strokeWidth={1.5} />{CONTACT.address[1]}, {CONTACT.address[0]}</li>
               <li className="flex gap-3"><Phone aria-hidden="true" className="size-5 shrink-0 text-brand-gold" strokeWidth={1.5} /><a href={CONTACT.phoneHref} className="hover:text-brand-ivory">{CONTACT.phone}</a></li>
               <li className="flex gap-3"><Mail aria-hidden="true" className="size-5 shrink-0 text-brand-gold" strokeWidth={1.5} /><a href={`mailto:${CONTACT.email}`} className="hover:text-brand-ivory">{CONTACT.email}</a></li>
-              <li className="flex gap-3"><Clock aria-hidden="true" className="size-5 shrink-0 text-brand-gold" strokeWidth={1.5} />Du lundi au vendredi · horaires d’accueil à confirmer</li>
+              <li className="flex gap-3"><Clock aria-hidden="true" className="size-5 shrink-0 text-brand-gold" strokeWidth={1.5} />{t.hours}</li>
             </ul>
             <ul className="mt-8 flex gap-2 border-t border-white/10 pt-6">
               {socials.map(([href, Icon, label]) => (
@@ -52,15 +56,15 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
           </div>
           <Link href={localePath(locale, "/actualites/espace-presse")} className="card-lift group flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-6">
             <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-accent-text"><Newspaper aria-hidden="true" className="size-5" strokeWidth={1.5} /></span>
-            <span className="flex-1"><span className="block font-medium text-heading">Journalistes</span><span className="text-sm text-muted">Espace presse : contacts, logos et chiffres clés</span></span>
+            <span className="flex-1"><span className="block font-medium text-heading">{t.press}</span><span className="text-sm text-muted">{t.pressText}</span></span>
             <ArrowUpRight aria-hidden="true" className="size-5 text-muted transition-transform group-hover:rotate-45 group-hover:text-link" />
           </Link>
           <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface-alt">
             <div className="absolute inset-0 opacity-60 [background-image:linear-gradient(var(--line)_1px,transparent_1px),linear-gradient(90deg,var(--line)_1px,transparent_1px)] [background-size:32px_32px]" aria-hidden="true" />
             <div className="relative text-center">
               <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-gold text-espresso shadow-soft"><MapPin aria-hidden="true" className="size-6" /></span>
-              <p className="mt-3 font-medium text-heading">Immeuble de la Bourse, Douala</p>
-              <p className="text-xs text-muted">Plan d’accès statique à intégrer (sans service de cartographie tiers)</p>
+              <p className="mt-3 font-medium text-heading">{t.building}</p>
+              <p className="text-xs text-muted">{t.city}</p>
             </div>
           </div>
         </Reveal>

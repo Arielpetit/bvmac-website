@@ -13,7 +13,7 @@ export default async function GlossaryPage({ params }: PageProps<"/[locale]/ecol
   const { locale, dict } = await resolveLocale(params);
   const glossary = await getGlossary();
   return (
-    <ContentPage locale={locale} dict={dict} group="learn" title={dict.nav.items.glossary} intro={`${glossary.length} termes de la bourse expliqués simplement, avec leur équivalent en anglais et en espagnol.`}>
+    <ContentPage locale={locale} dict={dict} title={dict.nav.items.glossary} intro={{ fr: `${glossary.length} termes de la bourse expliqués simplement, avec leur équivalent en anglais et en espagnol.`, en: `${glossary.length} stock market terms explained simply, with their French and Spanish equivalents.`, es: `${glossary.length} términos de bolsa explicados de forma sencilla, con su equivalente en francés e inglés.` }[locale]}>
       <GlossaryBrowser terms={glossary} />
     </ContentPage>
   );

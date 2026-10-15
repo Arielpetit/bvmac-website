@@ -1,3 +1,4 @@
+import { pageTitle } from "@/lib/page-helpers";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { resolveLocale } from "@/lib/i18n-server";
@@ -5,13 +6,15 @@ import { localePath } from "@/lib/paths";
 import { NAV } from "@/lib/navigation";
 import { PageHeader } from "@/components/ui/PageHeader";
 
-export const metadata: Metadata = { title: "Plan du site" };
+export async function generateMetadata({ params }: PageProps<"/[locale]/plan-du-site">): Promise<Metadata> {
+  return pageTitle(params, (d) => d.footer.sitemap);
+}
 
 export default async function SitemapPage({ params }: PageProps<"/[locale]/plan-du-site">) {
   const { locale, dict } = await resolveLocale(params);
   return (
     <>
-      <PageHeader title={dict.footer.sitemap} breadcrumbLabel={dict.a11y.breadcrumb} breadcrumb={[{ label: dict.nav.home, href: localePath(locale, "/") }, { label: dict.footer.sitemap }]} />
+      <PageHeader title={dict.footer.sitemap} />
       <div className="container-site grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
         {NAV.map((g) => (
           <section key={g.key} aria-labelledby={`sm-${g.key}`}>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
-import { crumbs, pageTitle } from "@/lib/page-helpers";
+import { pageTitle } from "@/lib/page-helpers";
 import { getAgenda } from "@/lib/api";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { AgendaList } from "@/components/market/AgendaList";
@@ -21,8 +21,8 @@ export default async function AgendaPage({ params }: PageProps<"/[locale]/marche
   const events = await getAgenda();
   return (
     <>
-      <PageHeader group="markets" title={dict.nav.items.agenda} intro={T[locale]} breadcrumbLabel={dict.a11y.breadcrumb} breadcrumb={crumbs(locale, dict, "markets", dict.nav.items.agenda)} />
-      <Reveal className="container-site py-14 md:py-20">
+      <PageHeader title={dict.nav.items.agenda} intro={T[locale]} />
+      <Reveal className="container-site pt-10 pb-14 md:pt-12 md:pb-20">
         <AgendaList events={events} today="2026-10-09" />
       </Reveal>
     </>

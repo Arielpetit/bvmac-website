@@ -1,22 +1,29 @@
 import { ArrowUpRight, FileText } from "lucide-react";
-import { Callout } from "@/components/ui/Callout";
 import { DOCUMENTS } from "@/data/content";
+import type { Locale } from "@/i18n/config";
+
+const L = {
+  fr: { since: "En vigueur depuis", item: "Prestation", basis: "Assiette", rate: "Taux / montant", grid: "Voir la grille officielle", refs: "Textes de référence" },
+  en: { since: "In force since", item: "Item", basis: "Basis", rate: "Rate / amount", grid: "See the official schedule", refs: "Reference texts" },
+  es: { since: "En vigor desde", item: "Concepto", basis: "Base", rate: "Tipo / importe", grid: "Ver la tarifa oficial", refs: "Textos de referencia" },
+};
 
 // Fee and tax tables: structure ready, values supplied by BVMAC through the CMS.
-export function FeeTable({ caption, rows, note, effective }: { caption: string; rows: { item: string; basis: string; value?: string }[]; note?: string; effective?: string }) {
+export function FeeTable({ locale, caption, rows, effective }: { locale: Locale; caption: string; rows: { item: string; basis: string; value?: string }[]; effective?: string }) {
+  const l = L[locale];
   return (
     <div>
       <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
         <table className="w-full min-w-[560px] text-sm">
           <caption className="px-6 pt-5 text-left">
             <span className="text-h3 block">{caption}</span>
-            {effective && <span className="mt-1 block text-xs text-muted">En vigueur depuis : {effective}</span>}
+            {effective && <span className="mt-1 block text-xs text-muted">{l.since} : {effective}</span>}
           </caption>
           <thead>
             <tr className="border-b border-line text-xs uppercase tracking-[0.1em] text-muted">
-              <th scope="col" className="px-6 py-3 text-left font-medium">Prestation</th>
-              <th scope="col" className="px-6 py-3 text-left font-medium">Assiette</th>
-              <th scope="col" className="px-6 py-3 text-right font-medium">Taux / montant</th>
+              <th scope="col" className="px-6 py-3 text-left font-medium">{l.item}</th>
+              <th scope="col" className="px-6 py-3 text-left font-medium">{l.basis}</th>
+              <th scope="col" className="px-6 py-3 text-right font-medium">{l.rate}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
@@ -24,21 +31,19 @@ export function FeeTable({ caption, rows, note, effective }: { caption: string; 
               <tr key={r.item} className="transition-colors hover:bg-surface-alt">
                 <th scope="row" className="px-6 py-4 text-left font-normal text-heading">{r.item}</th>
                 <td className="px-6 py-4 text-muted">{r.basis}</td>
-                <td className="figure px-6 py-4 text-right text-muted">{r.value ?? "Voir la grille officielle"}</td>
+                <td className="figure px-6 py-4 text-right text-muted">{r.value ?? l.grid}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <Callout tone="warning" className="mt-4">
-        {note ?? "Montants à saisir par la BVMAC dans l’outil de gestion de contenu, avec leur date d’entrée en vigueur. Les textes officiels ci-dessous font foi."}
-      </Callout>
     </div>
   );
 }
 
 // Links to official PDF texts from the document library.
-export function OfficialDocs({ ids, title = "Textes de référence" }: { ids: string[]; title?: string }) {
+export function OfficialDocs({ locale, ids, title }: { locale: Locale; ids: string[]; title?: string }) {
+  title ??= L[locale].refs;
   const docs = DOCUMENTS.filter((d) => ids.includes(d.id));
   return (
     <section aria-label={title}>

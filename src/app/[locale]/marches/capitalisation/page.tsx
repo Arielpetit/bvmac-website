@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
-import { crumbs, pageTitle } from "@/lib/page-helpers";
+import { pageTitle } from "@/lib/page-helpers";
 import { formatDate } from "@/lib/format";
 import { getCapitalisationHistory, getMarketSummary, getValueTradedHistory } from "@/lib/api";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -25,8 +25,8 @@ export default async function CapitalisationPage({ params }: PageProps<"/[locale
   const [summary, cap, traded] = await Promise.all([getMarketSummary(), getCapitalisationHistory(400), getValueTradedHistory(260)]);
   return (
     <>
-      <PageHeader group="markets" title={dict.nav.items.capitalisation} intro={t.intro} breadcrumbLabel={dict.a11y.breadcrumb} breadcrumb={crumbs(locale, dict, "markets", dict.nav.items.capitalisation)} meta={<span className="text-sm text-muted">{dict.session.lastUpdate} : {formatDate(summary.date, locale)}</span>} />
-      <div className="container-site grid gap-16 py-14 md:py-20">
+      <PageHeader title={dict.nav.items.capitalisation} intro={t.intro} meta={<span className="text-sm text-muted">{dict.session.lastUpdate} : {formatDate(summary.date, locale)}</span>} />
+      <div className="container-site grid gap-16 pt-10 pb-14 md:pt-12 md:pb-20">
         <Stagger as="dl" className="grid gap-4 md:grid-cols-3">
           {[summary.equityCapitalisation, summary.bondOutstanding, summary.valueTraded].map((v, i) => (
             <StaggerItem key={i} className="rounded-[var(--radius-card)] border border-line bg-surface p-6">

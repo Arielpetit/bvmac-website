@@ -20,7 +20,7 @@ export default async function NoticesPage({ params }: PageProps<"/[locale]/avis-
   const { locale, dict } = await resolveLocale(params);
   const notices = await getNotices();
   return (
-    <ContentPage locale={locale} dict={dict} group="news" isGroupRoot title={dict.nav.items.notices} frenchBody={false} intro={INTRO[locale]}>
+    <ContentPage locale={locale} dict={dict} title={dict.nav.items.notices} intro={INTRO[locale]}>
       <Reveal><NoticeLibrary notices={notices} /></Reveal>
     </ContentPage>
   );

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { localizeNews } from "@/i18n/content";
 import Link from "next/link";
 import type { NewsItem } from "@/data/content";
 import { formatDate } from "@/lib/format";
@@ -6,7 +7,8 @@ import type { Locale } from "@/i18n/config";
 import { localePath } from "@/lib/paths";
 import { cn } from "@/lib/cn";
 
-export function NewsCard({ item, locale, large = false }: { item: NewsItem; locale: Locale; large?: boolean }) {
+export function NewsCard({ item: raw, locale, large = false }: { item: NewsItem; locale: Locale; large?: boolean }) {
+  const item = localizeNews(raw, locale);
   return (
     <article className="group relative flex h-full flex-col">
       <div className={cn("relative overflow-hidden rounded-[var(--radius-card)] bg-surface-alt", large ? "aspect-[16/10] lg:aspect-auto lg:min-h-80 lg:flex-1" : "aspect-[4/3]")}>
@@ -27,7 +29,8 @@ export function NewsCard({ item, locale, large = false }: { item: NewsItem; loca
 }
 
 // Photo tile with the headline over the image, for compact mobile bento layouts.
-export function NewsTile({ item, locale, tall = false, className }: { item: NewsItem; locale: Locale; tall?: boolean; className?: string }) {
+export function NewsTile({ item: raw, locale, tall = false, className }: { item: NewsItem; locale: Locale; tall?: boolean; className?: string }) {
+  const item = localizeNews(raw, locale);
   return (
     <article className={cn("group relative overflow-hidden rounded-[var(--radius-card)] bg-espresso", className)}>
       <Image src={item.image} alt="" fill sizes={tall ? "60vw" : "50vw"} className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />

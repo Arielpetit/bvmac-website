@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { FileDown } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
-import { crumbs, pageTitle } from "@/lib/page-helpers";
+import { pageTitle } from "@/lib/page-helpers";
 import { formatDate } from "@/lib/format";
 import { getBocArchive, getEquities, getMarketSummary } from "@/lib/api";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -27,8 +27,8 @@ export default async function BocPage({ params }: PageProps<"/[locale]/marches/b
   const latest = archive[0];
   return (
     <>
-      <PageHeader group="markets" title={dict.nav.items.boc} intro={t.intro} breadcrumbLabel={dict.a11y.breadcrumb} breadcrumb={crumbs(locale, dict, "markets", dict.nav.items.boc)} />
-      <div className="container-site grid gap-16 py-14 md:py-20">
+      <PageHeader title={dict.nav.items.boc} intro={t.intro} />
+      <div className="container-site grid gap-16 pt-10 pb-14 md:pt-12 md:pb-20">
         <Reveal className="relative overflow-hidden rounded-[var(--radius-panel)] bg-espresso p-8 text-brand-sand md:p-12">
           <div aria-hidden="true" className="animate-orb absolute -right-20 -top-20 size-80 rounded-full bg-brand-gold/20 blur-3xl" />
           <div className="relative grid gap-8 md:grid-cols-[auto_1fr] md:items-center">

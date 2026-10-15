@@ -19,7 +19,7 @@ export default async function PhotosPage({ params }: PageProps<"/[locale]/actual
   const { locale, dict } = await resolveLocale(params);
   const albums = await getAlbums();
   return (
-    <ContentPage locale={locale} dict={dict} group="news" title={dict.nav.items.photos} intro={INTRO[locale]} image="/photos/ceremony-trading-floor.webp">
+    <ContentPage locale={locale} dict={dict} title={dict.nav.items.photos} intro={INTRO[locale]}>
       <PhotoGallery albums={albums} />
     </ContentPage>
   );

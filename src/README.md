@@ -16,7 +16,7 @@ Next.js 16 (App Router, `cacheComponents`), React 19, Tailwind CSS 4, Motion, Re
 | `lib/client-store.ts` | `useSyncExternalStore` hooks for local storage, URL params and media queries. |
 | `components/layout/` | Header (single bar + mega menu + mobile sheet), footer, search dialog (Ctrl K), favourites, cookie consent. |
 | `components/motion/` | Reveal, Stagger, WordReveal, CountUp, Parallax, Marquee, scroll progress, back-to-top, Lenis smooth scroll. All respect `prefers-reduced-motion`. |
-| `components/ui/` | Design-system primitives: Button, Card, Tabs, Accordion/Faq, Sheet, Hint, PageHeader, Skeleton, Callout. |
+| `components/ui/` | Design-system primitives: Button, Card, Tabs, Accordion/Faq, Sheet, Hint, PageHeader, Skeleton. |
 | `components/market/` | Market tables and charts. Charts are code-split through `LazyCharts.tsx`. |
 | `components/school/` | École de la Bourse: hub, lessons, quiz, glossary, simulator, certificate. Progress stays in `localStorage`. |
 

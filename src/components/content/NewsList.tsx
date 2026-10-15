@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { localizeNews } from "@/i18n/content";
 import { Search } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useI18n } from "@/i18n/provider";
@@ -11,8 +12,9 @@ import { cn } from "@/lib/cn";
 
 const PAGE = 6;
 
-export function NewsList({ items }: { items: NewsItem[] }) {
+export function NewsList({ items: raw }: { items: NewsItem[] }) {
   const { locale, dict } = useI18n();
+  const items = useMemo(() => raw.map((i) => localizeNews(i, locale)), [raw, locale]);
   const [cat, setCat] = useState("");
   const [year, setYear] = useState("");
   const [query, setQuery] = useState("");
@@ -25,7 +27,7 @@ export function NewsList({ items }: { items: NewsItem[] }) {
   return (
     <div>
       <div className="mb-10 flex flex-wrap items-center gap-3">
-        <div role="group" aria-label="Catégorie" className="flex flex-wrap gap-2">
+        <div role="group" aria-label={{ fr: "Catégorie", en: "Category", es: "Categoría" }[locale]} className="flex flex-wrap gap-2">
           {["", ...cats].map((c) => (
             <button key={c || "all"} type="button" aria-pressed={cat === c} onClick={() => { setCat(c); setLimit(PAGE); }} className={cn("h-10 rounded-full border px-4 text-sm transition-colors", cat === c ? "border-transparent bg-action text-action-text" : "border-line bg-surface hover:border-line-strong")}>
               {c || L.all}

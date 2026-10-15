@@ -19,7 +19,7 @@ export default async function TvPage({ params }: PageProps<"/[locale]/actualites
   const { locale, dict } = await resolveLocale(params);
   const videos = await getVideos();
   return (
-    <ContentPage locale={locale} dict={dict} group="news" title={dict.nav.items.tv} intro={INTRO[locale]} frenchBody={false}>
+    <ContentPage locale={locale} dict={dict} title={dict.nav.items.tv} intro={INTRO[locale]}>
       <VideoGrid videos={videos} />
     </ContentPage>
   );

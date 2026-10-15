@@ -1,5 +1,5 @@
-// École de bourse content (French). Educational only: no advice, no recommendation.
-// To be reviewed by BVMAC (and COSUMAF where relevant) before publication.
+// École de bourse content: French source. English and Spanish versions live in school.en.ts and school.es.ts.
+// Educational only: no advice, no recommendation.
 
 /** `answer` is an index, or a list of indexes for questions with several correct answers. */
 export type Question = { q: string; options: string[]; answer: number | number[]; explain: string };
@@ -244,3 +244,21 @@ export const GLOSSARY: { term: string; def: string }[] = [
   { term: "Suspension", def: "Arrêt temporaire de la cotation d'un titre décidé par la BVMAC." },
   { term: "Variation", def: "Évolution du cours en pourcentage par rapport au cours de référence." },
 ];
+
+import type { Locale } from "@/i18n/config";
+import { GLOSSARY_DEFS_EN, LESSONS_EN, PATHS_EN } from "./school.en";
+import { GLOSSARY_DEFS_ES, LESSONS_ES, PATHS_ES } from "./school.es";
+
+/** Paths and lessons in the visitor's language (same slugs in every language). */
+export function schoolContent(locale: Locale): { paths: Path[]; lessons: Lesson[] } {
+  if (locale === "en") return { paths: PATHS_EN, lessons: LESSONS_EN };
+  if (locale === "es") return { paths: PATHS_ES, lessons: LESSONS_ES };
+  return { paths: PATHS, lessons: LESSONS };
+}
+
+/** Glossary definition in the visitor's language; falls back to the French definition. */
+export function glossaryDef(term: string, def: string, locale: Locale): string {
+  if (locale === "en") return GLOSSARY_DEFS_EN[term] ?? def;
+  if (locale === "es") return GLOSSARY_DEFS_ES[term] ?? def;
+  return def;
+}

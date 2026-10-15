@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { resolveLocale } from "@/lib/i18n-server";
-import { crumbs } from "@/lib/page-helpers";
 import { getEquity, getNotices, getPriceHistory } from "@/lib/api";
 import { EQUITIES } from "@/data/market";
 import { locales } from "@/i18n/config";
@@ -27,6 +26,6 @@ export default async function IssuerPage({ params }: PageProps<"/[locale]/emette
   const [history, notices] = await Promise.all([getPriceHistory(slug, 400), getNotices()]);
   const related = notices.filter((n) => n.issuer && (n.issuer.toUpperCase().includes(e.shortName.toUpperCase().split(" ")[0]) || n.original.toUpperCase().includes(e.ticker)));
   return (
-    <SecurityProfile e={e} history={history} notices={related} locale={locale} dict={dict} mode="issuer" breadcrumb={crumbs(locale, dict, "issuers", dict.nav.items.listed, [{ label: e.shortName }])} />
+    <SecurityProfile e={e} history={history} notices={related} locale={locale} dict={dict} mode="issuer" />
   );
 }

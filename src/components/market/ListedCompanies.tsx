@@ -8,7 +8,7 @@ import { ArrowUpRight, LayoutGrid, List, Search } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
 import { localePath } from "@/lib/paths";
 import { formatNumber } from "@/lib/format";
-import { formatListedOn } from "@/lib/market-labels";
+import { formatListedOn, sectorLabel } from "@/lib/market-labels";
 import { COUNTRIES } from "@/lib/navigation";
 import type { Equity } from "@/data/market";
 import { Flag } from "@/components/ui/Flag";
@@ -37,11 +37,11 @@ export function ListedCompanies({ equities }: { equities: (Equity & { change: nu
         </div>
         <div className="flex flex-wrap gap-1.5">
           {["", ...sectors].map((s) => (
-            <button key={s || "all"} type="button" aria-pressed={sector === s} onClick={() => setSector(s)} className={cn("h-9 rounded-full border px-4 text-sm transition-colors", sector === s ? "border-transparent bg-action text-action-text" : "border-line hover:border-line-strong")}>{s || "Tous les secteurs"}</button>
+            <button key={s || "all"} type="button" aria-pressed={sector === s} onClick={() => setSector(s)} className={cn("h-9 rounded-full border px-4 text-sm transition-colors", sector === s ? "border-transparent bg-action text-action-text" : "border-line hover:border-line-strong")}>{s ? sectorLabel(s, locale) : { fr: "Tous les secteurs", en: "All sectors", es: "Todos los sectores" }[locale]}</button>
           ))}
         </div>
-        <div role="group" aria-label="Affichage" className="ml-auto inline-flex rounded-full border border-line bg-surface p-1">
-          {([["grid", LayoutGrid, "Grille"], ["list", List, "Liste"]] as const).map(([v, Icon, label]) => (
+        <div role="group" aria-label={{ fr: "Affichage", en: "View", es: "Vista" }[locale]} className="ml-auto inline-flex rounded-full border border-line bg-surface p-1">
+          {([["grid", LayoutGrid, { fr: "Grille", en: "Grid", es: "Cuadrícula" }[locale]], ["list", List, { fr: "Liste", en: "List", es: "Lista" }[locale]]] as const).map(([v, Icon, label]) => (
             <button key={v} type="button" aria-pressed={view === v} aria-label={label} onClick={() => setView(v)} className={cn("flex size-9 items-center justify-center rounded-full transition-colors", view === v ? "bg-action text-action-text" : "text-muted hover:text-heading")}>
               <Icon aria-hidden="true" className="size-4" />
             </button>
@@ -63,7 +63,7 @@ export function ListedCompanies({ equities }: { equities: (Equity & { change: nu
                       <CompanyMark slug={e.slug} name={e.shortName} size="lg" className="transition-transform duration-700 group-hover:-rotate-3 group-hover:scale-105" />
                       <span className="font-serif-display mt-3 block text-2xl text-heading">{e.shortName}</span>
                     </span>
-                    <span className="relative rounded-full border border-line bg-surface px-3 py-1 text-xs text-muted">{e.sector}</span>
+                    <span className="relative rounded-full border border-line bg-surface px-3 py-1 text-xs text-muted">{sectorLabel(e.sector, locale)}</span>
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <p className="text-sm text-muted">{e.name}</p>
@@ -95,7 +95,7 @@ export function ListedCompanies({ equities }: { equities: (Equity & { change: nu
                   <span className="block truncate text-xs text-muted">{e.name}</span>
                 </span>
                 <span className="hidden text-sm text-muted md:inline-flex md:items-center md:gap-2"><Flag code={e.country} />{country(e.country)}</span>
-                <span className="hidden text-sm text-muted md:block">{e.sector}</span>
+                <span className="hidden text-sm text-muted md:block">{sectorLabel(e.sector, locale)}</span>
                 <span className="text-right">
                   <span className="figure block text-heading">{formatNumber(e.closePrice, locale)}</span>
                   <PriceChange value={e.change} locale={locale} className="text-xs" />

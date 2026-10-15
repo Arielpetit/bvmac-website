@@ -1,4 +1,5 @@
-import { Bell, BookOpen, FileText, Home, LineChart, Search, Signal, Star, Wifi } from "lucide-react";
+import { Bell, BookOpen, Home, LineChart, Search, Settings, Signal, Star, Wifi } from "lucide-react";
+import type { Locale } from "@/i18n/config";
 import { CompanyMark } from "@/components/brand/CompanyMark";
 import { Logo } from "@/components/layout/Logo";
 
@@ -11,8 +12,15 @@ function Spark({ points, up }: { points: number[]; up: boolean }) {
   return <svg viewBox="0 0 48 16" className="h-4 w-12"><polyline points={d} fill="none" stroke={up ? "#157a43" : "#a8925f"} strokeWidth="1.4" strokeLinejoin="round" /></svg>;
 }
 
+const L = {
+  fr: { hello: "Bonjour", markets: "Marchés", cap: "Capitalisation actions", session: "Md FCFA · séance du", all: "Tout", tabs: ["Actions", "Obligations", "Favoris"], nav: ["Accueil", "Marchés", "Favoris", "École", "Réglages"], now: "maintenant", boc: "BOC publié", bocSub: "7 actions · 31 lignes obligataires", alert: "Alerte de cours", threshold: "Seuil 90 000 FCFA" },
+  en: { hello: "Hello", markets: "Markets", cap: "Equity capitalisation", session: "FCFA bn · session of", all: "All", tabs: ["Shares", "Bonds", "Favourites"], nav: ["Home", "Markets", "Favourites", "School", "Settings"], now: "now", boc: "BOC published", bocSub: "7 shares · 31 bond lines", alert: "Price alert", threshold: "Threshold FCFA 90,000" },
+  es: { hello: "Hola", markets: "Mercados", cap: "Capitalización de acciones", session: "mil M FCFA · sesión del", all: "Todo", tabs: ["Acciones", "Obligaciones", "Favoritos"], nav: ["Inicio", "Mercados", "Favoritos", "Escuela", "Ajustes"], now: "ahora", boc: "BOC publicado", bocSub: "7 acciones · 31 líneas de obligaciones", alert: "Alerta de cotización", threshold: "Umbral 90 000 FCFA" },
+};
+
 // High-fidelity mock of the BVMAC mobile app (decorative).
-export function AppShowcase({ rows, capitalisation, area }: { rows: Row[]; capitalisation: string; area: number[] }) {
+export function AppShowcase({ rows, capitalisation, area, locale, sessionDate }: { rows: Row[]; capitalisation: string; area: number[]; locale: Locale; sessionDate: string }) {
+  const t = L[locale];
   const min = Math.min(...area);
   const max = Math.max(...area);
   const pts = area.map((v, i) => [(i / (area.length - 1)) * 260, 64 - ((v - min) / (max - min || 1)) * 52 - 4] as const);
@@ -38,8 +46,8 @@ export function AppShowcase({ rows, capitalisation, area }: { rows: Row[]; capit
             <div className="px-5 pb-3 pt-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-[10px] text-[#6b6155]">Bonjour 👋</p>
-                  <p className="font-serif-display text-[22px] leading-tight">Marchés</p>
+                  <p className="text-[10px] text-[#6b6155]">{t.hello} 👋</p>
+                  <p className="font-serif-display text-[22px] leading-tight">{t.markets}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="flex size-8 items-center justify-center rounded-full bg-[#f4efe5]"><Search className="size-3.5" /></span>
@@ -52,9 +60,9 @@ export function AppShowcase({ rows, capitalisation, area }: { rows: Row[]; capit
                 <div className="absolute -right-8 -top-10 size-32 rounded-full bg-[#c9a23a]/25 blur-2xl" />
                 <div className="relative flex items-start justify-between">
                   <div>
-                    <p className="text-[9px] uppercase tracking-[0.14em] text-[#ead18a]/80">Capitalisation actions</p>
+                    <p className="text-[9px] uppercase tracking-[0.14em] text-[#ead18a]/80">{t.cap}</p>
                     <p className="font-serif-display mt-1 text-[26px] leading-none text-[#fbf6ea]">{capitalisation}</p>
-                    <p className="mt-1 text-[9px] text-[#efe6d4]/60">Md FCFA · séance du 8 oct.</p>
+                    <p className="mt-1 text-[9px] text-[#efe6d4]/60">{t.session} {sessionDate}</p>
                   </div>
                   <Logo variant="medal" className="size-9" alt="" />
                 </div>
@@ -65,15 +73,15 @@ export function AppShowcase({ rows, capitalisation, area }: { rows: Row[]; capit
                   <circle cx={pts[pts.length - 1][0] - 2} cy={pts[pts.length - 1][1]} r="3" fill="#ead18a" />
                 </svg>
                 <div className="relative mt-2 flex gap-1 text-[9px]">
-                  {["1S", "1M", "6M", "1A", "Tout"].map((r, i) => <span key={r} className={i === 2 ? "rounded-full bg-[#c9a23a] px-2 py-0.5 font-semibold text-[#1c130b]" : "px-2 py-0.5 text-[#efe6d4]/60"}>{r}</span>)}
+                  {["1S", "1M", "6M", "1A", t.all].map((r, i) => <span key={r} className={i === 2 ? "rounded-full bg-[#c9a23a] px-2 py-0.5 font-semibold text-[#1c130b]" : "px-2 py-0.5 text-[#efe6d4]/60"}>{r}</span>)}
                 </div>
               </div>
 
               {/* segmented */}
               <div className="mt-4 flex rounded-full bg-[#f4efe5] p-1 text-[10px] font-medium">
-                <span className="flex-1 rounded-full bg-white py-1.5 text-center shadow-sm">Actions</span>
-                <span className="flex-1 py-1.5 text-center text-[#6b6155]">Obligations</span>
-                <span className="flex-1 py-1.5 text-center text-[#6b6155]">Favoris</span>
+                <span className="flex-1 rounded-full bg-white py-1.5 text-center shadow-sm">{t.tabs[0]}</span>
+                <span className="flex-1 py-1.5 text-center text-[#6b6155]">{t.tabs[1]}</span>
+                <span className="flex-1 py-1.5 text-center text-[#6b6155]">{t.tabs[2]}</span>
               </div>
 
               <ul className="mt-2 divide-y divide-[#efe8da]">
@@ -96,7 +104,7 @@ export function AppShowcase({ rows, capitalisation, area }: { rows: Row[]; capit
 
             {/* tab bar */}
             <div className="grid grid-cols-5 border-t border-[#efe8da] bg-white/90 px-3 pb-6 pt-2 text-center text-[8.5px] text-[#9a8f80]">
-              {([[Home, "Accueil"], [LineChart, "Marchés"], [Star, "Favoris"], [FileText, "Avis"], [BookOpen, "École"]] as const).map(([Icon, label], i) => (
+              {([[Home, t.nav[0]], [LineChart, t.nav[1]], [Star, t.nav[2]], [BookOpen, t.nav[3]], [Settings, t.nav[4]]] as const).map(([Icon, label], i) => (
                 <span key={label} className={i === 1 ? "font-semibold text-[#1c130b]" : ""}>
                   <Icon className="mx-auto mb-0.5 size-4" strokeWidth={i === 1 ? 2.2 : 1.6} />
                   {label}
@@ -113,19 +121,19 @@ export function AppShowcase({ rows, capitalisation, area }: { rows: Row[]; capit
         <div className="flex items-center gap-2.5">
           <Logo variant="medal" className="size-8" alt="" />
           <div className="min-w-0">
-            <p className="flex items-center justify-between text-[10px] text-[#6b6155]"><span className="font-semibold text-[#1a140e]">BVMAC</span><span>maintenant</span></p>
-            <p className="truncate text-[11px] font-medium">BOC du 8 octobre publié</p>
-            <p className="truncate text-[10px] text-[#6b6155]">7 actions · 31 lignes obligataires</p>
+            <p className="flex items-center justify-between text-[10px] text-[#6b6155]"><span className="font-semibold text-[#1a140e]">BVMAC</span><span>{t.now}</span></p>
+            <p className="truncate text-[11px] font-medium">{t.boc} · {sessionDate}</p>
+            <p className="truncate text-[10px] text-[#6b6155]">{t.bocSub}</p>
           </div>
         </div>
       </div>
       <div className="absolute -bottom-6 -right-6 z-10 w-44 animate-[float_7s_ease-in-out_infinite_-3s] rounded-2xl border border-white/10 bg-[#1c130b]/95 p-3 text-[#efe6d4] shadow-2xl backdrop-blur lg:-right-20">
-        <p className="text-[9px] uppercase tracking-[0.14em] text-[#ead18a]">Alerte de cours</p>
+        <p className="text-[9px] uppercase tracking-[0.14em] text-[#ead18a]">{t.alert}</p>
         <div className="mt-2 flex items-center gap-2">
           <CompanyMark slug="bgfi-holding" size="sm" />
           <div>
             <p className="text-[11px] font-semibold text-[#fbf6ea]">BGFI HC</p>
-            <p className="text-[10px] text-[#efe6d4]/70">Seuil 90 000 FCFA</p>
+            <p className="text-[10px] text-[#efe6d4]/70">{t.threshold}</p>
           </div>
         </div>
       </div>

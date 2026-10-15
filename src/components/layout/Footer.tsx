@@ -54,6 +54,14 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
           </div>
         </Reveal>
 
+        <div className="grid gap-10 border-b border-white/10 py-12 lg:items-center lg:grid-cols-[1.3fr_2.7fr]">
+          <div>
+            <h2 className="font-serif-display text-2xl text-brand-ivory">{t.newsletter}</h2>
+            <p className="mt-2 text-sm text-brand-sand/70">{t.app} · Google Play · App Store</p>
+          </div>
+          <NewsletterForm />
+        </div>
+
         <div className="grid gap-12 py-14 lg:grid-cols-[1.3fr_2.7fr]">
           <div>
             <Logo variant="dark" className="h-12 w-auto" alt="BVMAC – Bourse des Valeurs Mobilières de l’Afrique Centrale" />
@@ -104,14 +112,6 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
               </nav>
             ))}
           </div>
-        </div>
-
-        <div className="grid gap-10 border-t border-white/10 py-12 lg:grid-cols-[1.3fr_2.7fr]">
-          <div>
-            <h2 className="font-serif-display text-2xl text-brand-ivory">{t.newsletter}</h2>
-            <p className="mt-2 text-sm text-brand-sand/70">{t.app} · Google Play · App Store</p>
-          </div>
-          <NewsletterForm />
         </div>
 
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 py-6 text-sm">

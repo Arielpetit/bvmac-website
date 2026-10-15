@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { localizeAlbum } from "@/i18n/content";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
@@ -8,8 +9,9 @@ import { useI18n } from "@/i18n/provider";
 import type { Album } from "@/data/media";
 
 // Album grid with an accessible lightbox (Escape, arrow keys, focus kept in the dialog).
-export function PhotoGallery({ albums }: { albums: Album[] }) {
-  const { dict } = useI18n();
+export function PhotoGallery({ albums: raw }: { albums: Album[] }) {
+  const { dict, locale } = useI18n();
+  const albums = raw.map((a) => localizeAlbum(a, locale));
   const [open, setOpen] = useState<{ album: number; photo: number } | null>(null);
   const current = open ? albums[open.album].photos[open.photo] : null;
 

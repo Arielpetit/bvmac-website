@@ -19,7 +19,7 @@ export default async function NewsPage({ params }: PageProps<"/[locale]/actualit
   const { locale, dict } = await resolveLocale(params);
   const news = await getNews();
   return (
-    <ContentPage locale={locale} dict={dict} group="news" title={dict.nav.items.newsList} intro={INTRO[locale]} frenchBody={false}>
+    <ContentPage locale={locale} dict={dict} title={dict.nav.items.newsList} intro={INTRO[locale]}>
       <NewsList items={news} />
     </ContentPage>
   );

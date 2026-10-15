@@ -1,21 +1,23 @@
 "use client";
 
 import Image from "next/image";
+import { localizeVideo } from "@/i18n/content";
 import { useState } from "react";
-import { FileText, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
 import { CONTACT } from "@/lib/navigation";
 import type { Video } from "@/data/media";
 import { VideoCard } from "./VideoCard";
 import { cn } from "@/lib/cn";
 
-export function VideoGrid({ videos }: { videos: Video[] }) {
+export function VideoGrid({ videos: raw }: { videos: Video[] }) {
   const { locale } = useI18n();
+  const videos = raw.map((v) => localizeVideo(v, locale));
   const [list, setList] = useState("");
   const [current, setCurrent] = useState(videos[0]);
   const playlists = [...new Set(videos.map((v) => v.playlist))];
   const shown = videos.filter((v) => !list || v.playlist === list);
-  const L = { fr: ["Toutes", "Transcription (à venir)"], en: ["All", "Transcript (coming soon)"], es: ["Todas", "Transcripción (próximamente)"] }[locale];
+  const L = { fr: ["Toutes"], en: ["All"], es: ["Todas"] }[locale];
   return (
     <div className="grid gap-10">
       <VideoCard title={current.title} caption={current.caption} channelUrl={CONTACT.social.youtube} poster={current.poster} />
@@ -25,7 +27,6 @@ export function VideoGrid({ videos }: { videos: Video[] }) {
             <button key={p || "all"} type="button" aria-pressed={list === p} onClick={() => setList(p)} className={cn("h-10 rounded-full border px-4 text-sm", list === p ? "border-transparent bg-action text-action-text" : "border-line bg-surface hover:border-line-strong")}>{p || L[0]}</button>
           ))}
         </div>
-        <span className="inline-flex items-center gap-2 text-sm text-muted"><FileText aria-hidden="true" className="size-4" />{L[1]}</span>
       </div>
       <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((v) => (

@@ -8,10 +8,16 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/emetteur
   return pageTitle(params, (d) => d.nav.items.eligibility);
 }
 
+const INTRO = {
+  fr: "Une première indication, en quatre questions, sur l’accès de votre entreprise au compartiment A-Premium.",
+  en: "A first indication, in four questions, of whether your company could join the A-Premium segment.",
+  es: "Una primera indicación, en cuatro preguntas, sobre el acceso de su empresa al segmento A-Premium.",
+};
+
 export default async function EligibilityPage({ params }: PageProps<"/[locale]/emetteurs/test-d-eligibilite">) {
   const { locale, dict } = await resolveLocale(params);
   return (
-    <ContentPage locale={locale} dict={dict} group="issuers" title={dict.nav.items.eligibility} intro="Une première indication, en quatre questions, sur l'accès de votre entreprise au compartiment A-Premium.">
+    <ContentPage locale={locale} dict={dict} title={dict.nav.items.eligibility} intro={INTRO[locale]}>
       <EligibilityCheck />
     </ContentPage>
   );

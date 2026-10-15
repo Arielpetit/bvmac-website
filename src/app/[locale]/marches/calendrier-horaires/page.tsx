@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
-import { crumbs } from "@/lib/page-helpers";
-import { formatDate } from "@/lib/format";
+import { formatDate, formatDayMonth } from "@/lib/format";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Callout } from "@/components/ui/Callout";
 import { SessionTimeline } from "@/components/market/SessionTimeline";
+import { tc } from "@/i18n/content";
 
 // 2026 Cameroon public holidays. Movable religious dates are indicative and
 // announced by an avis de la BVMAC.
@@ -37,35 +36,32 @@ export default async function HoursPage({ params }: PageProps<"/[locale]/marches
   const t = T[locale];
   return (
     <>
-      <PageHeader group="markets" title={dict.nav.items.hours} intro={t.intro} breadcrumbLabel={dict.a11y.breadcrumb} breadcrumb={crumbs(locale, dict, "markets", dict.nav.items.hours)} />
-      <div className="container-site grid gap-16 py-14 md:py-20">
+      <PageHeader title={dict.nav.items.hours} intro={t.intro} />
+      <div className="container-site grid gap-16 pt-10 pb-14 md:pt-12 md:pb-20">
         <section aria-labelledby="phases">
           <h2 id="phases" className="text-h2 mb-6">{t.phases}</h2>
           <SessionTimeline />
         </section>
-        <section aria-labelledby="holidays" className="max-w-2xl">
+        <section aria-labelledby="holidays">
           <h2 id="holidays" className="text-h2 mb-6">{t.holidays}</h2>
-          <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface">
-            <table className="w-full text-sm">
-              <caption className="sr-only">{t.holidays}</caption>
-              <thead className="bg-surface-alt">
-                <tr className="text-xs uppercase tracking-[0.08em] text-muted">
-                  <th scope="col" className="px-4 py-3 text-left font-semibold">{t.day}</th>
-                  <th scope="col" className="px-4 py-3 text-left font-semibold">{t.date}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line">
-                {HOLIDAYS_2026.map((h) => (
-                  <tr key={h.date}>
-                    <td className="px-4 py-2.5">{h.fr}</td>
-                    <td className="px-4 py-2.5 capitalize">{formatDate(h.date, locale)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {HOLIDAYS_2026.map((h) => {
+              const dm = formatDayMonth(h.date, locale);
+              return (
+                <li key={h.date} className="flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-4">
+                  <time dateTime={h.date} className="flex size-14 shrink-0 flex-col items-center justify-center rounded-2xl bg-accent-soft text-accent-text">
+                    <span className="font-serif-display text-xl leading-none">{dm.day}</span>
+                    <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider">{dm.month}</span>
+                  </time>
+                  <span className="min-w-0">
+                    <span className="block font-medium text-heading">{tc(h.fr, locale)}</span>
+                    <span className="block text-xs capitalize text-muted">{formatDate(h.date, locale)}</span>
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
         </section>
-        <Callout tone="warning">{t.note}</Callout>
       </div>
     </>
   );

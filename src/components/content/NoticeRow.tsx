@@ -6,6 +6,7 @@ import { formatDayMonth, formatDate } from "@/lib/format";
 import type { Locale } from "@/i18n/config";
 import { localePath } from "@/lib/paths";
 import { cn } from "@/lib/cn";
+import { tc } from "@/i18n/content";
 
 const TYPE_STYLE: Record<Notice["type"], string> = {
   avis: "bg-accent-soft text-accent-text",
@@ -31,11 +32,11 @@ export function NoticeRow({ notice, locale, compact = false }: { notice: Notice;
         <div className="mb-1.5 flex flex-wrap items-center gap-2 text-xs text-muted">
           <NoticeTypeTag type={notice.type} locale={locale} />
           {notice.number && <span className="code">N°{notice.number}</span>}
-          {!compact && notice.issuer && <span>· {notice.issuer}</span>}
+          {!compact && notice.issuer && <span>· {tc(notice.issuer, locale)}</span>}
         </div>
         <h3 className={cn("text-[0.98rem] font-medium leading-snug text-heading", compact && "line-clamp-2")}>
           <Link href={localePath(locale, `/avis-et-communiques/${notice.id}`)} className="after:absolute after:inset-0 group-hover:text-link">
-            {notice.title}
+            {tc(notice.title, locale)}
           </Link>
         </h3>
         {!compact && <p className="mt-1 text-xs text-muted">{formatDate(notice.date, locale)}</p>}

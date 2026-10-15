@@ -19,7 +19,7 @@ export default async function ListedPage({ params }: PageProps<"/[locale]/emette
   const { locale, dict } = await resolveLocale(params);
   const equities = await getEquities();
   return (
-    <ContentPage locale={locale} dict={dict} group="issuers" isGroupRoot title={dict.nav.items.listed} intro={INTRO[locale]} frenchBody={false} image="/photos/ceremony-trading-floor.webp">
+    <ContentPage locale={locale} dict={dict} title={dict.nav.items.listed} intro={INTRO[locale]}>
       <ListedCompanies equities={equities} />
       <p className="mt-6 text-xs text-muted">{dict.market.demo}.</p>
     </ContentPage>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useI18n } from "@/i18n/provider";
 import { AnimatePresence, motion } from "motion/react";
 import { Building2, ChevronRight } from "lucide-react";
 import type { OrgUnit } from "@/data/institution";
@@ -9,6 +10,7 @@ import { cn } from "@/lib/cn";
 // HTML organisation chart: every unit is a button; the selected unit's
 // details appear in a side panel. Collapses to a stacked tree on phones.
 export function OrgChart({ root }: { root: OrgUnit }) {
+  const { locale } = useI18n();
   const [selected, setSelected] = useState<OrgUnit>(root);
   const node = (u: OrgUnit, level: number) => (
     <button
@@ -31,7 +33,7 @@ export function OrgChart({ root }: { root: OrgUnit }) {
 
   return (
     <div className="grid gap-10 xl:grid-cols-[1fr_300px]">
-      <figure aria-label="Organigramme de la BVMAC">
+      <figure aria-label={{ fr: "Organigramme de la BVMAC", en: "BVMAC organisation chart", es: "Organigrama de la BVMAC" }[locale]}>
         <div className="mx-auto max-w-sm">{node(root, 0)}</div>
         <div aria-hidden="true" className="mx-auto hidden h-8 w-px bg-brand-gold md:block" />
         <ul className="relative grid gap-4 md:grid-cols-5 md:pt-8">
@@ -54,7 +56,7 @@ export function OrgChart({ root }: { root: OrgUnit }) {
           <motion.div key={selected.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.25 }}>
             <span className="flex size-11 items-center justify-center rounded-xl bg-accent-soft text-accent-text"><Building2 aria-hidden="true" className="size-5" strokeWidth={1.5} /></span>
             <h2 className="text-h3 mt-4">{selected.title}</h2>
-            <p className="mt-2 text-sm text-muted">{selected.text ?? "Unité rattachée. Missions détaillées à fournir par la BVMAC."}</p>
+            <p className="mt-2 text-sm text-muted">{selected.text ?? { fr: "Unité rattachée à la direction ci-dessus.", en: "Unit reporting to the department above.", es: "Unidad dependiente de la dirección superior." }[locale]}</p>
             {selected.children && (
               <ul className="mt-4 grid gap-1.5">
                 {selected.children.map((c) => (

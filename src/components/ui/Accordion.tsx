@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Plus } from "lucide-react";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/cn";
 
 export type AccordionItem = { id: string; title: React.ReactNode; content: React.ReactNode; meta?: React.ReactNode };
@@ -60,7 +61,9 @@ export function Accordion({ items, className, numbered = false, defaultOpen = []
 }
 
 // FAQ block with schema.org FAQPage structured data.
-export function Faq({ items, title = "Questions fréquentes" }: { items: { q: string; a: string }[]; title?: string }) {
+export function Faq({ items, title }: { items: { q: string; a: string }[]; title?: string }) {
+  const { locale } = useI18n();
+  title ??= { fr: "Questions fréquentes", en: "Frequently asked questions", es: "Preguntas frecuentes" }[locale];
   const ld = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) };
   return (
     <section aria-label={title} className="grid gap-8 lg:grid-cols-[1fr_2fr]">

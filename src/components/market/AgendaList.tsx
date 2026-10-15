@@ -9,6 +9,7 @@ import { intlLocale } from "@/i18n/config";
 import type { CorporateAction } from "@/data/market";
 import { EmptyState } from "@/components/ui/States";
 import { cn } from "@/lib/cn";
+import { tc } from "@/i18n/content";
 
 const TYPES = {
   fr: { dividende: "Dividende", coupon: "Coupon", remboursement: "Remboursement", ag: "Assemblée générale", introduction: "Introduction", souscription: "Souscription", all: "Tous", allIssuers: "Tous les émetteurs", list: "Liste", grid: "Mois", export: "Exporter (.ics)", add: "Ajouter", notice: "Avis", upcoming: "À venir", past: "Passées" },
@@ -51,10 +52,10 @@ export function AgendaList({ events, today }: { events: CorporateAction[]; today
             </button>
           ))}
         </div>
-        <label className="sr-only" htmlFor="ag-issuer">Émetteur</label>
+        <label className="sr-only" htmlFor="ag-issuer">{t.allIssuers}</label>
         <select id="ag-issuer" value={issuer} onChange={(e) => setIssuer(e.target.value)} className="h-9 rounded-full border border-line bg-surface px-4 text-sm">
           <option value="">{t.allIssuers}</option>
-          {issuers.map((i) => <option key={i}>{i}</option>)}
+          {issuers.map((i) => <option key={i} value={i}>{tc(i, locale)}</option>)}
         </select>
         <div className="ml-auto flex gap-2">
           <div role="group" aria-label="Vue" className="inline-flex rounded-full border border-line bg-surface p-1">
@@ -103,15 +104,15 @@ export function AgendaList({ events, today }: { events: CorporateAction[]; today
           <span className="font-serif-display text-2xl leading-none">{dm.day}</span>
           <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider">{dm.month}</span>
         </time>
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 basis-48">
           <p className="text-xs font-medium uppercase tracking-[0.1em] text-muted">{t[e.type]}</p>
-          <p className="font-medium text-heading">{e.issuer}</p>
+          <p className="font-medium text-heading">{tc(e.issuer, locale)}</p>
           <p className="text-sm text-muted">
-            {e.detail}
+            {tc(e.detail, locale)}
             {e.endDate && ` · ${formatDate(e.date, locale, "short")} → ${formatDate(e.endDate, locale, "short")}`}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex w-full gap-2 pl-20 sm:w-auto sm:pl-0">
           {e.notice && <Link href={`/${locale}/avis-et-communiques/${e.notice}`} className="inline-flex h-9 items-center rounded-full border border-line px-3 text-sm hover:border-line-strong">{t.notice}</Link>}
           <button type="button" onClick={() => ics([e])} className="inline-flex h-9 items-center gap-1 rounded-full px-3 text-sm text-link hover:bg-surface-alt">
             <CalendarPlus aria-hidden="true" className="size-4" strokeWidth={1.6} /> {t.add}

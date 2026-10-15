@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
+import { sectorLabel } from "@/lib/market-labels";
 import Link from "next/link";
 import { ArrowUpRight, FileDown } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { localePath } from "@/lib/paths";
-import { crumbs, pageTitle } from "@/lib/page-helpers";
-import { formatDate, formatFcfa, formatNumber } from "@/lib/format";
+import { pageTitle } from "@/lib/page-helpers";
+import { formatDate, formatNumber } from "@/lib/format";
 import { getBocArchive, getCapitalisationHistory, getMarketSummary, getMovers } from "@/lib/api";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Callout } from "@/components/ui/Callout";
 import { PriceChange } from "@/components/ui/PriceChange";
 import { SessionChip } from "@/components/layout/SessionChip";
 import { TimeSeriesChart } from "@/components/market/LazyCharts";
@@ -41,11 +41,8 @@ export default async function MarketsPage({ params }: PageProps<"/[locale]/march
   return (
     <>
       <PageHeader
-        group="markets"
         title={dict.nav.items.session}
         intro={t.intro}
-        breadcrumbLabel={dict.a11y.breadcrumb}
-        breadcrumb={crumbs(locale, dict, "markets")}
         meta={
           <>
             <SessionChip />
@@ -54,12 +51,12 @@ export default async function MarketsPage({ params }: PageProps<"/[locale]/march
           </>
         }
       />
-      <div className="container-site grid gap-16 py-14 md:py-20">
+      <div className="container-site grid gap-16 pt-10 pb-14 md:pt-12 md:pb-20">
         <Stagger as="dl" className="grid grid-cols-2 gap-4 lg:grid-cols-5">
           {cards.map((c, i) => (
-            <StaggerItem key={i} className="rounded-[var(--radius-card)] border border-line bg-surface p-5">
+            <StaggerItem key={i} className="rounded-[var(--radius-card)] border border-line bg-surface p-4 sm:p-5">
               <dt className="text-sm text-muted">{t.cards[i]}</dt>
-              <dd className="mt-3 font-serif-display text-2xl text-heading md:text-[1.65rem]"><CountUp value={c.value} kind={c.kind} /></dd>
+              <dd className="mt-3 whitespace-nowrap font-serif-display text-xl text-heading sm:text-2xl md:text-[1.65rem]"><CountUp value={c.value} kind={c.kind} /></dd>
             </StaggerItem>
           ))}
         </Stagger>
@@ -78,7 +75,7 @@ export default async function MarketsPage({ params }: PageProps<"/[locale]/march
                   <Link href={localePath(locale, `/marches/actions/${e.slug}`)} className="group flex items-center justify-between gap-3 px-5 py-4 hover:bg-surface-alt/50">
                     <span>
                       <span className="block font-medium text-heading group-hover:text-link">{e.shortName}</span>
-                      <span className="block text-xs text-muted">{formatNumber(e.qtyTraded, locale)} · {e.sector}</span>
+                      <span className="block text-xs text-muted">{formatNumber(e.qtyTraded, locale)} · {sectorLabel(e.sector, locale)}</span>
                     </span>
                     <span className="flex items-center gap-4">
                       <span className="text-right">
@@ -91,7 +88,6 @@ export default async function MarketsPage({ params }: PageProps<"/[locale]/march
                 </li>
               ))}
             </ul>
-            <Callout title={t.indices}>{t.indicesText}</Callout>
           </Reveal>
         </div>
 
@@ -100,7 +96,6 @@ export default async function MarketsPage({ params }: PageProps<"/[locale]/march
           <p className="mb-6 mt-2 text-sm text-muted">{t.phasesNote}</p>
           <SessionTimeline />
         </Reveal>
-        <p className="text-xs text-muted">{dict.common.disclaimer} {formatFcfa(summary.equityCapitalisation, locale)} · {formatDate(summary.date, locale)}.</p>
       </div>
     </>
   );

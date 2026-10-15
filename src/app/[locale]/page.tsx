@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { sectorLabel } from "@/lib/market-labels";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -47,6 +48,7 @@ import { CountUp } from "@/components/motion/CountUp";
 import { ParallaxImage } from "@/components/motion/Parallax";
 import { Marquee } from "@/components/motion/Marquee";
 import { Guilloche } from "@/components/brand/Guilloche";
+import { tc } from "@/i18n/content";
 
 const copy = {
   fr: {
@@ -102,6 +104,7 @@ const copy = {
     schoolTitle: "Apprendre la bourse, pas à pas.",
     schoolText: "Un espace gratuit pour comprendre le marché financier régional avant d’investir : 14 leçons, des quiz expliqués et un portefeuille virtuel.",
     schoolPoints: [["Leçons de 5 minutes", "Des notions claires, du BOC aux obligations."], ["Quiz et badges", "Une progression enregistrée sur votre appareil."], ["Portefeuille virtuel", "5 000 000 FCFA fictifs, cours réels différés."]],
+    mock: { lesson: "Leçon 2 · 5 min", lessonTitle: "Actions et obligations", quizQ: "Qu’est-ce qu’une obligation ?", quizA: "Un prêt à un émetteur", streak: "Série de 4 jours", badge: "badge « Premier pas » obtenu", ipoAlt: "Signature lors de l’introduction en bourse de BGFI Holding Corporation", hq: "Siège BVMAC, Douala" },
     schoolCta: "Commencer un parcours",
     newsEyebrow: "Actualités",
     newsTitle: "La vie du marché",
@@ -170,6 +173,7 @@ const copy = {
     schoolTitle: "Learn the market, step by step.",
     schoolText: "A free space to understand the regional financial market before investing: 14 lessons, explained quizzes and a virtual portfolio.",
     schoolPoints: [["5-minute lessons", "Clear concepts, from the BOC to bonds."], ["Quizzes and badges", "Progress saved on your device."], ["Virtual portfolio", "5,000,000 virtual FCFA, real delayed prices."]],
+    mock: { lesson: "Lesson 2 · 5 min", lessonTitle: "Shares and bonds", quizQ: "What is a bond?", quizA: "A loan to an issuer", streak: "4-day streak", badge: "“First step” badge earned", ipoAlt: "Signing ceremony for the BGFI Holding Corporation IPO", hq: "BVMAC headquarters, Douala" },
     schoolCta: "Start a learning path",
     newsEyebrow: "News",
     newsTitle: "Life of the market",
@@ -238,6 +242,7 @@ const copy = {
     schoolTitle: "Aprender la bolsa, paso a paso.",
     schoolText: "Un espacio gratuito para comprender el mercado financiero regional antes de invertir: 14 lecciones, cuestionarios explicados y una cartera virtual.",
     schoolPoints: [["Lecciones de 5 minutos", "Conceptos claros, del BOC a las obligaciones."], ["Cuestionarios e insignias", "Progreso guardado en su dispositivo."], ["Cartera virtual", "5.000.000 FCFA ficticios, cotizaciones reales diferidas."]],
+    mock: { lesson: "Lección 2 · 5 min", lessonTitle: "Acciones y obligaciones", quizQ: "¿Qué es una obligación?", quizA: "Un préstamo a un emisor", streak: "Racha de 4 días", badge: "insignia «Primer paso» obtenida", ipoAlt: "Firma durante la salida a bolsa de BGFI Holding Corporation", hq: "Sede de la BVMAC, Duala" },
     schoolCta: "Empezar un itinerario",
     newsEyebrow: "Actualidad",
     newsTitle: "La vida del mercado",
@@ -532,7 +537,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                         <CompanyMark slug={e.slug} name={e.shortName} />
                         <span>
                           <span className="block font-medium text-heading group-hover:text-link">{e.shortName}</span>
-                          <span className="flex items-center gap-1.5 text-xs text-muted"><Flag code={e.country} className="h-2.5 w-[15px]" />{e.sector}</span>
+                          <span className="flex items-center gap-1.5 text-xs text-muted"><Flag code={e.country} className="h-2.5 w-[15px]" />{sectorLabel(e.sector, locale)}</span>
                         </span>
                       </Link>
                     </th>
@@ -610,14 +615,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
           <Reveal delay={0.15} className="relative">
             <div className="relative aspect-[970/624] overflow-hidden rounded-[var(--radius-panel)] shadow-[0_60px_120px_-40px_rgb(0_0_0/0.9)] ring-1 ring-white/10">
-              <ParallaxImage src="/photos/bgfi-ipo-signing.webp" alt="Signature lors de l’introduction en bourse de BGFI Holding Corporation" className="absolute inset-0" strength={40} sizes="(min-width:1024px) 640px, 100vw" />
+              <ParallaxImage src="/photos/bgfi-ipo-signing.webp" alt={t.mock.ipoAlt} className="absolute inset-0" strength={40} sizes="(min-width:1024px) 640px, 100vw" />
               <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-tr from-espresso/60 via-transparent to-transparent" />
             </div>
             <div className="absolute -bottom-6 left-5 flex items-center gap-3 rounded-2xl bg-espresso-2 px-4 py-3 shadow-2xl ring-1 ring-brand-gold/30 md:-left-8">
               <CalendarDays aria-hidden="true" className="size-5 text-brand-gold-light" strokeWidth={1.6} />
               <span className="text-sm">
                 <span className="block font-medium text-brand-ivory">{t.storyStats[0][0]}</span>
-                <span className="block text-xs text-brand-sand/65">Siège BVMAC, Douala</span>
+                <span className="block text-xs text-brand-sand/65">{t.mock.hq}</span>
               </span>
             </div>
             <div className="absolute -top-5 right-5 flex items-center gap-2.5 rounded-full bg-brand-ivory py-2 pl-2 pr-4 text-espresso shadow-2xl md:-right-6">
@@ -658,8 +663,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                       </time>
                       <div className="min-w-0">
                         <p className="text-xs font-medium uppercase tracking-[0.1em] text-muted">{t.agendaTypes[a.type]}</p>
-                        <p className="truncate font-medium text-heading">{a.issuer}</p>
-                        <p className="line-clamp-1 text-sm text-muted">{a.detail}</p>
+                        <p className="truncate font-medium text-heading">{tc(a.issuer, locale)}</p>
+                        <p className="line-clamp-1 text-sm text-muted">{tc(a.detail, locale)}</p>
                       </div>
                     </div>
                   </StaggerItem>
@@ -683,19 +688,19 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <LearnArt className="relative mx-auto w-full max-w-md opacity-90" />
               <div className="relative mt-6 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-brand-sand backdrop-blur">
-                  <p className="text-[10px] uppercase tracking-[0.14em] text-brand-gold-light">Leçon 2 · 5 min</p>
-                  <p className="mt-1.5 font-medium text-brand-ivory">Actions et obligations</p>
+                  <p className="text-[10px] uppercase tracking-[0.14em] text-brand-gold-light">{t.mock.lesson}</p>
+                  <p className="mt-1.5 font-medium text-brand-ivory">{t.mock.lessonTitle}</p>
                   <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full w-2/3 rounded-full bg-brand-gold" /></div>
                 </div>
                 <div className="rounded-2xl bg-brand-ivory p-4 text-espresso shadow-2xl">
                   <p className="text-[10px] uppercase tracking-[0.14em] text-[#8a6614]">Quiz</p>
-                  <p className="mt-1.5 text-sm font-medium">Qu’est-ce qu’une obligation ?</p>
-                  <p className="mt-2 flex items-center gap-2 rounded-lg bg-[#e4f3ea] px-2.5 py-1.5 text-xs text-[#157a43]"><Check aria-hidden="true" className="size-3.5" />Un prêt à un émetteur</p>
+                  <p className="mt-1.5 text-sm font-medium">{t.mock.quizQ}</p>
+                  <p className="mt-2 flex items-center gap-2 rounded-lg bg-[#e4f3ea] px-2.5 py-1.5 text-xs text-[#157a43]"><Check aria-hidden="true" className="size-3.5" />{t.mock.quizA}</p>
                 </div>
               </div>
               <div className="relative mt-3 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-3 text-sm text-brand-sand">
                 <span className="flex size-9 items-center justify-center rounded-full bg-brand-gold text-espresso"><Flame aria-hidden="true" className="size-4" /></span>
-                <span><span className="font-medium text-brand-ivory">Série de 4 jours</span> · badge « Premier pas » obtenu</span>
+                <span><span className="font-medium text-brand-ivory">{t.mock.streak}</span> · {t.mock.badge}</span>
               </div>
             </div>
           </Reveal>
@@ -790,9 +795,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </div>
           <Reveal delay={0.15} className="mx-auto max-sm:[zoom:0.72]">
             <AppShowcase
+              locale={locale}
+              sessionDate={formatDate(summary.date, locale, "short")}
               capitalisation={formatNumber(summary.equityCapitalisation / 1e9, locale, 1)}
               area={capHistory.slice(-60).map((pt) => pt.value)}
-              rows={equities.slice(0, 5).map((e) => ({ slug: e.slug, name: e.shortName, sector: e.sector, price: formatNumber(e.closePrice, locale), change: e.change, spark: sparks[e.slug].slice(-20).map((pt) => pt.value) }))}
+              rows={equities.slice(0, 5).map((e) => ({ slug: e.slug, name: e.shortName, sector: sectorLabel(e.sector, locale), price: formatNumber(e.closePrice, locale), change: e.change, spark: sparks[e.slug].slice(-20).map((pt) => pt.value) }))}
             />
           </Reveal>
         </div>

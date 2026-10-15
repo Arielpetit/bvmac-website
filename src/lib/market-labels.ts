@@ -19,7 +19,7 @@ export const COLUMN_HINTS: Record<Locale, Record<string, string>> = {
     demanded: "Nombre de titres demandés par les acheteurs pendant la séance.",
     offered: "Nombre de titres proposés par les vendeurs pendant la séance.",
     traded: "Nombre de titres réellement échangés pendant la séance.",
-    status: "NC : aucune transaction. PEq : cours d’équilibre publié (définition à confirmer par la BVMAC).",
+    status: "NC : aucune transaction. PEq : cours d’équilibre publié.",
   },
   en: {
     isin: "Unique international code identifying a security.",
@@ -31,7 +31,7 @@ export const COLUMN_HINTS: Record<Locale, Record<string, string>> = {
     demanded: "Number of securities bid during the session.",
     offered: "Number of securities offered during the session.",
     traded: "Number of securities actually traded.",
-    status: "NC: no trade. PEq: equilibrium price published (definition to be confirmed by BVMAC).",
+    status: "NC: no trade. PEq: equilibrium price published.",
   },
   es: {
     isin: "Código internacional único que identifica un valor.",
@@ -43,7 +43,7 @@ export const COLUMN_HINTS: Record<Locale, Record<string, string>> = {
     demanded: "Número de títulos demandados durante la sesión.",
     offered: "Número de títulos ofrecidos durante la sesión.",
     traded: "Número de títulos realmente negociados.",
-    status: "NC: sin operación. PEq: precio de equilibrio publicado (definición por confirmar por la BVMAC).",
+    status: "NC: sin operación. PEq: precio de equilibrio publicado.",
   },
 };
 
@@ -54,4 +54,17 @@ export function formatListedOn(value: string | null, locale: Locale): string {
     return new Intl.DateTimeFormat({ fr: "fr-FR", en: "en-GB", es: "es-ES" }[locale], { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}-15T00:00:00Z`));
   }
   return new Intl.DateTimeFormat({ fr: "fr-FR", en: "en-GB", es: "es-ES" }[locale], { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T12:00:00Z`));
+}
+
+// Sector names are stored in French (source data); shown in the visitor's language.
+const SECTORS: Record<string, { en: string; es: string }> = {
+  "Agro-industrie": { en: "Agribusiness", es: "Agroindustria" },
+  Banque: { en: "Banking", es: "Banca" },
+  Boissons: { en: "Beverages", es: "Bebidas" },
+  Microfinance: { en: "Microfinance", es: "Microfinanzas" },
+  "Réassurance": { en: "Reinsurance", es: "Reaseguros" },
+};
+
+export function sectorLabel(sector: string, locale: Locale): string {
+  return locale === "fr" ? sector : SECTORS[sector]?.[locale] ?? sector;
 }
