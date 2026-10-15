@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BadgeCheck, BookOpen, Building2, LineChart, Scale, Wallet } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookOpen, Building2, Coins, FileText, LineChart, CirclePlus, Scale, Vote, Wallet } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
 import { localePath } from "@/lib/paths";
@@ -9,7 +8,6 @@ import { ContentPage } from "@/components/content/ContentPage";
 import { ButtonLink } from "@/components/ui/Button";
 import { Faq } from "@/components/ui/Accordion";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
-import { ParallaxImage } from "@/components/motion/Parallax";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/investisseurs/comment-investir">): Promise<Metadata> {
   return pageTitle(params, (d) => d.nav.items.howTo);
@@ -34,9 +32,14 @@ const T = {
     ],
     rightsEyebrow: "Être actionnaire",
     rightsTitle: "Vos droits d’actionnaire",
-    rights: ["Droit aux dividendes votés en assemblée générale", "Droit de vote en assemblée générale", "Droit à l’information : rapports, états financiers, avis", "Droit préférentiel lors de certaines augmentations de capital"],
+    rightsIntro: "Une action fait de vous copropriétaire de la société. Elle vous donne quatre droits essentiels.",
+    rights: [
+      ["Dividendes", "Vous recevez votre part des bénéfices distribués, au montant voté en assemblée générale et payé via votre teneur de compte."],
+      ["Droit de vote", "Vous votez en assemblée générale sur les comptes, la distribution des bénéfices et l’élection des administrateurs."],
+      ["Information", "La société publie ses rapports annuels, ses états financiers et ses avis ; la BVMAC les relaie dans les avis et communiqués."],
+      ["Droit préférentiel", "Lors d’une augmentation de capital, vous pouvez souscrire en priorité aux nouvelles actions pour garder votre part."],
+    ],
     protection: "Protection des investisseurs",
-    photoAlt: "Étudiants lors d’une séance de l’École de bourse",
     simEyebrow: "Sans risque",
     simTitle: "Entraînez-vous avec le portefeuille virtuel",
     simText: "5 millions de FCFA fictifs pour tester vos idées sur les vrais cours de la BVMAC.",
@@ -70,9 +73,14 @@ const T = {
     ],
     rightsEyebrow: "Being a shareholder",
     rightsTitle: "Your rights as a shareholder",
-    rights: ["Right to dividends approved at the general meeting", "Right to vote at the general meeting", "Right to information: reports, financial statements, notices", "Preferential right in some capital increases"],
+    rightsIntro: "A share makes you a co-owner of the company. It gives you four essential rights.",
+    rights: [
+      ["Dividends", "You receive your share of the profits paid out, at the amount voted at the general meeting and paid through your account keeper."],
+      ["Voting rights", "You vote at the general meeting on the accounts, the profit distribution and the election of directors."],
+      ["Information", "The company publishes its annual reports, financial statements and notices; the BVMAC relays them in its notices and releases."],
+      ["Preferential right", "In a capital increase, you can subscribe to the new shares first, so you keep your share of the company."],
+    ],
     protection: "Investor protection",
-    photoAlt: "Students at a Stock Market School session",
     simEyebrow: "Risk-free",
     simTitle: "Practise with the virtual portfolio",
     simText: "5 million virtual FCFA to test your ideas on real BVMAC prices.",
@@ -106,9 +114,14 @@ const T = {
     ],
     rightsEyebrow: "Ser accionista",
     rightsTitle: "Sus derechos como accionista",
-    rights: ["Derecho a los dividendos aprobados en junta general", "Derecho de voto en junta general", "Derecho a la información: informes, estados financieros, avisos", "Derecho preferente en algunas ampliaciones de capital"],
+    rightsIntro: "Una acción le convierte en copropietario de la sociedad. Le da cuatro derechos esenciales.",
+    rights: [
+      ["Dividendos", "Recibe su parte de los beneficios repartidos, por el importe votado en junta general y pagado a través de su depositario."],
+      ["Derecho de voto", "Vota en junta general sobre las cuentas, el reparto de beneficios y la elección de los administradores."],
+      ["Información", "La sociedad publica sus informes anuales, estados financieros y avisos; la BVMAC los difunde en sus avisos y comunicados."],
+      ["Derecho preferente", "En una ampliación de capital, puede suscribir primero las nuevas acciones para mantener su participación."],
+    ],
     protection: "Protección de los inversores",
-    photoAlt: "Estudiantes en una sesión de la Escuela de Bolsa",
     simEyebrow: "Sin riesgo",
     simTitle: "Practique con la cartera virtual",
     simText: "5 millones de FCFA ficticios para probar sus ideas con las cotizaciones reales de la BVMAC.",
@@ -180,24 +193,33 @@ export default async function HowToPage({ params }: PageProps<"/[locale]/investi
           </Stagger>
         </section>
 
-        <section aria-labelledby="rights" className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div className="relative aspect-[5/4] overflow-hidden rounded-[var(--radius-panel)]">
-            <ParallaxImage src="/photos/school-students.webp" alt={t.photoAlt} className="absolute inset-0" />
-          </div>
+        <section aria-labelledby="rights" className="grid gap-12 lg:grid-cols-[1fr_1.7fr] lg:gap-16">
           <Reveal>
             <p className="eyebrow">{t.rightsEyebrow}</p>
             <h2 id="rights" className="text-h2 mt-3">{t.rightsTitle}</h2>
-            <ul className="mt-8 grid gap-4">
-              {t.rights.map((r) => (
-                <li key={r} className="flex gap-4 border-b border-line pb-4 text-[1.0625rem]"><BadgeCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-accent-text" strokeWidth={1.6} />{r}</li>
-              ))}
-            </ul>
+            <p className="mt-4 max-w-sm text-muted">{t.rightsIntro}</p>
             <Link href={p("/investisseurs/protection")} className="link mt-6 inline-flex items-center gap-1 text-sm">{t.protection}<ArrowUpRight aria-hidden="true" className="size-4" /></Link>
           </Reveal>
+          <Stagger as="ul" className="grid gap-4 sm:grid-cols-2">
+            {t.rights.map(([title, text], i) => {
+              const Icon = RIGHT_ICONS[i];
+              return (
+                <StaggerItem as="li" key={title} className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface p-6 md:p-7">
+                  <span aria-hidden="true" className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-brand-gold transition-transform duration-500 group-hover:scale-x-100" />
+                  <div className="flex items-center justify-between">
+                    <span className="flex size-12 items-center justify-center rounded-full bg-accent-soft text-accent-text ring-1 ring-brand-gold/25"><Icon aria-hidden="true" className="size-[22px]" strokeWidth={1.5} /></span>
+                    <span aria-hidden="true" className="figure font-serif-display text-2xl text-brand-gold/40">0{i + 1}</span>
+                  </div>
+                  <h3 className="mt-5 text-lg font-semibold text-heading">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
+                </StaggerItem>
+              );
+            })}
+          </Stagger>
         </section>
 
         <Reveal className="relative overflow-hidden rounded-[var(--radius-panel)] bg-espresso p-10 text-brand-ivory md:p-14">
-          <Image src="/photos/school-students-2.webp" alt="" fill sizes="100vw" className="object-cover opacity-20" />
+          <PriceLine />
           <div className="relative grid gap-6 md:grid-cols-[1.5fr_1fr] md:items-center">
             <div>
               <p className="eyebrow text-brand-gold-light!">{t.simEyebrow}</p>
@@ -211,5 +233,40 @@ export default async function HowToPage({ params }: PageProps<"/[locale]/investi
         <Faq items={t.faq} title={t.faqTitle} />
       </div>
     </ContentPage>
+  );
+}
+
+// Icons for the four shareholder rights, in the order of t.rights.
+const RIGHT_ICONS = [Coins, Vote, FileText, CirclePlus];
+
+// Decorative share-price chart for the simulator band: a fixed random walk with a mild
+// upward trend, faint gridlines and a glowing last price, so it reads as a real market.
+const SERIES = [48, 47.2, 48.1, 49.4, 48.6, 47.9, 49.8, 51.2, 50.4, 51.9, 51.1, 52.8, 54.1, 53.2, 52.6, 54.4, 56.1, 55.3, 56.8, 58.2, 57.1, 56.4, 58.9, 60.2, 59.4, 61.3, 62.8, 61.9, 63.6, 65.1];
+
+function PriceLine() {
+  const min = 44, max = 68, w = 600, h = 200;
+  const x = (i: number) => (i / (SERIES.length - 1)) * w;
+  const y = (v: number) => h - ((v - min) / (max - min)) * h;
+  const line = SERIES.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+  const last = SERIES.length - 1;
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-y-10 right-10 hidden w-1/2 md:block">
+      <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="size-full [mask-image:linear-gradient(to_right,transparent,black_40%)]">
+        <defs>
+          <linearGradient id="sim-fill" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stopColor="#c9a23a" stopOpacity="0.28" />
+            <stop offset="1" stopColor="#c9a23a" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        {[0.25, 0.5, 0.75].map((f) => (
+          <line key={f} x1="0" x2={w} y1={h * f} y2={h * f} stroke="#efe6d4" strokeOpacity="0.07" strokeDasharray="4 6" vectorEffect="non-scaling-stroke" />
+        ))}
+        <path d={`${line} L${w},${h} L0,${h} Z`} fill="url(#sim-fill)" />
+        <path d={line} fill="none" stroke="#d9b24a" strokeOpacity="0.85" strokeWidth="1.8" vectorEffect="non-scaling-stroke" strokeLinejoin="round" strokeLinecap="round" />
+      </svg>
+      <span className="absolute right-0 size-2.5 -translate-y-1/2 translate-x-1/2 rounded-full bg-brand-gold-light shadow-[0_0_0_6px_rgb(201_162_58/0.18)]" style={{ top: `${(y(SERIES[last]) / h) * 100}%` }}>
+        <span className="absolute inset-0 animate-ping rounded-full bg-brand-gold/60 motion-reduce:hidden" />
+      </span>
+    </div>
   );
 }
