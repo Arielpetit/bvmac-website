@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Clock, Mail, MapPin, Newspaper, Phone } from "lucide-react";
+import { RealMap } from "@/components/ui/RealMap";
+
 import { resolveLocale } from "@/lib/i18n-server";
 import { localePath } from "@/lib/paths";
 import { getContact } from "@/lib/api";
@@ -9,14 +11,17 @@ import { ContactForms } from "@/components/content/ContactForms";
 import { FacebookIcon, LinkedinIcon, XIcon, YoutubeIcon } from "@/components/ui/SocialIcons";
 import { Reveal } from "@/components/motion/Reveal";
 
+// BVMAC head office, 1450 Boulevard de la Liberté, Akwa, Douala (position to be confirmed on site).
+const HQ: [number, number] = [4.0575, 9.7003];
+
 export async function generateMetadata(): Promise<Metadata> {
   return { title: "Contact" };
 }
 
 const T = {
-  fr: { intro: "Une question sur le marché, une réclamation ou une demande presse : écrivez-nous, vous recevrez une référence de suivi.", hq: "Siège", name: "Bourse des Valeurs Mobilières de l’Afrique Centrale", hours: "Du lundi au vendredi", press: "Journalistes", pressText: "Espace presse : contacts, logos et chiffres clés", building: "Immeuble de la Bourse, Douala", city: "B.P. 442 Douala, Cameroun" },
-  en: { intro: "A question about the market, a complaint or a press enquiry: write to us and you will receive a tracking reference.", hq: "Headquarters", name: "Central African Stock Exchange", hours: "Monday to Friday", press: "Journalists", pressText: "Press room: contacts, logos and key figures", building: "Immeuble de la Bourse, Douala", city: "P.O. Box 442 Douala, Cameroon" },
-  es: { intro: "Una pregunta sobre el mercado, una reclamación o una solicitud de prensa: escríbanos y recibirá una referencia de seguimiento.", hq: "Sede", name: "Bolsa de Valores de África Central", hours: "De lunes a viernes", press: "Periodistas", pressText: "Sala de prensa: contactos, logotipos y cifras clave", building: "Immeuble de la Bourse, Duala", city: "Apdo. 442 Duala, Camerún" },
+  fr: { intro: "Une question sur le marché, une réclamation ou une demande presse : écrivez-nous, vous recevrez une référence de suivi.", hq: "Siège", directions: "Itinéraire", name: "Bourse des Valeurs Mobilières de l’Afrique Centrale", hours: "Du lundi au vendredi", press: "Journalistes", pressText: "Espace presse : contacts, logos et chiffres clés", building: "Immeuble de la Bourse, Douala", city: "B.P. 442 Douala, Cameroun" },
+  en: { intro: "A question about the market, a complaint or a press enquiry: write to us and you will receive a tracking reference.", hq: "Headquarters", directions: "Directions", name: "Central African Stock Exchange", hours: "Monday to Friday", press: "Journalists", pressText: "Press room: contacts, logos and key figures", building: "Immeuble de la Bourse, Douala", city: "P.O. Box 442 Douala, Cameroon" },
+  es: { intro: "Una pregunta sobre el mercado, una reclamación o una solicitud de prensa: escríbanos y recibirá una referencia de seguimiento.", hq: "Sede", directions: "Cómo llegar", name: "Bolsa de Valores de África Central", hours: "De lunes a viernes", press: "Periodistas", pressText: "Sala de prensa: contactos, logotipos y cifras clave", building: "Immeuble de la Bourse, Duala", city: "Apdo. 442 Duala, Camerún" },
 };
 
 export default async function ContactPage({ params }: PageProps<"/[locale]/contact">) {
@@ -59,12 +64,18 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
             <span className="flex-1"><span className="block font-medium text-heading">{t.press}</span><span className="text-sm text-muted">{t.pressText}</span></span>
             <ArrowUpRight aria-hidden="true" className="size-5 text-muted transition-transform group-hover:rotate-45 group-hover:text-link" />
           </Link>
-          <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface-alt">
-            <div className="absolute inset-0 opacity-60 [background-image:linear-gradient(var(--line)_1px,transparent_1px),linear-gradient(90deg,var(--line)_1px,transparent_1px)] [background-size:32px_32px]" aria-hidden="true" />
-            <div className="relative text-center">
-              <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-gold text-espresso shadow-soft"><MapPin aria-hidden="true" className="size-6" /></span>
-              <p className="mt-3 font-medium text-heading">{t.building}</p>
-              <p className="text-xs text-muted">{t.city}</p>
+          <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface">
+            <RealMap
+              label={t.building}
+              center={HQ}
+              zoom={16}
+              fit={false}
+              className="aspect-[4/3] w-full"
+              markers={[{ id: "hq", lat: HQ[0], lon: HQ[1], label: `${t.building} · ${t.city}` }]}
+            />
+            <div className="flex items-center justify-between gap-3 border-t border-line px-5 py-4">
+              <span><span className="block font-medium text-heading">{t.building}</span><span className="text-xs text-muted">{t.city}</span></span>
+              <a href={`https://www.openstreetmap.org/?mlat=${HQ[0]}&mlon=${HQ[1]}#map=17/${HQ[0]}/${HQ[1]}`} target="_blank" rel="noopener noreferrer" className="link inline-flex shrink-0 items-center gap-1 text-sm">{t.directions}<ArrowUpRight aria-hidden="true" className="size-4" /></a>
             </div>
           </div>
         </Reveal>

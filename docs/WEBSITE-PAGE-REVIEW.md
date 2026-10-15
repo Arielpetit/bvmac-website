@@ -9,7 +9,7 @@ Local preview: `http://localhost:3100/fr` (replace `fr` with `en` or `es`).
 - Breadcrumb trail ("Home › Section › Page"): removed.
 - Information/disclaimer bars ("This information is provided for information only…", French-only notices, callout boxes): removed.
 - Page header: no photo on any inner page (title + short intro), with faint gold CEMAC contour lines on the right (desktop only). All 58 pages open the same way and content starts higher. Photos stay inside the page content (galleries, news, governance messages, home).
-- Content spacing: one rule for all content pages (`py-14` mobile, `py-20` desktop).
+- Spacing: same space above and below the header line on every inner page (48 px each side on desktop, was 56/80). Bottom of page unchanged.
 - Newsletter: moved to the top of the footer, right after the call-to-action band, above the link columns.
 - Translation: all interface text, data labels, notices, corporate-action details, bond issuers, holidays, school lessons, quizzes and glossary are in FR/EN/ES. Proper names stay in French (company legal names, COSUMAF/BEAC full names, street addresses).
 - Mobile check (375 px): no horizontal scrolling on any of the 58 pages.
@@ -25,6 +25,8 @@ Local preview: `http://localhost:3100/fr` (replace `fr` with `en` or `es`).
 - Governance (mobile): 10 director cards were one per row. Now two per row.
 - Stock Market School (mobile): the "My progress" card was cramped beside the ring. Now stacked.
 - Markets overview (mobile): figures broke across two lines ("12.5 m FCF / A"). Now on one line.
+- Brokers: the drawn schematic map is replaced by a real OpenStreetMap map. Gold markers show brokers per city; click a city to filter the list.
+- Contact: the placeholder map is replaced by a real street map of Douala with a pin on the head office and a "Directions" link.
 
 Status key: **Done** = reviewed and fixed in this pass. **Check** = fixed, but worth a look with the business team.
 
@@ -57,7 +59,7 @@ Status key: **Done** = reviewed and fixed in this pass. **Check** = fixed, but w
 | 20 | Issuer fees | `/emetteurs/commissions` | Check | Validate fee figures. |
 | 21 | Issuer taxation | `/emetteurs/fiscalite` | Check | Placeholder per-country section removed; add real content when available. |
 | **Participants** | | | | |
-| 22 | Brokers (SDB) | `/participants/societes-de-bourse` | Check | Addresses stay in French. Confirm broker list is current. |
+| 22 | Brokers (SDB) | `/participants/societes-de-bourse` | Check | Real map with city markers (click to filter). Addresses stay in French. Confirm broker list is current. |
 | 23 | Central depository | `/participants/depositaire` | Done | Callout removed. |
 | 24 | Regulator (COSUMAF) | `/participants/regulateur` | Done | — |
 | **Learn (School)** | | | | |
@@ -92,7 +94,7 @@ Status key: **Done** = reviewed and fixed in this pass. **Check** = fixed, but w
 | 50 | Reports | `/documentation/rapports` | Check | Upload real annual reports. |
 | 51 | Tariffs | `/documentation/tarifs` | Check | Validate against official tariff. |
 | **Utility & legal** | | | | |
-| 52 | Contact | `/contact` | Done | Form not yet wired to a real mailbox. |
+| 52 | Contact | `/contact` | Check | Real street map added; confirm the exact pin position of 1450 Boulevard de la Liberté. Form not yet wired to a real mailbox. |
 | 53 | Site map | `/plan-du-site` | Done | — |
 | 54 | Legal notice | `/mentions-legales` | Check | Text aligned with title. "Not investment advice" sentence removed as requested; legal team should confirm. Legal review needed. |
 | 55 | Privacy policy | `/politique-de-confidentialite` | Check | Legal review needed. |

@@ -11,8 +11,9 @@ import type { Broker } from "@/data/content";
 import { Flag } from "@/components/ui/Flag";
 import { EmptyState } from "@/components/ui/States";
 import { cn } from "@/lib/cn";
+import { RealMap } from "@/components/ui/RealMap";
 
-// Approximate city positions for the schematic map (lon, lat).
+// City positions for the broker map (lon, lat).
 const CITIES: Record<string, [number, number]> = {
   Douala: [9.7, 4.05],
   "Yaoundé": [11.5, 3.87],
@@ -22,10 +23,6 @@ const CITIES: Record<string, [number, number]> = {
   Malabo: [8.78, 3.75],
   Bangui: [18.56, 4.36],
 };
-const project = ([lon, lat]: [number, number]) => [((lon - 6) / 15) * 300 + 30, ((14 - lat) / 20) * 400 + 20];
-// Label placement around close-together cities (Douala, Malabo, Yaoundé).
-const LABEL: Record<string, "above" | "below" | "left" | "right"> = { Douala: "above", Malabo: "left", "Yaoundé": "below" };
-const radius = (count: number) => (count ? 5 + Math.sqrt(count) * 3.2 : 4);
 const SERVICES = ["Négociation", "Placement", "Tenue de compte", "Conseil"];
 
 export function BrokerDirectory({ brokers, totals }: { brokers: Broker[]; totals: Record<CountryCode, number> }) {
@@ -77,38 +74,24 @@ export function BrokerDirectory({ brokers, totals }: { brokers: Broker[]; totals
 
       <div className="grid gap-8 lg:grid-cols-[380px_1fr]">
         <aside className="h-fit lg:sticky lg:top-40">
-          <div className="relative overflow-hidden rounded-[var(--radius-panel)] bg-espresso p-4">
-            <div className="grid-lines absolute inset-0 opacity-60" aria-hidden="true" />
-            <svg viewBox="0 0 360 440" className="relative h-auto w-full" role="group" aria-label={L.map}>
-              {Object.entries(CITIES).map(([name, coords]) => {
-                const [x, y] = project(coords);
+          <RealMap
+            label={L.map}
+            center={[3, 13]}
+            zoom={5}
+            className="aspect-[4/5] w-full rounded-[var(--radius-panel)] border border-line"
+            onSelect={(name) => setCity(city === name ? "" : name)}
+            markers={Object.entries(CITIES).map(([name, [lon, lat]]) => ({
+              id: name,
+              lat,
+              lon,
+              ...(() => {
                 const count = brokers.filter((b) => b.city === name && (!country || b.country === country)).length;
-                const active = city === name || hoveredCity === name;
-                return (
-                  <g
-                    key={name}
-                    role="button"
-                    tabIndex={count ? 0 : -1}
-                    aria-pressed={city === name}
-                    aria-label={`${name} : ${count}`}
-                    onClick={() => count && setCity(city === name ? "" : name)}
-                    onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && count) { e.preventDefault(); setCity(city === name ? "" : name); } }}
-                    className={count ? "cursor-pointer outline-none" : "opacity-30"}
-                  >
-                    {active && <circle cx={x} cy={y} r={radius(count) + 6} fill="#c9a23a" opacity={0.25}><animate attributeName="r" values={`${radius(count) + 4};${radius(count) + 14};${radius(count) + 4}`} dur="2s" repeatCount="indefinite" /></circle>}
-                    <circle cx={x} cy={y} r={radius(count)} fill={active ? "#ead18a" : count ? "#c9a23a" : "#6b6155"} stroke="#120c06" strokeWidth={1.5} className="transition-all" />
-                    {(() => {
-                      const pos = LABEL[name] ?? "right";
-                      const r = radius(count) + 6;
-                      const [tx, ty, anchor]: [number, number, "start" | "middle" | "end"] = pos === "above" ? [x, y - r - 2, "middle"] : pos === "below" ? [x + 6, y + r + 10, "start"] : pos === "left" ? [x - r, y + 4, "end"] : [x + r, y + 4, "start"];
-                      return <text x={tx} y={ty} textAnchor={anchor} fontSize="12.5" fill={active ? "#ead18a" : "#efe6d4"}>{name}{count ? ` · ${count}` : ""}</text>;
-                    })()}
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
-          <p className="mt-3 text-xs text-muted">{L.map}. Carte schématique, positions approximatives.</p>
+                return { count, label: `${name} · ${count}` };
+              })(),
+              active: city === name || hoveredCity === name,
+            }))}
+          />
+          <p className="mt-3 text-xs text-muted">{L.map}.</p>
         </aside>
 
         <div>
