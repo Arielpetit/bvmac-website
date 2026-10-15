@@ -2,7 +2,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n";
 import { PageHeader } from "@/components/ui/PageHeader";
 
-// Standard inner page: header (title, intro, optional photo) and the page body.
+// Standard inner page: header (title and intro) and the page body.
 export function ContentPage({
   locale,
   title,

@@ -8,7 +8,7 @@ Local preview: `http://localhost:3100/fr` (replace `fr` with `en` or `es`).
 - Section sub-navigation bar under the header: removed.
 - Breadcrumb trail ("Home › Section › Page"): removed.
 - Information/disclaimer bars ("This information is provided for information only…", French-only notices, callout boxes): removed.
-- Page header: text only on every inner page (title + short intro), no photo. All 58 pages open the same way and content starts higher. Photos stay inside the page content (galleries, news, governance messages, home).
+- Page header: no photo on any inner page (title + short intro), with faint gold CEMAC contour lines on the right (desktop only). All 58 pages open the same way and content starts higher. Photos stay inside the page content (galleries, news, governance messages, home).
 - Content spacing: one rule for all content pages (`py-14` mobile, `py-20` desktop).
 - Newsletter: moved to the top of the footer, right after the call-to-action band, above the link columns.
 - Translation: all interface text, data labels, notices, corporate-action details, bond issuers, holidays, school lessons, quizzes and glossary are in FR/EN/ES. Proper names stay in French (company legal names, COSUMAF/BEAC full names, street addresses).
