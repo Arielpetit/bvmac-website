@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AfricaCemac } from "@/components/brand/AfricaCemac";
 import { ArrowRight, ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import { NAV } from "@/lib/navigation";
 import { getContact, getPartners } from "@/lib/api";
@@ -35,6 +36,7 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
   return (
     <footer className="relative mt-auto overflow-hidden bg-espresso text-brand-sand">
       <div aria-hidden="true" className="pointer-events-none absolute -right-40 -top-40 size-[520px] rounded-full bg-brand-gold/10 blur-3xl" />
+      <AfricaCemac className="pointer-events-none absolute -right-28 top-10 hidden w-[620px] text-brand-gold/[0.05] lg:block" cemacClassName="fill-brand-gold-light/[0.13]" borderClassName="stroke-espresso" />
       <Guilloche className="absolute inset-x-0 top-0 h-80 w-full text-brand-gold-light opacity-[0.09] [mask-image:linear-gradient(90deg,transparent,black_35%,black_100%)]" />
       <div className="container-site relative">
         <Reveal className="grid gap-8 border-b border-white/10 py-16 md:grid-cols-[1.4fr_1fr] md:items-end md:py-20">

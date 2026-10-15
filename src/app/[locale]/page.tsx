@@ -30,6 +30,7 @@ import { getContact } from "@/lib/api";
 import { ButtonLink } from "@/components/ui/Button";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { PriceChange } from "@/components/ui/PriceChange";
+import { AfricaCemac } from "@/components/brand/AfricaCemac";
 import { Flag } from "@/components/ui/Flag";
 import { Sparkline } from "@/components/market/Sparkline";
 import { NoticeRow } from "@/components/content/NoticeRow";
@@ -292,15 +293,23 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       {/* HERO */}
       <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-espresso text-brand-sand">
-        <div aria-hidden="true" className="absolute inset-0 -z-30 bg-[#0b0704]" />
+        <div aria-hidden="true" className="absolute inset-0 -z-30 bg-hero" />
         {/* Building on the right; faded with a solid gradient overlay (no CSS mask, which rendered blocky pixels). */}
         <div aria-hidden="true" className="absolute inset-y-0 right-0 -z-20 w-full lg:w-[62%]">
-          <Image src="/photos/bvmac-building.webp" alt="" fill priority sizes="(min-width:1024px) 62vw, 100vw" className="object-cover object-[60%_35%] opacity-[0.28] saturate-[0.8]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0b0704] via-[#0b0704]/70 to-transparent" />
+          <Image src="/photos/bvmac-building.webp" alt="" fill priority sizes="(min-width:1024px) 62vw, 100vw" className="object-cover object-[60%_35%] opacity-[0.36] saturate-[0.85]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-hero via-hero/60 to-transparent" />
         </div>
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_85%_0%,rgb(234_209_138/0.22),transparent_60%),radial-gradient(ellipse_60%_50%_at_10%_100%,rgb(201_162_58/0.10),transparent_60%),linear-gradient(180deg,transparent_55%,#0b0704)]" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_85%_0%,rgb(234_209_138/0.22),transparent_60%),radial-gradient(ellipse_60%_50%_at_10%_100%,rgb(201_162_58/0.10),transparent_60%),linear-gradient(180deg,transparent_60%,var(--hero-base))]" />
         <div aria-hidden="true" className="absolute -top-40 right-[18%] -z-10 h-[140%] w-40 rotate-[24deg] bg-gradient-to-b from-brand-gold-light/15 via-brand-gold/5 to-transparent blur-2xl" />
         <div aria-hidden="true" className="animate-orb absolute -left-40 top-24 -z-10 size-[520px] rounded-full bg-brand-gold/10 blur-[130px]" />
+        {/* Central Africa identity: the continent with the CEMAC zone lit, inside gold orbit lines (as on bvm-ac.org). */}
+        <div aria-hidden="true" className="pointer-events-none absolute -z-10 left-[-13%] top-[6%] hidden w-[44vw] max-w-[860px] xl:block">
+          <svg viewBox="0 0 100 100" className="absolute inset-[-14%] size-[128%] text-brand-gold/25" fill="none" stroke="currentColor" strokeWidth="0.18">
+            <circle cx="50" cy="50" r="49" />
+            <circle cx="50" cy="50" r="38" strokeDasharray="0.6 1.2" />
+          </svg>
+          <AfricaCemac className="relative w-full text-brand-gold/[0.07]" cemacClassName="fill-brand-gold-light/35" borderClassName="stroke-hero" />
+        </div>
 
         <div className="container-site grid gap-14 pb-14 pt-32 md:pt-36 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16 lg:pb-16 lg:pt-40">
           <div>
@@ -326,7 +335,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </ButtonLink>
             </Reveal>
             <Reveal delay={0.8} className="mt-12">
-              <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-brand-sand/70">
+              <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-brand-sand/70">
+                <li className="flex items-center gap-2 font-medium text-brand-gold-light">
+                  <AfricaCemac className="h-6 w-auto text-brand-sand/25" cemacClassName="fill-brand-gold-light" borderClassName="stroke-hero" />
+                  CEMAC
+                </li>
                 {COUNTRIES.map((c) => (
                   <li key={c.code} className="flex items-center gap-2">
                     <Flag code={c.code} className="h-3 w-[18px]" />
@@ -451,7 +464,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           {t.personas.map((persona, i) => {
             const Icon = personaIcons[i];
             const Art = [InvestArt, RaiseArt, NoticesArt, LearnArt][i];
-            const theme = ["dark", "gold", "light", "dark"][i];
+            const theme = ["dark", "gold", "light", "light"][i];
             const span = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"][i];
             const dark = theme === "dark";
             return (
@@ -538,18 +551,18 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </Reveal>
 
           <div className="grid gap-6">
-            <Reveal delay={0.1} className="relative overflow-hidden rounded-[var(--radius-card)] bg-espresso p-7 text-brand-sand">
-              <div aria-hidden="true" className="absolute -right-10 -top-10 size-48 rounded-full bg-brand-gold/20 blur-3xl" />
-              <p className="eyebrow text-brand-gold-light!">BOC · {latestBoc.number}</p>
-              <h3 className="mt-3 font-serif-display text-2xl text-brand-ivory">{t.bocTitle}</h3>
-              <p className="mt-2 text-sm text-brand-sand/75">{t.bocText}</p>
-              <p className="mt-4 text-sm text-brand-sand">{dict.session.sessionOf} {formatDate(latestBoc.date, locale)}</p>
+            <Reveal delay={0.1} className="relative overflow-hidden rounded-[var(--radius-card)] bg-gradient-to-br from-[#f3e2b0] via-[#e9cf86] to-[#d4b25a] p-7 text-espresso">
+              <div aria-hidden="true" className="absolute -right-10 -top-10 size-48 rounded-full bg-white/30 blur-3xl" />
+              <p className="eyebrow text-espresso/70!">BOC · {latestBoc.number}</p>
+              <h3 className="mt-3 font-serif-display text-2xl text-espresso">{t.bocTitle}</h3>
+              <p className="mt-2 text-sm text-espresso/75">{t.bocText}</p>
+              <p className="mt-4 text-sm text-espresso">{dict.session.sessionOf} {formatDate(latestBoc.date, locale)}</p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <ButtonLink href={latestBoc.url} variant="gold" size="sm" external>
+                <ButtonLink href={latestBoc.url} variant="primary" size="sm" external>
                   <FileDown aria-hidden="true" className="size-4" />
                   {t.bocDownload}
                 </ButtonLink>
-                <ButtonLink href={p("/marches/boc")} variant="outlineDark" size="sm">{t.bocArchive}</ButtonLink>
+                <ButtonLink href={p("/marches/boc")} variant="secondary" size="sm">{t.bocArchive}</ButtonLink>
               </div>
             </Reveal>
             <Reveal delay={0.2} className="rounded-[var(--radius-card)] border border-line bg-background p-7">
@@ -568,6 +581,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <section aria-labelledby="story-title" className="grain relative isolate overflow-hidden bg-espresso text-brand-sand">
         <div aria-hidden="true" className="grid-lines absolute inset-0 -z-10" />
         <div aria-hidden="true" className="animate-orb absolute -right-40 top-10 -z-10 size-[560px] rounded-full bg-brand-gold/15 blur-[130px]" />
+        <AfricaCemac className="pointer-events-none absolute -left-24 top-1/2 -z-10 hidden w-[560px] -translate-y-1/2 text-brand-gold/[0.05] md:block" cemacClassName="fill-brand-gold-light/[0.14]" borderClassName="stroke-espresso" />
         <div className="container-site grid items-center gap-14 py-24 md:py-32 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
           <div>
             <Reveal className="flex items-center gap-3">

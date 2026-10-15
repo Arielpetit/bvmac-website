@@ -34,6 +34,11 @@
   --chart-grid: #ece5d6;
   --ring: #c9a23a;
   --shadow-color: 32 20 8;
+  /* Dark panels on light pages take the warm brown of the home hero. */
+  --panel: #2a1d10;
+  --panel-2: #33240f;
+  --panel-3: #3d2b18;
+  --hero-base: #1a110a;
   color-scheme: light;
 }
 
@@ -64,6 +69,11 @@
   --chart-grid: #241b12;
   --ring: #e6c36a;
   --shadow-color: 0 0 0;
+  /* Dark theme keeps the original near-black browns. */
+  --panel: #120c06;
+  --panel-2: #1c130b;
+  --panel-3: #2a1c10;
+  --hero-base: #0b0704;
   color-scheme: dark;
 }
 
@@ -91,12 +101,13 @@
   --color-skeleton: var(--skeleton);
 
   /* Fixed brand colours */
-  --color-espresso: #120c06;
-  --color-espresso-2: #1c130b;
-  --color-espresso-3: #2a1c10;
+  --color-espresso: var(--panel);
+  --color-espresso-2: var(--panel-2);
+  --color-espresso-3: var(--panel-3);
   --color-brand-brown: #5a3412;
   --color-brand-deep: #3a2414;
-  --color-brand-night: #120c06;
+  --color-brand-night: var(--panel);
+  --color-hero: var(--hero-base);
   --color-brand-gold: #c9a23a;
   --color-brand-gold-dark: #8a6614;
   --color-brand-gold-light: #ead18a;
@@ -192,7 +203,7 @@
     font-variation-settings: "SOFT" 30, "opsz" 144;
     font-weight: 400;
     letter-spacing: -0.035em;
-    font-size: clamp(2.6rem, 6.4vw, 5.25rem);
+    font-size: clamp(2.15rem, 6.4vw, 5.25rem);
     line-height: 1.02;
   }
   .text-h1 {
@@ -326,6 +337,17 @@
 }
 
 /* Motion */
+@keyframes word-up {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+.word-up {
+  animation: word-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-up { animation: none; }
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);

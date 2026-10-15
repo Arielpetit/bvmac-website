@@ -19,24 +19,24 @@ export function CookieConsent() {
   return (
     <>
       {!consent && !settingsOpen && (
-        <div role="region" aria-label={t.title} className="fixed inset-x-0 bottom-0 z-[72] p-3 md:bottom-5 md:left-5 md:right-auto md:max-w-[520px] md:p-0">
+        <div role="region" aria-label={t.title} className="fixed inset-x-0 bottom-0 z-[72] p-2 md:bottom-5 md:left-5 md:right-auto md:max-w-[520px] md:p-0">
           <div>
-            <div className="rounded-[var(--radius-card)] border border-line bg-surface p-6 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.45)]">
+            <div className="rounded-[var(--radius-card)] border border-line bg-surface p-4 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.45)] md:p-6">
               <div className="flex-1">
-                <p className="font-serif-display text-xl text-heading">{t.title}</p>
-                <p className="mt-2 text-sm text-muted">
+                <p className="font-serif-display text-base text-heading md:text-xl">{t.title}</p>
+                <p className="mt-1 text-[13px] leading-snug text-muted md:mt-2 md:text-sm">
                   {t.text}{" "}
                   <Link href={localePath(locale, "/politique-de-confidentialite")} className="link">
                     {t.policy}
                   </Link>
                 </p>
               </div>
-              <div className="mt-5 flex flex-wrap gap-2">
-                <Button size="sm" variant="ghost" onClick={openSettings}>
+              <div className="mt-3 flex gap-1.5 md:mt-5 md:gap-2">
+                <Button size="sm" variant="ghost" className="min-w-0 whitespace-nowrap px-2! text-[13px]! md:px-4! md:text-sm!" onClick={openSettings}>
                   {t.customise}
                 </Button>
-                <Button size="sm" className="flex-1" onClick={() => save({ analytics: false, thirdParty: false })}>{t.reject}</Button>
-                <Button size="sm" className="flex-1" onClick={() => save({ analytics: true, thirdParty: true })}>{t.accept}</Button>
+                <Button size="sm" className="flex-1 min-w-0 whitespace-nowrap px-2! text-[13px]! md:px-4! md:text-sm!" onClick={() => save({ analytics: false, thirdParty: false })}>{t.reject}</Button>
+                <Button size="sm" className="flex-1 min-w-0 whitespace-nowrap px-2! text-[13px]! md:px-4! md:text-sm!" onClick={() => save({ analytics: true, thirdParty: true })}>{t.accept}</Button>
               </div>
             </div>
           </div>

@@ -30,7 +30,7 @@ export type Equity = {
   headquarters: string;
 };
 
-export const LAST_SESSION = "2026-10-08";
+export const LAST_SESSION = "2026-10-14";
 
 export const EQUITIES: Equity[] = [
   {
@@ -189,8 +189,8 @@ export function changePct(e: Pick<Equity, "referencePrice" | "closePrice">): num
 
 export const MARKET_SUMMARY = {
   date: LAST_SESSION,
-  valueTraded: 7_517_000,
-  equityCapitalisation: 1_795_850_543_600,
+  valueTraded: 12_540_000,
+  equityCapitalisation: 1_793_600_543_600,
   bondOutstanding: 1_226_606_149_540,
   listedEquities: 7,
   listedBonds: 31,
