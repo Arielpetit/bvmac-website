@@ -18,10 +18,10 @@ Both are behind a sign-in gate (`/login`). Market data is demonstration data; th
 | Area | Choice |
 |---|---|
 | Framework | Next.js 16 (App Router, Turbopack), React 19, TypeScript |
-| Styling | Tailwind CSS 4; brand tokens in `src/app/globals.css` (light and dark) |
+| Styling | Tailwind CSS 4; brand tokens in `src/app/globals.css` (light and dark), per the [brand guidelines v0.2](brand/BVMAC-Brand-Guidelines-v0.2.pdf) |
 | Motion | `motion`, `lenis` (smooth scroll) |
 | Charts, icons | Recharts, lucide-react |
-| Fonts | Montserrat, IBM Plex Sans, IBM Plex Mono, self-hosted through `next/font` |
+| Fonts | Fraunces (headings), Geist (text, figures), Geist Mono (codes), self-hosted through `next/font` |
 | Languages | French (source), English, Spanish; dictionaries in `src/i18n/`; `/fr`, `/en`, `/es` |
 | Content and admin | Supabase (Postgres, Auth, RLS), project `kshheckxedarrothfinh`; admin UI at `/admin` |
 | Assistant | `/api/bvmac-ai`, Groq chat completions (`GROQ_MODEL`), answers grounded on site content (`src/lib/ai/`) |

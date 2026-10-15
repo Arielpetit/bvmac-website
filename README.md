@@ -1,7 +1,7 @@
 # BVMAC website (Next.js)
 
 Website for the Bourse des Valeurs Mobilières de l'Afrique Centrale, built for
-tender N°030/06/BVMAC/DG/DSI/07-26. It follows the "BVMAC Brand Guidelines v0.1"
+tender N°030/06/BVMAC/DG/DSI/07-26. It follows the BVMAC Digital Brand Guidelines v0.2 ([docs/brand](docs/brand/BVMAC-Brand-Guidelines-v0.2.pdf))
 and the blueprint in `../docs/`.
 
 User guide: [docs/USER-GUIDE.md](docs/USER-GUIDE.md) · Engineering doc: [docs/ENGINEERING.md](docs/ENGINEERING.md) · ADRs: [docs/adr](docs/adr/README.md) · Runbooks: [docs/runbooks](docs/runbooks/README.md)
@@ -20,7 +20,7 @@ npm run lint
 - Next.js 16 (App Router, Turbopack), React 19, TypeScript
 - Tailwind CSS 4 with brand tokens in `src/app/globals.css`
 - Recharts for charts, lucide-react for icons
-- Fonts (Montserrat, IBM Plex Sans, IBM Plex Mono) self-hosted by `next/font` at build time
+- Fonts (Fraunces, Geist, Geist Mono) self-hosted by `next/font` at build time
 - No third-party scripts: no Google Analytics, Fonts, Maps or reCAPTCHA
 
 ## Structure
