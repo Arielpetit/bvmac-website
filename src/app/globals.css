@@ -91,12 +91,12 @@
   --color-skeleton: var(--skeleton);
 
   /* Fixed brand colours */
-  --color-espresso: #120c06;
-  --color-espresso-2: #1c130b;
-  --color-espresso-3: #2a1c10;
+  --color-espresso: #24150a;
+  --color-espresso-2: #2f1d0f;
+  --color-espresso-3: #3d2716;
   --color-brand-brown: #5a3412;
   --color-brand-deep: #3a2414;
-  --color-brand-night: #120c06;
+  --color-brand-night: #24150a;
   --color-brand-gold: #c9a23a;
   --color-brand-gold-dark: #8a6614;
   --color-brand-gold-light: #ead18a;
@@ -192,7 +192,7 @@
     font-variation-settings: "SOFT" 30, "opsz" 144;
     font-weight: 400;
     letter-spacing: -0.035em;
-    font-size: clamp(2.6rem, 6.4vw, 5.25rem);
+    font-size: clamp(2.15rem, 6.4vw, 5.25rem);
     line-height: 1.02;
   }
   .text-h1 {
@@ -326,6 +326,17 @@
 }
 
 /* Motion */
+@keyframes word-up {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+.word-up {
+  animation: word-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-up { animation: none; }
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);

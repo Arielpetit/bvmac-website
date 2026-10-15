@@ -69,7 +69,9 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
     document.documentElement.style.overflow = drawer ? "hidden" : "";
   }, [drawer]);
 
-  const onDark = isHome && !scrolled && !open;
+  // The home hero is light, so the header keeps dark text; it is only transparent at the top.
+  const transparent = isHome && !scrolled && !open;
+  const onDark = false;
   const enter = (key: string) => {
     if (timer.current) clearTimeout(timer.current);
     setOpen(key);
@@ -85,7 +87,7 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
         onMouseLeave={leave}
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-500",
-          onDark ? "border-b border-transparent bg-transparent" : "border-b border-line/70 bg-surface/[0.97] shadow-[0_8px_30px_-20px_rgb(var(--shadow-color)/0.25)] backdrop-blur-xl backdrop-saturate-150",
+          transparent ? "border-b border-transparent bg-transparent" : "border-b border-line/70 bg-surface/[0.97] shadow-[0_8px_30px_-20px_rgb(var(--shadow-color)/0.25)] backdrop-blur-xl backdrop-saturate-150",
         )}
       >
         <div className="container-site flex h-[76px] items-center justify-between gap-6">

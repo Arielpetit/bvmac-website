@@ -291,29 +291,29 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   return (
     <>
       {/* HERO */}
-      <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-espresso text-brand-sand">
-        <div aria-hidden="true" className="absolute inset-0 -z-30 bg-[#0b0704]" />
+      <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-background text-text">
+        <div aria-hidden="true" className="absolute inset-0 -z-30 bg-background" />
         {/* Building on the right; faded with a solid gradient overlay (no CSS mask, which rendered blocky pixels). */}
         <div aria-hidden="true" className="absolute inset-y-0 right-0 -z-20 w-full lg:w-[62%]">
-          <Image src="/photos/bvmac-building.webp" alt="" fill priority sizes="(min-width:1024px) 62vw, 100vw" className="object-cover object-[60%_35%] opacity-[0.28] saturate-[0.8]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0b0704] via-[#0b0704]/70 to-transparent" />
+          <Image src="/photos/bvmac-building.webp" alt="" fill priority sizes="(min-width:1024px) 62vw, 100vw" className="object-cover object-[60%_35%] opacity-60 saturate-[0.9]" />
+          <div className="absolute inset-0 bg-background/85 lg:bg-transparent lg:bg-gradient-to-r lg:from-background lg:via-background/75 lg:to-background/10" />
         </div>
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_85%_0%,rgb(234_209_138/0.22),transparent_60%),radial-gradient(ellipse_60%_50%_at_10%_100%,rgb(201_162_58/0.10),transparent_60%),linear-gradient(180deg,transparent_55%,#0b0704)]" />
-        <div aria-hidden="true" className="absolute -top-40 right-[18%] -z-10 h-[140%] w-40 rotate-[24deg] bg-gradient-to-b from-brand-gold-light/15 via-brand-gold/5 to-transparent blur-2xl" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_85%_0%,rgb(234_209_138/0.22),transparent_60%),radial-gradient(ellipse_60%_50%_at_10%_100%,rgb(201_162_58/0.10),transparent_60%),linear-gradient(180deg,transparent_60%,var(--background))]" />
+        <div aria-hidden="true" className="absolute -top-40 right-[18%] -z-10 h-[140%] w-40 rotate-[24deg] bg-gradient-to-b from-brand-gold-light/25 via-brand-gold/5 to-transparent blur-2xl" />
         <div aria-hidden="true" className="animate-orb absolute -left-40 top-24 -z-10 size-[520px] rounded-full bg-brand-gold/10 blur-[130px]" />
 
         <div className="container-site grid gap-14 pb-14 pt-32 md:pt-36 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16 lg:pb-16 lg:pt-40">
           <div>
             <Reveal y={12} className="flex flex-wrap items-center gap-3">
-              <SessionChip withNext className="bg-white/10! text-brand-ivory! ring-1 ring-white/15" />
-              <span className="text-sm text-brand-sand/70">{t.eyebrow}</span>
+              <SessionChip withNext className="bg-surface! text-heading! ring-1 ring-line" />
+              <span className="text-sm text-muted">{t.eyebrow}</span>
             </Reveal>
-            <h1 id="hero-title" className="text-display mt-7 text-brand-ivory!">
+            <h1 id="hero-title" className="text-display mt-7">
               <WordReveal text={t.titleA} />
               <br />
-              <WordReveal text={t.titleB} delay={0.25} className="italic text-brand-gold-light [font-variation-settings:'SOFT'_100,'opsz'_144]" />
+              <WordReveal text={t.titleB} delay={0.25} className="italic text-accent-text [font-variation-settings:'SOFT'_100,'opsz'_144]" />
             </h1>
-            <Reveal delay={0.5} className="mt-7 max-w-xl text-lg leading-relaxed text-brand-sand/80">
+            <Reveal delay={0.5} className="mt-7 max-w-xl text-lg leading-relaxed text-muted">
               <p>{t.subtitle}</p>
             </Reveal>
             <Reveal delay={0.65} className="mt-9 flex flex-wrap gap-3">
@@ -321,12 +321,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 {t.ctaA}
                 <ArrowRight aria-hidden="true" className="size-4" />
               </ButtonLink>
-              <ButtonLink href={p("/investisseurs/comment-investir")} variant="outlineDark">
+              <ButtonLink href={p("/investisseurs/comment-investir")} variant="secondary">
                 {t.ctaB}
               </ButtonLink>
             </Reveal>
             <Reveal delay={0.8} className="mt-12">
-              <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-brand-sand/70">
+              <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
                 {COUNTRIES.map((c) => (
                   <li key={c.code} className="flex items-center gap-2">
                     <Flag code={c.code} className="h-3 w-[18px]" />
@@ -350,7 +350,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           />
         </div>
 
-        <div className="border-t border-white/10 bg-black/20">
+        <div className="bg-brand-deep text-brand-sand">
           <Marquee duration={45} className="py-3.5">
             {[...equities, ...bonds.slice(0, 8).map((b) => ({ slug: "", shortName: b.name, closePrice: b.close, change: b.change, ticker: b.isin }))].map((e, i) => (
               <span key={i} className="flex items-center gap-2.5 px-6 text-sm">
@@ -389,35 +389,35 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </Reveal>
 
           {/* Bonds outstanding */}
-          <Reveal delay={0.08} className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] bg-espresso text-brand-sand shadow-soft">
-            <span aria-hidden="true" className="grid-lines absolute inset-0 opacity-70" />
-            <span aria-hidden="true" className="absolute -right-24 -top-24 size-72 rounded-full bg-brand-gold/20 blur-[80px]" />
+          <Reveal delay={0.08} className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] border border-line bg-surface-alt shadow-soft">
+            <span aria-hidden="true" className="dots absolute inset-0 opacity-50" />
+            <span aria-hidden="true" className="absolute -right-24 -top-24 size-72 rounded-full bg-brand-gold/15 blur-[80px]" />
             <div className="relative flex items-start justify-between gap-4 p-7 pb-0 md:p-8 md:pb-0">
               <div>
-                <p className="text-sm text-brand-sand/70">{t.figures[1]}</p>
+                <p className="text-sm text-muted">{t.figures[1]}</p>
                 <p className="mt-3 flex items-baseline gap-2">
-                  <span className="font-serif-display text-[2.75rem] leading-none sm:text-[3.25rem] text-brand-ivory md:text-6xl"><CountUp value={summary.bondOutstanding} kind="billions" /></span>
-                  <span className="whitespace-nowrap text-sm font-medium text-brand-gold-light">{t.figUnit}</span>
+                  <span className="font-serif-display text-[2.75rem] leading-none sm:text-[3.25rem] text-heading md:text-6xl"><CountUp value={summary.bondOutstanding} kind="billions" /></span>
+                  <span className="whitespace-nowrap text-sm font-medium text-accent-text">{t.figUnit}</span>
                 </p>
               </div>
-              <span className="flex size-11 items-center justify-center rounded-2xl bg-white/10 text-brand-gold-light"><ReceiptText aria-hidden="true" className="size-5" strokeWidth={1.6} /></span>
+              <span className="flex size-11 items-center justify-center rounded-2xl bg-accent-soft text-accent-text"><ReceiptText aria-hidden="true" className="size-5" strokeWidth={1.6} /></span>
             </div>
             <div className="relative mt-6 px-7 pb-6 md:px-8">
-              <p className="text-xs uppercase tracking-[0.12em] text-brand-sand/55">{t.figBondSplit}</p>
-              <div className="mt-3 flex h-2.5 overflow-hidden rounded-full bg-white/10">
+              <p className="text-xs uppercase tracking-[0.12em] text-muted">{t.figBondSplit}</p>
+              <div className="mt-3 flex h-2.5 overflow-hidden rounded-full bg-line">
                 {bondSplit.map((b, k) => (
                   <span key={b.code} className="h-full first:rounded-l-full last:rounded-r-full" style={{ width: `${(b.count / bonds.length) * 100}%`, background: COUNTRY_TONES[k % COUNTRY_TONES.length], marginRight: 2 }} />
                 ))}
               </div>
-              <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-brand-sand/75">
+              <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted">
                 {bondSplit.map((b) => (
-                  <li key={b.code} className="flex items-center gap-1.5"><Flag code={b.code} className="h-2.5 w-[15px]" />{COUNTRIES.find((c) => c.code === b.code)?.[locale]} <span className="figure text-brand-ivory">{b.count}</span></li>
+                  <li key={b.code} className="flex items-center gap-1.5"><Flag code={b.code} className="h-2.5 w-[15px]" />{COUNTRIES.find((c) => c.code === b.code)?.[locale]} <span className="figure text-heading">{b.count}</span></li>
                 ))}
               </ul>
             </div>
-            <Link href={p("/marches/obligations")} className="relative mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 px-7 py-4 text-sm md:px-8">
-              <span className="text-brand-sand/60">{t.figSession} {formatDate(summary.date, locale, "short")}</span>
-              <span className="inline-flex shrink-0 items-center gap-1.5 font-medium text-brand-gold-light">{t.figBondCta}<ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" /></span>
+            <Link href={p("/marches/obligations")} className="relative mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-line px-7 py-4 text-sm md:px-8">
+              <span className="text-muted">{t.figSession} {formatDate(summary.date, locale, "short")}</span>
+              <span className="inline-flex shrink-0 items-center gap-1.5 font-medium text-link">{t.figBondCta}<ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" /></span>
             </Link>
           </Reveal>
 
@@ -451,7 +451,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           {t.personas.map((persona, i) => {
             const Icon = personaIcons[i];
             const Art = [InvestArt, RaiseArt, NoticesArt, LearnArt][i];
-            const theme = ["dark", "gold", "light", "dark"][i];
+            const theme = ["dark", "gold", "light", "light"][i];
             const span = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"][i];
             const dark = theme === "dark";
             return (
@@ -538,18 +538,18 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </Reveal>
 
           <div className="grid gap-6">
-            <Reveal delay={0.1} className="relative overflow-hidden rounded-[var(--radius-card)] bg-espresso p-7 text-brand-sand">
-              <div aria-hidden="true" className="absolute -right-10 -top-10 size-48 rounded-full bg-brand-gold/20 blur-3xl" />
-              <p className="eyebrow text-brand-gold-light!">BOC · {latestBoc.number}</p>
-              <h3 className="mt-3 font-serif-display text-2xl text-brand-ivory">{t.bocTitle}</h3>
-              <p className="mt-2 text-sm text-brand-sand/75">{t.bocText}</p>
-              <p className="mt-4 text-sm text-brand-sand">{dict.session.sessionOf} {formatDate(latestBoc.date, locale)}</p>
+            <Reveal delay={0.1} className="relative overflow-hidden rounded-[var(--radius-card)] bg-gradient-to-br from-[#f3e2b0] via-[#e9cf86] to-[#d4b25a] p-7 text-espresso">
+              <div aria-hidden="true" className="absolute -right-10 -top-10 size-48 rounded-full bg-white/30 blur-3xl" />
+              <p className="eyebrow text-espresso/70!">BOC · {latestBoc.number}</p>
+              <h3 className="mt-3 font-serif-display text-2xl text-espresso">{t.bocTitle}</h3>
+              <p className="mt-2 text-sm text-espresso/75">{t.bocText}</p>
+              <p className="mt-4 text-sm text-espresso">{dict.session.sessionOf} {formatDate(latestBoc.date, locale)}</p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <ButtonLink href={latestBoc.url} variant="gold" size="sm" external>
+                <ButtonLink href={latestBoc.url} variant="primary" size="sm" external>
                   <FileDown aria-hidden="true" className="size-4" />
                   {t.bocDownload}
                 </ButtonLink>
-                <ButtonLink href={p("/marches/boc")} variant="outlineDark" size="sm">{t.bocArchive}</ButtonLink>
+                <ButtonLink href={p("/marches/boc")} variant="secondary" size="sm" className="border-espresso/30! text-espresso!">{t.bocArchive}</ButtonLink>
               </div>
             </Reveal>
             <Reveal delay={0.2} className="rounded-[var(--radius-card)] border border-line bg-background p-7">
@@ -565,24 +565,24 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </Section>
 
       {/* FEATURED STORY */}
-      <section aria-labelledby="story-title" className="grain relative isolate overflow-hidden bg-espresso text-brand-sand">
-        <div aria-hidden="true" className="grid-lines absolute inset-0 -z-10" />
-        <div aria-hidden="true" className="animate-orb absolute -right-40 top-10 -z-10 size-[560px] rounded-full bg-brand-gold/15 blur-[130px]" />
+      <section aria-labelledby="story-title" className="relative isolate overflow-hidden border-y border-line bg-surface-alt text-text">
+        <div aria-hidden="true" className="dots absolute inset-0 -z-10 opacity-60" />
+        <div aria-hidden="true" className="animate-orb absolute -right-40 top-10 -z-10 size-[560px] rounded-full bg-brand-gold/10 blur-[130px]" />
         <div className="container-site grid items-center gap-14 py-24 md:py-32 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
           <div>
             <Reveal className="flex items-center gap-3">
               <CompanyMark slug="bgfi-holding" size="md" />
-              <p className="eyebrow text-brand-gold-light!">{t.storyEyebrow}</p>
+              <p className="eyebrow">{t.storyEyebrow}</p>
             </Reveal>
             <Reveal delay={0.1}>
-              <h2 id="story-title" className="text-h1 mt-6 text-brand-ivory!">{t.storyTitle}</h2>
+              <h2 id="story-title" className="text-h1 mt-6">{t.storyTitle}</h2>
             </Reveal>
-            <Reveal delay={0.2}><p className="mt-6 max-w-xl text-lg text-brand-sand/80">{t.storyText}</p></Reveal>
-            <Stagger as="dl" className="mt-10 grid grid-cols-3 gap-6 border-t border-white/15 pt-8">
+            <Reveal delay={0.2}><p className="mt-6 max-w-xl text-lg text-muted">{t.storyText}</p></Reveal>
+            <Stagger as="dl" className="mt-10 grid grid-cols-3 gap-6 border-t border-line pt-8">
               {t.storyStats.map(([value, label]) => (
                 <StaggerItem key={label}>
-                  <dd className="font-serif-display text-2xl text-brand-ivory md:text-3xl">{value}</dd>
-                  <dt className="mt-1 text-sm text-brand-sand/65">{label}</dt>
+                  <dd className="font-serif-display text-2xl text-heading md:text-3xl">{value}</dd>
+                  <dt className="mt-1 text-sm text-muted">{label}</dt>
                 </StaggerItem>
               ))}
             </Stagger>
@@ -590,14 +590,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <ButtonLink href={p("/marches/actions/bgfi-holding")} variant="gold">
                 {t.storyCta} <ArrowRight aria-hidden="true" className="size-4" />
               </ButtonLink>
-              <span className="text-xs text-brand-sand/55">Visa COSUMAF N° COSUMAF-IPO1/25</span>
+              <span className="text-xs text-muted">Visa COSUMAF N° COSUMAF-IPO1/25</span>
             </Reveal>
           </div>
 
           <Reveal delay={0.15} className="relative">
-            <div className="relative aspect-[970/624] overflow-hidden rounded-[var(--radius-panel)] shadow-[0_60px_120px_-40px_rgb(0_0_0/0.9)] ring-1 ring-white/10">
+            <div className="relative aspect-[970/624] overflow-hidden rounded-[var(--radius-panel)] shadow-[0_40px_90px_-40px_rgb(32_20_8/0.45)] ring-1 ring-line">
               <ParallaxImage src="/photos/bgfi-ipo-signing.webp" alt="Signature lors de l’introduction en bourse de BGFI Holding Corporation" className="absolute inset-0" strength={40} sizes="(min-width:1024px) 640px, 100vw" />
-              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-tr from-espresso/60 via-transparent to-transparent" />
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-tr from-espresso/30 via-transparent to-transparent" />
             </div>
             <div className="absolute -bottom-6 left-5 flex items-center gap-3 rounded-2xl bg-espresso-2 px-4 py-3 shadow-2xl ring-1 ring-brand-gold/30 md:-left-8">
               <CalendarDays aria-hidden="true" className="size-5 text-brand-gold-light" strokeWidth={1.6} />
