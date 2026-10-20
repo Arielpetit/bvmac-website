@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowDownUp, BellRing, Rss, Search } from "lucide-react";
+import { ArrowDownUp, Search } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
 import { tc } from "@/i18n/content";
 import { COUNTRIES } from "@/lib/navigation";
@@ -9,7 +9,6 @@ import type { Notice, NoticeType } from "@/data/content";
 import { NOTICE_TYPES } from "@/data/content";
 import { EmptyState } from "@/components/ui/States";
 import { NoticeRow } from "./NoticeRow";
-import { SubscribeForm } from "./SubscribeForm";
 import { cn } from "@/lib/cn";
 
 const PAGE = 12;
@@ -45,9 +44,9 @@ export function NoticeLibrary({ notices }: { notices: Notice[] }) {
     setQuery(""); setType(""); setIssuer(""); setCountry(""); setFrom(""); setTo(""); setLimit(PAGE);
   };
   const L = {
-    fr: { search: "Titre, numéro, émetteur…", type: "Type", issuer: "Émetteur", country: "Pays", from: "Du", to: "Au", all: "Tous", sort: "Trier", newest: "Plus récents", oldest: "Plus anciens", more: "Afficher plus", subscribe: "Recevoir les avis", subscribeText: "Un e-mail à chaque nouvel avis (double confirmation), ou des alertes dans l’application BVMAC.", rss: "Flux RSS" },
-    en: { search: "Title, number, issuer…", type: "Type", issuer: "Issuer", country: "Country", from: "From", to: "To", all: "All", sort: "Sort", newest: "Newest", oldest: "Oldest", more: "Show more", subscribe: "Get notices", subscribeText: "An email for every new notice (double opt-in), or alerts in the BVMAC app.", rss: "RSS feed" },
-    es: { search: "Título, número, emisor…", type: "Tipo", issuer: "Emisor", country: "País", from: "Desde", to: "Hasta", all: "Todos", sort: "Ordenar", newest: "Más recientes", oldest: "Más antiguos", more: "Mostrar más", subscribe: "Recibir los avisos", subscribeText: "Un correo por cada nuevo aviso (doble confirmación), o alertas en la aplicación BVMAC.", rss: "Canal RSS" },
+    fr: { search: "Titre, numéro, émetteur…", type: "Type", issuer: "Émetteur", country: "Pays", from: "Du", to: "Au", all: "Tous", sort: "Trier", newest: "Plus récents", oldest: "Plus anciens", more: "Afficher plus" },
+    en: { search: "Title, number, issuer…", type: "Type", issuer: "Issuer", country: "Country", from: "From", to: "To", all: "All", sort: "Sort", newest: "Newest", oldest: "Oldest", more: "Show more" },
+    es: { search: "Título, número, emisor…", type: "Tipo", issuer: "Emisor", country: "País", from: "Desde", to: "Hasta", all: "Todos", sort: "Ordenar", newest: "Más recientes", oldest: "Más antiguos", more: "Mostrar más" },
   }[locale];
   const field = "h-11 w-full rounded-full border border-line bg-surface px-4 text-sm";
 
@@ -97,13 +96,6 @@ export function NoticeLibrary({ notices }: { notices: Notice[] }) {
             </div>
           </div>
           <button type="button" onClick={reset} className="link w-fit text-sm">{dict.common.clearFilters}</button>
-        </div>
-        <div className="rounded-[var(--radius-card)] bg-espresso p-5 text-brand-sand">
-          <BellRing aria-hidden="true" className="size-6 text-brand-gold-light" strokeWidth={1.5} />
-          <p className="mt-3 font-serif-display text-xl text-brand-ivory">{L.subscribe}</p>
-          <p className="mt-1 text-sm text-brand-sand/75">{L.subscribeText}</p>
-          <div className="mt-4"><SubscribeForm tone="dark" /></div>
-          <a href="#" className="mt-3 inline-flex items-center gap-1.5 text-sm text-brand-gold-light hover:underline"><Rss aria-hidden="true" className="size-4" /> {L.rss}</a>
         </div>
       </aside>
       <div>

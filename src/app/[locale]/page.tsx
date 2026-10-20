@@ -629,8 +629,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </Stagger>
           </div>
           <div>
-            <Reveal className="mb-6 flex items-end justify-between gap-4 pt-[2.15rem]">
-              <h2 className="font-serif-display text-2xl text-heading md:text-3xl">{t.agendaTitle}</h2>
+            <Reveal className="mb-6 flex flex-wrap items-baseline-last justify-between gap-6">
+              <div className="max-w-2xl">
+                <p aria-hidden="true" className="eyebrow mb-4 select-none">&nbsp;</p>
+                <h2 className="text-h2">{t.agendaTitle}</h2>
+              </div>
               <Link href={p("/marches/agenda")} className="link text-sm">{t.agendaAll}</Link>
             </Reveal>
             <Stagger as="ol" className="relative grid gap-3">

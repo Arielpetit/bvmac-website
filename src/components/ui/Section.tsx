@@ -57,7 +57,7 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <Reveal className={cn("mb-12 flex flex-wrap items-end justify-between gap-6", className)}>
+    <Reveal className={cn("mb-12 flex flex-wrap items-baseline-last justify-between gap-6", className)}>
       <div className="max-w-2xl">
         {overline && <p className={cn("eyebrow mb-4", tone === "dark" && "text-brand-gold-light!")}>{overline}</p>}
         <h2 id={id} className={cn("text-h2", tone === "dark" && "text-brand-ivory!")}>
