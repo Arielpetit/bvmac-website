@@ -112,18 +112,18 @@ export function HeroMarketCard({
             <circle cx={last[0]} cy={last[1]} r="4" fill="#ead18a" stroke="#1c130b" strokeWidth="2" />
           </motion.g>
         </svg>
-        <p className="mt-1 text-right text-[10px] uppercase tracking-[0.14em] text-brand-sand/40">{t.trend}</p>
+        <p className="mt-1 text-right text-[11px] uppercase tracking-[0.14em] text-brand-sand/50">{t.trend}</p>
       </div>
 
-      <dl className="relative mt-4 grid divide-y divide-white/10 rounded-2xl bg-black/20 py-1.5 ring-1 ring-white/[0.06] sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:py-3.5">
+      <dl className="relative mt-4 grid divide-y divide-white/10 rounded-2xl bg-black/20 py-1.5 ring-1 ring-white/[0.06] sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:py-3.5 lg:grid-cols-1 lg:divide-x-0 lg:divide-y lg:py-1.5 xl:grid-cols-3 xl:divide-x xl:divide-y-0 xl:py-3.5">
         {[
           [t.traded, formatFcfaCompact(traded, locale)],
           [t.bonds, formatFcfaCompact(bonds, locale)],
           [t.listed, t.listedValue(equitiesCount, bondsCount)],
         ].map(([label, value]) => (
-          <div key={label} className="flex items-baseline justify-between gap-3 px-3.5 py-2 sm:block sm:py-0">
-            <dt className="text-[10.5px] leading-tight text-brand-sand/55">{label}</dt>
-            <dd className="figure whitespace-nowrap text-right text-[13px] font-medium text-brand-ivory sm:mt-1.5 sm:text-left">{value}</dd>
+          <div key={label} className="flex items-baseline justify-between gap-3 px-3.5 py-2 sm:block sm:py-0 lg:flex lg:py-2 xl:block xl:py-0">
+            <dt className="text-[11px] leading-tight text-brand-sand/65">{label}</dt>
+            <dd className="figure whitespace-nowrap text-right text-[13px] font-medium text-brand-ivory sm:mt-1.5 sm:text-left lg:mt-0 lg:text-right xl:mt-1.5 xl:text-left">{value}</dd>
           </div>
         ))}
       </dl>

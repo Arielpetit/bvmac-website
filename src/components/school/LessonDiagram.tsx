@@ -37,11 +37,11 @@ export function LessonDiagram({ slug, locale = "fr" }: { slug: string; locale?: 
   const flow = FLOWS[locale][slug];
   if (!flow) return null;
   return (
-    <figure className="rounded-[var(--radius-card)] border border-line bg-surface-alt p-6">
+    <figure className="rounded-[var(--radius-card)] border border-line bg-surface-alt p-4 sm:p-6">
       <Stagger as="ol" className="grid gap-3 md:grid-cols-4">
         {flow.nodes.map((n, i) => (
-          <StaggerItem as="li" key={n.label} className="relative flex items-center gap-3 md:block">
-            <div className="flex-1 rounded-2xl border border-line bg-surface p-4 text-center">
+          <StaggerItem as="li" key={n.label} className="relative flex flex-col items-center gap-2 md:block">
+            <div className="w-full rounded-2xl border border-line bg-surface p-4 text-center">
               <span className="figure text-xs text-accent-text">{String(i + 1).padStart(2, "0")}</span>
               <p className="mt-1 font-medium text-heading">{n.label}</p>
               <p className="text-xs text-muted">{n.sub}</p>
@@ -59,7 +59,7 @@ function BondDiagram({ locale }: { locale: Locale }) {
   const t = BOND[locale];
   const years = [1, 2, 3, 4, 5];
   return (
-    <figure className="rounded-[var(--radius-card)] border border-line bg-surface-alt p-6">
+    <figure className="rounded-[var(--radius-card)] border border-line bg-surface-alt p-4 sm:p-6">
       <svg viewBox="0 0 520 220" className="h-auto w-full" role="img" aria-labelledby="bond-cap">
         <line x1="40" y1="150" x2="500" y2="150" stroke="var(--line-strong)" />
         <rect x="40" y="150" width="44" height="60" rx="6" fill="var(--fall)" opacity="0.75" />

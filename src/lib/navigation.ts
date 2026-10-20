@@ -58,6 +58,7 @@ export const NAV: NavGroup[] = [
     href: "/emetteurs/societes-cotees",
     items: [
       { key: "listed", href: "/emetteurs/societes-cotees", icon: "Briefcase" },
+      { key: "bondIssuers", href: "/emetteurs/emetteurs-obligataires", icon: "Landmark" },
       { key: "ipo", href: "/emetteurs/s-introduire-en-bourse", icon: "Rocket" },
       { key: "admission", href: "/emetteurs/conditions-d-admission", icon: "ListChecks" },
       { key: "eligibility", href: "/emetteurs/test-d-eligibilite", icon: "Gauge" },

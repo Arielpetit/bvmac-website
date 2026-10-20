@@ -2,7 +2,7 @@
 
 import { Download } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
-import { formatFcfa } from "@/lib/format";
+import { formatFcfa, formatFcfaCompact } from "@/lib/format";
 import { intlLocale } from "@/i18n/config";
 import type { Point } from "@/data/series";
 
@@ -36,19 +36,19 @@ export function MonthlyTable({ cap, traded }: { cap: Point[]; traded: Point[] })
         </button>
       </div>
       <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
-        <table className="w-full min-w-[520px] text-sm">
+        <table className="w-full text-sm sm:min-w-[520px]">
           <caption className="sr-only">{L[1]}</caption>
           <thead className="bg-surface-alt">
             <tr className="text-xs uppercase tracking-[0.08em] text-muted">
-              {L.map((h, i) => <th key={h} scope="col" className={`px-5 py-3.5 font-medium ${i ? "text-right" : "text-left"}`}>{h}</th>)}
+              {L.map((h, i) => <th key={h} scope="col" className={`px-3 py-3.5 font-medium sm:px-5 ${i ? "text-right" : "text-left"}`}>{h}</th>)}
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
             {rows.map((r) => (
               <tr key={r.month}>
-                <th scope="row" className="px-5 py-3 text-left font-normal capitalize">{name(r.month)}</th>
-                <td className="figure px-5 py-3 text-right">{formatFcfa(r.cap, locale)}</td>
-                <td className="figure px-5 py-3 text-right">{formatFcfa(r.traded, locale)}</td>
+                <th scope="row" className="px-3 py-3 text-left font-normal capitalize sm:px-5">{name(r.month)}</th>
+                <td className="figure whitespace-nowrap px-2 py-3 text-right text-[13px] sm:px-5 sm:text-sm"><span className="sm:hidden">{formatFcfaCompact(r.cap, locale)}</span><span className="hidden sm:inline">{formatFcfa(r.cap, locale)}</span></td>
+                <td className="figure whitespace-nowrap px-2 py-3 text-right text-[13px] sm:px-5 sm:text-sm"><span className="sm:hidden">{formatFcfaCompact(r.traded, locale)}</span><span className="hidden sm:inline">{formatFcfa(r.traded, locale)}</span></td>
               </tr>
             ))}
           </tbody>

@@ -88,19 +88,19 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
           onDark ? "border-b border-transparent bg-transparent" : "border-b border-line/70 bg-surface/[0.97] shadow-[0_8px_30px_-20px_rgb(var(--shadow-color)/0.25)] backdrop-blur-xl backdrop-saturate-150",
         )}
       >
-        <div className="container-site flex h-[76px] items-center justify-between gap-6">
+        <div className="container-site flex h-[76px] items-center justify-between gap-3 sm:gap-6">
           <Link href={localePath(locale, "/")} className="relative z-10 flex shrink-0 items-center" aria-label={`BVMAC – ${dict.nav.home}`}>
             {onDark ? (
-              <Logo variant="dark" className="h-[52px] w-auto sm:h-16" alt="" priority />
+              <Logo variant="dark" className="h-[46px] w-auto min-[380px]:h-[52px] sm:h-16" alt="" priority />
             ) : (
               <>
-                <Logo variant="light" className="h-[52px] w-auto sm:h-16 dark:hidden" alt="" priority />
-                <Logo variant="dark" className="hidden h-[52px] w-auto sm:h-16 dark:block" alt="" />
+                <Logo variant="light" className="h-[46px] w-auto min-[380px]:h-[52px] sm:h-16 dark:hidden" alt="" priority />
+                <Logo variant="dark" className="hidden h-[46px] w-auto min-[380px]:h-[52px] sm:h-16 dark:block" alt="" />
               </>
             )}
           </Link>
 
-          <nav aria-label={dict.a11y.mainNav} className="hidden lg:block">
+          <nav aria-label={dict.a11y.mainNav} className="hidden xl:block">
             <ul className="flex items-center gap-0.5">
               {NAV.map((group) => {
                 const active = isActive(group);
@@ -114,7 +114,7 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
                       onClick={() => setOpen(expanded ? null : group.key)}
                       onFocus={() => enter(group.key)}
                       className={cn(
-                        "relative flex h-10 items-center gap-1 whitespace-nowrap rounded-full px-3 text-[0.9375rem] font-medium transition-colors xl:px-3.5",
+                        "relative flex h-10 items-center gap-1 whitespace-nowrap rounded-full px-3 text-[0.9375rem] font-medium transition-colors 2xl:px-3.5",
                         onDark ? "text-brand-ivory/85 hover:text-brand-ivory" : "text-muted hover:text-heading",
                         (expanded || active) && (onDark ? "text-brand-ivory" : "text-heading"),
                       )}
@@ -164,7 +164,7 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
             </Link>
             <button
               type="button"
-              className={cn("inline-flex size-10 items-center justify-center rounded-full lg:hidden", onDark ? "text-brand-ivory hover:bg-white/10" : "text-heading hover:bg-surface-alt")}
+              className={cn("inline-flex size-10 items-center justify-center rounded-full xl:hidden", onDark ? "text-brand-ivory hover:bg-white/10" : "text-heading hover:bg-surface-alt")}
               aria-expanded={drawer}
               aria-controls="mobile-menu"
               onClick={() => setDrawer(true)}
@@ -185,7 +185,7 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25, ease: EASE }}
               onMouseEnter={() => enter(current.key)}
-              className="absolute inset-x-0 top-full hidden border-b border-line bg-surface lg:block"
+              className="absolute inset-x-0 top-full hidden border-b border-line bg-surface xl:block"
             >
               <div className="container-site grid grid-cols-[1fr_340px] gap-10 py-8">
                 <div>
@@ -257,6 +257,17 @@ function MobileSheet({ onClose, onSearch }: { onClose: () => void; onSearch: () 
   }, []);
 
   return (
+    <>
+    {/* Tablets and small laptops: the menu opens as a side panel over a dimmed page. */}
+    <motion.div
+      aria-hidden="true"
+      onClick={onClose}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25, ease: EASE }}
+      className="fixed inset-0 z-[79] hidden bg-espresso/40 backdrop-blur-sm md:block"
+    />
     <motion.div
       id="mobile-menu"
       role="dialog"
@@ -266,7 +277,7 @@ function MobileSheet({ onClose, onSearch }: { onClose: () => void; onSearch: () 
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.25, ease: EASE }}
-      className="fixed inset-0 z-[80] flex flex-col bg-background"
+      className="fixed inset-y-0 right-0 z-[80] flex w-full flex-col bg-background md:max-w-md md:border-l md:border-line md:shadow-2xl"
     >
       <div className="container-site flex h-[72px] shrink-0 items-center justify-between border-b border-line">
         <Link href={localePath(locale, "/")} onClick={onClose} aria-label="BVMAC">
@@ -358,5 +369,6 @@ function MobileSheet({ onClose, onSearch }: { onClose: () => void; onSearch: () 
         </div>
       </div>
     </motion.div>
+    </>
   );
 }

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, BellRing, Building2, CalendarDays, FileText, Hash } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { localePath } from "@/lib/paths";
-import { formatDate } from "@/lib/format";
+import { breakable, formatDate, ucfirst } from "@/lib/format";
 import { getNotice, getNotices } from "@/lib/api";
 import { NOTICES, NOTICE_TYPES } from "@/data/content";
 import { EQUITIES } from "@/data/market";
@@ -55,13 +55,13 @@ export default async function NoticePage({ params }: PageProps<"/[locale]/avis-e
       <PageHeader
         title={tc(n.title, locale)}
         overline={n.number ? `Avis N°${n.number}` : NOTICE_TYPES[n.type][locale]}
-        meta={<><NoticeTypeTag type={n.type} locale={locale} /><span className="text-sm capitalize text-muted">{formatDate(n.date, locale)}</span></>}
+        meta={<><NoticeTypeTag type={n.type} locale={locale} /><span className="text-sm text-muted">{ucfirst(formatDate(n.date, locale))}</span></>}
       />
       <div className="container-site grid gap-12 pt-10 pb-14 md:pt-12 md:pb-20 lg:grid-cols-[1.6fr_1fr]">
         <Reveal className="grid content-start gap-8">
           <div className="rounded-[var(--radius-card)] border border-line bg-surface p-7">
             <p className="text-xs uppercase tracking-[0.12em] text-muted">{t.original}</p>
-            <p lang="fr" className="mt-3 font-serif-display text-2xl leading-snug text-heading">{n.original}</p>
+            <p lang="fr" className="mt-3 font-serif-display text-xl leading-snug text-heading sm:text-2xl">{breakable(n.original)}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href={n.url} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-full bg-action px-6 font-medium text-action-text hover:bg-action-hover">
                 {t.official} <ArrowUpRight aria-hidden="true" className="size-4" />

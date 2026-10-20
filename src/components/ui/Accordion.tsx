@@ -1,5 +1,6 @@
 "use client";
 
+import { nbsp } from "@/lib/format";
 import { useId, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Plus } from "lucide-react";
@@ -30,7 +31,7 @@ export function Accordion({ items, className, numbered = false, defaultOpen = []
                 className="group flex w-full items-center gap-4 py-5 text-left"
               >
                 {numbered && <span className="figure w-8 shrink-0 text-sm text-accent-text">{String(i + 1).padStart(2, "0")}</span>}
-                <span className="flex-1 text-[1.0625rem] font-medium text-heading transition-colors group-hover:text-link">{item.title}</span>
+                <span className="flex-1 text-[1.0625rem] font-medium text-heading transition-colors group-hover:text-link">{typeof item.title === "string" ? nbsp(item.title) : item.title}</span>
                 {item.meta && <span className="hidden shrink-0 text-sm text-muted sm:block">{item.meta}</span>}
                 <span className={cn("flex size-9 shrink-0 items-center justify-center rounded-full border border-line transition-all duration-300", isOpen && "rotate-45 border-transparent bg-action text-action-text")}>
                   <Plus aria-hidden="true" className="size-4" strokeWidth={1.8} />

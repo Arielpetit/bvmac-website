@@ -106,12 +106,12 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
     }
   };
 
-  const select = "h-11 rounded-full border border-line bg-surface px-4 text-sm";
+  const select = "h-11 w-full min-w-0 rounded-full border border-line bg-surface px-4 text-sm sm:w-auto";
 
   return (
     <div>
-      <div className="mb-5 flex flex-wrap items-end gap-3">
-        <div className="min-w-60 flex-1">
+      <div className="mb-5 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-end">
+        <div className="col-span-2 sm:min-w-60 sm:flex-1">
           <label htmlFor="eq-search" className="sr-only">{t.search}</label>
           <div className="relative">
             <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted" strokeWidth={1.6} />
@@ -146,7 +146,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
             </fieldset>
           )}
         </div>
-        <button type="button" onClick={exportCsv} className="inline-flex h-11 items-center gap-2 rounded-full bg-action px-5 text-sm font-medium text-action-text hover:bg-action-hover">
+        <button type="button" onClick={exportCsv} className="col-span-2 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-action px-5 text-sm font-medium text-action-text hover:bg-action-hover sm:col-span-1">
           <Download aria-hidden="true" className="size-4" strokeWidth={1.6} /> CSV
         </button>
       </div>
@@ -159,7 +159,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
         <EmptyState message={dict.common.noResults} action={<button type="button" className="link text-sm" onClick={() => { setQuery(""); setCountry(""); setSector(""); }}>{dict.common.clearFilters}</button>} />
       ) : (
         <>
-          <div className="relative hidden overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface md:block" data-lenis-prevent>
+          <div className="relative hidden overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface lg:block" data-lenis-prevent>
             <table className="w-full min-w-[960px] text-sm">
               <caption className="sr-only">{dict.nav.items.equities}</caption>
               <thead className="bg-surface-alt">
@@ -200,7 +200,7 @@ export function EquityTable({ rows, sparks, asOf }: { rows: EquityQuote[]; spark
             </table>
           </div>
 
-          <ul className="grid gap-3 md:hidden">
+          <ul className="grid gap-3 md:grid-cols-2 lg:hidden">
             {filtered.map((r) => (
               <li key={r.slug} className="rounded-[var(--radius-card)] border border-line bg-surface p-4">
                 <div className="flex items-start justify-between gap-3">

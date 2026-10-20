@@ -57,6 +57,7 @@ const es: Dictionary = {
       agenda: "Agenda de operaciones",
       hours: "Calendario y horarios",
       listed: "Sociedades cotizadas",
+      bondIssuers: "Emisores de obligaciones",
       ipo: "Salir a bolsa",
       admission: "Condiciones de admisión",
       eligibility: "Test de elegibilidad",

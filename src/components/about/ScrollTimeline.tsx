@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { breakable } from "@/lib/format";
 import { motion, useScroll, useSpring } from "motion/react";
 
 type Item = { date: string; title: string; text: string };
@@ -32,7 +33,7 @@ export function ScrollTimeline({ items }: { items: Item[] }) {
             <div className={right ? "md:col-start-2" : "md:text-right"}>
               <p className="font-serif-display text-3xl text-accent-text md:text-4xl">{item.date}</p>
               <h2 className="text-h3 mt-2">{item.title}</h2>
-              <p className="mt-2 leading-relaxed text-muted [overflow-wrap:anywhere]">{item.text}</p>
+              <p className="mt-2 leading-relaxed text-muted">{breakable(item.text)}</p>
             </div>
           </motion.li>
         );

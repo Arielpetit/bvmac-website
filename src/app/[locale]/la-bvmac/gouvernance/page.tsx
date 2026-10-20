@@ -99,6 +99,14 @@ const T = {
   },
 };
 
+const CODE_PDF = "https://www.bvm-ac.org/wp-content/uploads/2025/02/Code-ethique-et-de-deontologie-de-la-BVMAC_compressed.pdf";
+const BROCHURE_PDF = "https://www.bvm-ac.org/wp-content/uploads/2024/05/Plaquette-de-presentation-BVMAC.pdf";
+const DL = {
+  fr: { code: "Télécharger le code (PDF)", brochure: "Plaquette de présentation (PDF)" },
+  en: { code: "Download the code (PDF)", brochure: "Presentation brochure (PDF, French)" },
+  es: { code: "Descargar el código (PDF)", brochure: "Folleto de presentación (PDF, francés)" },
+};
+
 export default async function GovernancePage({ params }: PageProps<"/[locale]/la-bvmac/gouvernance">) {
   const { locale, dict } = await resolveLocale(params);
   const t = T[locale];
@@ -195,6 +203,10 @@ export default async function GovernancePage({ params }: PageProps<"/[locale]/la
                     <FileText aria-hidden="true" className="size-7 text-accent-text" strokeWidth={1.4} />
                     <h3 className="text-h3 mt-4">{t.code}</h3>
                     <p className="mt-2 text-sm text-muted">{t.codeText}</p>
+                    <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                      <a href={CODE_PDF} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">{DL[locale].code}<ArrowUpRight aria-hidden="true" className="size-4" /></a>
+                      <a href={BROCHURE_PDF} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">{DL[locale].brochure}<ArrowUpRight aria-hidden="true" className="size-4" /></a>
+                    </div>
                   </div>
                   <div className="rounded-[var(--radius-card)] border border-line bg-surface p-6">
                     <h3 className="text-h3">{t.report}</h3>

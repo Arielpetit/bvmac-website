@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { ChevronDown, FileDown, Search } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useI18n } from "@/i18n/provider";
-import { formatDate } from "@/lib/format";
+import { formatDate, ucfirst } from "@/lib/format";
 import { intlLocale } from "@/i18n/config";
 import type { BocEntry } from "@/data/content";
 import { EmptyState } from "@/components/ui/States";
@@ -70,7 +70,7 @@ export function BocArchive({ entries }: { entries: BocEntry[] }) {
                         <li key={e.number} className="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
                           <span>
                             <span className="code block text-heading">{e.number}</span>
-                            <span className="block text-sm capitalize text-muted">{formatDate(e.date, locale)}</span>
+                            <span className="block text-sm text-muted">{ucfirst(formatDate(e.date, locale))}</span>
                           </span>
                           <a href={e.url} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-2 rounded-full border border-line px-4 text-sm text-heading hover:border-line-strong">
                             <FileDown aria-hidden="true" className="size-4" strokeWidth={1.6} /> PDF

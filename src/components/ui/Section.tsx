@@ -1,3 +1,4 @@
+import { nbsp } from "@/lib/format";
 import { cn } from "@/lib/cn";
 import { Reveal } from "@/components/motion/Reveal";
 
@@ -60,9 +61,9 @@ export function SectionHeading({
       <div className="max-w-2xl">
         {overline && <p className={cn("eyebrow mb-4", tone === "dark" && "text-brand-gold-light!")}>{overline}</p>}
         <h2 id={id} className={cn("text-h2", tone === "dark" && "text-brand-ivory!")}>
-          {title}
+          {nbsp(title)}
         </h2>
-        {intro && <p className={cn("mt-4 text-lg", tone === "dark" ? "text-brand-sand/75" : "text-muted")}>{intro}</p>}
+        {intro && <p className={cn("mt-4 text-lg", tone === "dark" ? "text-brand-sand/75" : "text-muted")}>{nbsp(intro)}</p>}
       </div>
       {action}
     </Reveal>

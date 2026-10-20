@@ -20,7 +20,7 @@ export function BocOnline({ rows, date, number, valueTraded }: { rows: Row[]; da
         <Eye aria-hidden="true" className="size-4" /> {L[0]}
       </button>
       <Sheet open={open} onClose={() => setOpen(false)} title={`BOC · ${number}`} closeLabel={dict.common.close}>
-        <p className="mb-4 text-sm capitalize text-muted">{dict.session.sessionOf} {formatDate(date, locale)}</p>
+        <p className="mb-4 text-sm text-muted">{dict.session.sessionOf} {formatDate(date, locale)}</p>
         <table className="w-full text-sm">
           <caption className="sr-only">BOC {number}</caption>
           <thead className="border-b border-line text-xs uppercase tracking-[0.08em] text-muted">

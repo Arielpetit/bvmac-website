@@ -27,7 +27,7 @@ export function NewsList({ items: raw }: { items: NewsItem[] }) {
   return (
     <div>
       <div className="mb-10 flex flex-wrap items-center gap-3">
-        <div role="group" aria-label={{ fr: "Catégorie", en: "Category", es: "Categoría" }[locale]} className="flex flex-wrap gap-2">
+        <div role="group" aria-label={{ fr: "Catégorie", en: "Category", es: "Categoría" }[locale]} className="flex w-full flex-wrap gap-2 lg:w-auto">
           {["", ...cats].map((c) => (
             <button key={c || "all"} type="button" aria-pressed={cat === c} onClick={() => { setCat(c); setLimit(PAGE); }} className={cn("h-10 rounded-full border px-4 text-sm transition-colors", cat === c ? "border-transparent bg-action text-action-text" : "border-line bg-surface hover:border-line-strong")}>
               {c || L.all}
@@ -39,7 +39,7 @@ export function NewsList({ items: raw }: { items: NewsItem[] }) {
           <option value="">{L.allYears}</option>
           {years.map((y) => <option key={y}>{y}</option>)}
         </select>
-        <div className="relative ml-auto min-w-60">
+        <div className="relative min-w-0 flex-1 sm:ml-auto sm:w-72 sm:flex-none">
           <label htmlFor="news-q" className="sr-only">{L.search}</label>
           <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted" strokeWidth={1.6} />
           <input id="news-q" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={L.search} className="h-10 w-full rounded-full border border-line bg-surface pl-11 pr-4 text-sm" />

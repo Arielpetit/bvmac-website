@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { StackTable } from "@/components/ui/StackTable";
 import { resolveLocale } from "@/lib/i18n-server";
 import { LegalPage } from "@/components/content/LegalPage";
 import { CookieSettingsLink } from "@/components/layout/CookieConsent";
@@ -82,15 +83,7 @@ export default async function CookiesPage({ params }: PageProps<"/[locale]/polit
       <h2 id="principes" className="text-h2">{t.principlesTitle}</h2>
       <p>{t.principles}</p>
       <h2 id="liste" className="text-h2">{t.listTitle}</h2>
-      <div className="not-prose my-6 relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
-        <table className="w-full min-w-[760px] text-sm">
-          <caption className="sr-only">{t.caption}</caption>
-          <thead><tr className="border-b border-line">{t.head.map((h) => <th key={h} scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-[0.1em] text-muted">{h}</th>)}</tr></thead>
-          <tbody className="divide-y divide-line">
-            {t.rows.map((c) => <tr key={c[0]}>{c.map((v, i) => i === 0 ? <th key={i} scope="row" className="code px-4 py-3 text-left font-normal text-heading">{v}</th> : <td key={i} className="px-4 py-3 text-muted">{v}</td>)}</tr>)}
-          </tbody>
-        </table>
-      </div>
+      <StackTable alwaysStack className="not-prose my-6 [overflow-wrap:normal]" caption={t.caption} head={t.head} rows={t.rows} minWidth={760} firstColClassName="code font-normal" />
       <h2 id="choix" className="text-h2">{t.choiceTitle}</h2>
       <p>{t.choice} <CookieSettingsLink className="link" />. {t.browser}</p>
     </LegalPage>

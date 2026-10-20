@@ -34,16 +34,16 @@ export function OrgChart({ root }: { root: OrgUnit }) {
   return (
     <div className="grid gap-10 xl:grid-cols-[1fr_300px]">
       <figure aria-label={{ fr: "Organigramme de la BVMAC", en: "BVMAC organisation chart", es: "Organigrama de la BVMAC" }[locale]}>
-        <div className="mx-auto max-w-sm">{node(root, 0)}</div>
-        <div aria-hidden="true" className="mx-auto hidden h-8 w-px bg-brand-gold md:block" />
-        <ul className="relative grid gap-4 md:grid-cols-5 md:pt-8">
-          <span aria-hidden="true" className="absolute left-[10%] right-[10%] top-0 hidden h-px bg-brand-gold md:block" />
+        <div className="mb-4 lg:mx-auto lg:mb-0 lg:max-w-sm">{node(root, 0)}</div>
+        <div aria-hidden="true" className="mx-auto hidden h-8 w-px bg-brand-gold lg:block" />
+        <ul className="relative grid gap-4 lg:grid-cols-5 lg:pt-8">
+          <span aria-hidden="true" className="absolute left-[10%] right-[10%] top-0 hidden h-px bg-brand-gold lg:block" />
           {root.children?.map((child) => (
-            <li key={child.title} className="relative border-l border-brand-gold/50 pl-4 md:border-l-0 md:pl-0">
-              <span aria-hidden="true" className="absolute -top-8 left-1/2 hidden h-8 w-px bg-brand-gold md:block" />
+            <li key={child.title} className="relative border-l border-brand-gold/50 pl-4 lg:border-l-0 lg:pl-0">
+              <span aria-hidden="true" className="absolute -top-8 left-1/2 hidden h-8 w-px bg-brand-gold lg:block" />
               {node(child, 1)}
               {child.children && (
-                <ul className="mt-3 grid gap-2 pl-3 md:pl-0">
+                <ul className="mt-3 grid gap-2 pl-3 lg:pl-0">
                   {child.children.map((leaf) => <li key={leaf.title}>{node(leaf, 2)}</li>)}
                 </ul>
               )}

@@ -56,6 +56,7 @@ const fr = {
       agenda: "Agenda des opérations",
       hours: "Calendrier et horaires",
       listed: "Sociétés cotées",
+      bondIssuers: "Émetteurs obligataires",
       ipo: "S'introduire en bourse",
       admission: "Conditions d'admission",
       eligibility: "Test d'éligibilité",

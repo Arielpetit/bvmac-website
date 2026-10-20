@@ -57,3 +57,19 @@ export function formatDayMonth(iso: string, locale: Locale): { day: string; mont
 export function formatFileSize(kb: number, locale: Locale): string {
   return kb >= 1024 ? `${formatNumber(kb / 1024, locale, 1)}${NBSP}Mo` : `${formatNumber(kb, locale)}${NBSP}Ko`;
 }
+
+// Sentence case for dates that open a line ("mercredi 14 octobre" -> "Mercredi 14 octobre").
+export function ucfirst(text: string): string {
+  return text.charAt(0).toLocaleUpperCase() + text.slice(1);
+}
+
+// Lets long references (N°01/22/CEMAC/UMAC/CM) wrap after each slash instead of mid-word.
+export function breakable(text: string): string {
+  return text.replace(/\//g, "/\u200B");
+}
+
+// French typography: keep ? ! : ; » glued to the previous word and « to the next,
+// so a question mark never starts a line on its own.
+export function nbsp(text: string): string {
+  return text.replace(/ ([?!:;»])/g, "\u00a0$1").replace(/« /g, "«\u00a0");
+}

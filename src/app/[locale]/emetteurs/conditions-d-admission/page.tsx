@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { StackTable } from "@/components/ui/StackTable";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
@@ -82,27 +83,14 @@ export default async function AdmissionPage({ params }: PageProps<"/[locale]/eme
     <ContentPage locale={locale} dict={dict} title={dict.nav.items.admission} intro={t.intro}>
       <div className="grid gap-16">
         <Reveal>
-          <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
-            <table className="w-full min-w-[720px] text-sm">
-              <caption className="px-6 pt-5 text-left"><span className="text-h3">{t.caption}</span></caption>
-              <thead>
-                <tr className="border-b border-line">
-                  <th scope="col" className="w-1/4 px-6 py-4 text-left text-xs font-medium uppercase tracking-[0.1em] text-muted">{t.criterion}</th>
-                  {t.cols.map((c, i) => (
-                    <th key={c} scope="col" className={i === 0 ? "bg-accent-soft/60 px-6 py-4 text-left font-medium text-heading" : "px-6 py-4 text-left font-medium text-heading"}>{c}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line">
-                {t.rows.map(([label, ...vals]) => (
-                  <tr key={label}>
-                    <th scope="row" className="px-6 py-4 text-left font-normal text-muted">{label}</th>
-                    {vals.map((v, i) => <td key={i} className={i === 0 ? "bg-accent-soft/30 px-6 py-4 text-heading" : v === "RG" ? "px-6 py-4 text-muted" : "px-6 py-4"}>{v === "RG" ? t.rg : v}</td>)}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <StackTable
+            caption={t.caption}
+            title={<h2 className="text-h3">{t.caption}</h2>}
+            head={[t.criterion, ...t.cols]}
+            rows={t.rows.map(([label, ...vals]) => [label, ...vals.map((v) => (v === "RG" ? t.rg : v))])}
+            highlight={1}
+            minWidth={640}
+          />
         </Reveal>
 
         <Reveal className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">

@@ -34,11 +34,11 @@ export default async function BocPage({ params }: PageProps<"/[locale]/marches/b
           <div className="relative grid gap-8 md:grid-cols-[auto_1fr] md:items-center">
             <div className="flex h-40 w-32 flex-col justify-between rounded-xl bg-brand-ivory p-4 text-espresso shadow-2xl [transform:rotate(-4deg)]">
               <span className="font-serif-display text-lg leading-tight">Bulletin Officiel de la Cote</span>
-              <span className="code text-[10px]">{latest.number}</span>
+              <span className="code text-[11px]">{latest.number}</span>
             </div>
             <div>
               <p className="eyebrow text-brand-gold-light!">{t.latest}</p>
-              <h2 className="text-h2 mt-3 text-brand-ivory! capitalize">{dict.session.sessionOf} {formatDate(latest.date, locale)}</h2>
+              <h2 className="text-h2 mt-3 text-brand-ivory!">{dict.session.sessionOf} {formatDate(latest.date, locale)}</h2>
               <p className="code mt-2 text-brand-sand/70">N° {latest.number}</p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <ButtonLink href={latest.url} variant="gold" external><FileDown aria-hidden="true" className="size-4" />{t.download}</ButtonLink>

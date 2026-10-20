@@ -68,18 +68,18 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
             <p className="mt-5 max-w-sm text-sm text-brand-sand/75">
               {t.company}. {t.capital}.
             </p>
-            <ul className="mt-6 grid gap-2.5 text-sm">
-              <li className="flex gap-2.5">
+            <ul className="mt-6 grid gap-1 text-sm">
+              <li className="flex gap-2.5 py-1.5">
                 <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-gold" strokeWidth={1.6} />
                 {CONTACT.address[1]}, {CONTACT.address[0]}
               </li>
-              <li className="flex gap-2.5">
-                <Phone aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-gold" strokeWidth={1.6} />
-                <a href={CONTACT.phoneHref} className="hover:text-brand-ivory">{CONTACT.phone}</a>
+              <li className="flex items-center gap-2.5">
+                <Phone aria-hidden="true" className="size-4 shrink-0 text-brand-gold" strokeWidth={1.6} />
+                <a href={CONTACT.phoneHref} className="py-1.5 hover:text-brand-ivory">{CONTACT.phone}</a>
               </li>
-              <li className="flex gap-2.5">
-                <Mail aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-gold" strokeWidth={1.6} />
-                <a href={`mailto:${CONTACT.email}`} className="hover:text-brand-ivory">{CONTACT.email}</a>
+              <li className="flex items-center gap-2.5">
+                <Mail aria-hidden="true" className="size-4 shrink-0 text-brand-gold" strokeWidth={1.6} />
+                <a href={`mailto:${CONTACT.email}`} className="py-1.5 hover:text-brand-ivory">{CONTACT.email}</a>
               </li>
             </ul>
             <ul className="mt-6 flex gap-2">
@@ -94,16 +94,16 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
             </ul>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
             {columns.map((group) => (
               <nav key={group.key} aria-labelledby={`f-${group.key}`}>
                 <h2 id={`f-${group.key}`} className="text-xs font-medium uppercase tracking-[0.14em] text-brand-gold-light">
                   {dict.nav[group.key]}
                 </h2>
-                <ul className="mt-4 grid gap-2.5 text-sm">
+                <ul className="mt-3 grid gap-0.5 text-sm">
                   {group.items.slice(0, 6).map((item) => (
                     <li key={item.href}>
-                      <Link href={p(item.href)} className="text-brand-sand/80 transition-colors hover:text-brand-ivory">
+                      <Link href={p(item.href)} className="inline-block py-1.5 text-brand-sand/80 transition-colors hover:text-brand-ivory">
                         {dict.nav.items[item.key]}
                       </Link>
                     </li>
@@ -114,9 +114,9 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 py-6 text-sm">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-1 border-t border-white/10 py-5 text-sm">
           {PARTNERS.map((partner) => (
-            <a key={partner.name} href={partner.href} target="_blank" rel="noopener noreferrer" title={partner.desc} className="inline-flex items-center gap-1 text-brand-sand/70 hover:text-brand-ivory">
+            <a key={partner.name} href={partner.href} target="_blank" rel="noopener noreferrer" title={partner.desc} className="inline-flex items-center gap-1 py-1.5 text-brand-sand/70 hover:text-brand-ivory">
               {partner.name}
               <ArrowUpRight aria-hidden="true" className="size-3.5" />
               <span className="sr-only">{dict.a11y.external}</span>
@@ -126,13 +126,13 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
 
         <div className="flex flex-col gap-3 border-t border-white/10 py-6 text-xs text-brand-sand/60 md:flex-row md:items-center md:justify-between">
           <p>© <CurrentYear fallback={2026} /> BVMAC. {t.rights}</p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2">
-            <li><Link href={p("/mentions-legales")} className="hover:text-brand-ivory">{t.legal}</Link></li>
-            <li><Link href={p("/politique-de-confidentialite")} className="hover:text-brand-ivory">{t.privacy}</Link></li>
-            <li><Link href={p("/politique-de-cookies")} className="hover:text-brand-ivory">Cookies</Link></li>
+          <ul className="flex flex-wrap gap-x-5 gap-y-1">
+            <li><Link href={p("/mentions-legales")} className="inline-block py-1 hover:text-brand-ivory">{t.legal}</Link></li>
+            <li><Link href={p("/politique-de-confidentialite")} className="inline-block py-1 hover:text-brand-ivory">{t.privacy}</Link></li>
+            <li><Link href={p("/politique-de-cookies")} className="inline-block py-1 hover:text-brand-ivory">Cookies</Link></li>
             <li><CookieSettingsLink className="hover:text-brand-ivory" /></li>
-            <li><Link href={p("/accessibilite")} className="hover:text-brand-ivory">{t.accessibility}</Link></li>
-            <li><Link href={p("/plan-du-site")} className="hover:text-brand-ivory">{t.sitemap}</Link></li>
+            <li><Link href={p("/accessibilite")} className="inline-block py-1 hover:text-brand-ivory">{t.accessibility}</Link></li>
+            <li><Link href={p("/plan-du-site")} className="inline-block py-1 hover:text-brand-ivory">{t.sitemap}</Link></li>
           </ul>
         </div>
       </div>

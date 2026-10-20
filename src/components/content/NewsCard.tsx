@@ -38,7 +38,7 @@ export function NewsTile({ item: raw, locale, tall = false, className }: { item:
       <span className="absolute left-2.5 top-2.5 rounded-full bg-surface/90 px-2.5 py-0.5 text-[11px] font-medium text-heading backdrop-blur">{item.category}</span>
       <div className="absolute inset-x-0 bottom-0 p-3">
         <time dateTime={item.date} className="text-[11px] text-brand-sand/75">{formatDate(item.date, locale, "short")}</time>
-        <h3 className={cn("mt-1 font-serif-display leading-snug text-brand-ivory", tall ? "line-clamp-5 text-lg" : "line-clamp-3 text-sm")}>
+        <h3 className={cn("mt-1 font-serif-display leading-snug text-brand-ivory", tall ? "line-clamp-6 text-base min-[380px]:text-lg min-[380px]:line-clamp-5" : "line-clamp-3 text-sm")}>
           <Link href={localePath(locale, `/actualites/${item.slug}`)} className="after:absolute after:inset-0">
             {item.title}
           </Link>

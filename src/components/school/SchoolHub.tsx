@@ -1,5 +1,6 @@
 "use client";
 
+import { nbsp } from "@/lib/format";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -74,7 +75,7 @@ export function SchoolHub({ paths, lessons }: { paths: Path[]; lessons: Lesson[]
 
         <div className="flex flex-col rounded-[var(--radius-panel)] border border-line bg-surface p-7">
           <p className="eyebrow flex items-center gap-1.5"><Sparkles aria-hidden="true" className="size-3.5" />{t.weekly}</p>
-          <p className="mt-3 text-lg font-medium text-heading">{weekly.q}</p>
+          <p className="mt-3 text-lg font-medium text-heading">{nbsp(weekly.q)}</p>
           <div className="mt-4 grid gap-2">
             {weekly.options.map((o, i) => {
               const shown = weeklyChoice !== undefined;

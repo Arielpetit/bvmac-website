@@ -107,10 +107,10 @@ export default async function PresentationPage({ params }: PageProps<"/[locale]/
               <p>{t.who1(tc(LEGAL_BASIS, locale))}</p>
               <p>{t.who2}</p>
             </div>
-            <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line">
-              {figures.map(([label, value]) => (
-                <div key={label} className="bg-surface p-5">
-                  <dt className="text-xs uppercase tracking-[0.1em] text-muted">{label}</dt>
+            <dl className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line">
+              {figures.map(([label, value], i) => (
+                <div key={label} className={i === 0 ? "col-span-3 bg-surface p-5" : "bg-surface p-4 sm:p-5"}>
+                  <dt className="text-xs uppercase tracking-[0.1em] text-muted [overflow-wrap:normal]">{label}</dt>
                   <dd className="figure mt-2 text-xl text-heading">{value}</dd>
                 </div>
               ))}
@@ -171,7 +171,7 @@ export default async function PresentationPage({ params }: PageProps<"/[locale]/
         <Reveal className="relative overflow-hidden rounded-[var(--radius-panel)] bg-espresso p-10 text-brand-ivory md:p-14">
           <Image src="/photos/governance-group.webp" alt="" fill sizes="100vw" className="object-cover opacity-25" />
           <div className="relative max-w-2xl">
-            <h2 className="font-serif-display text-[clamp(1.8rem,3.4vw,2.8rem)] leading-tight text-brand-ivory">{t.moreTitle}</h2>
+            <h2 className="font-serif-display text-[clamp(1.6rem,3.4vw,2.8rem)] leading-tight text-brand-ivory">{t.moreTitle}</h2>
             <p className="mt-4 text-brand-sand/75">{t.moreText}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               {[["/la-bvmac/gouvernance", dict.nav.items.governance], ["/la-bvmac/histoire", dict.nav.items.history], ["/la-bvmac/organigramme", dict.nav.items.orgchart]].map(([href, label]) => (

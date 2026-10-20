@@ -52,11 +52,11 @@ export default async function MarketsPage({ params }: PageProps<"/[locale]/march
         }
       />
       <div className="container-site grid gap-16 pt-10 pb-14 md:pt-12 md:pb-20">
-        <Stagger as="dl" className="grid grid-cols-2 gap-4 lg:grid-cols-5">
+        <Stagger as="dl" className="grid grid-cols-2 gap-4 md:grid-cols-6 xl:grid-cols-5">
           {cards.map((c, i) => (
-            <StaggerItem key={i} className="rounded-[var(--radius-card)] border border-line bg-surface p-4 sm:p-5">
+            <StaggerItem key={i} className={`rounded-[var(--radius-card)] border border-line bg-surface p-4 last:col-span-2 sm:p-5 ${i < 3 ? "md:col-span-2" : "md:col-span-3"} xl:col-span-1 xl:last:col-span-1`}>
               <dt className="text-sm text-muted">{t.cards[i]}</dt>
-              <dd className="mt-3 whitespace-nowrap font-serif-display text-xl text-heading sm:text-2xl md:text-[1.65rem]"><CountUp value={c.value} kind={c.kind} /></dd>
+              <dd className="mt-3 font-serif-display text-base leading-tight text-heading [overflow-wrap:normal] min-[400px]:text-xl sm:text-2xl"><CountUp value={c.value} kind={c.kind} /></dd>
             </StaggerItem>
           ))}
         </Stagger>

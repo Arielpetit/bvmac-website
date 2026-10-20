@@ -1,3 +1,4 @@
+import { nbsp } from "@/lib/format";
 import { Reveal } from "@/components/motion/Reveal";
 import { HeaderMotif } from "@/components/brand/HeaderMotif";
 
@@ -26,8 +27,8 @@ export function PageHeader({
         <Reveal className="max-w-3xl">
           {leading && <div className="mb-6">{leading}</div>}
           {overline && <p className="eyebrow mb-4">{overline}</p>}
-          <h1 className="text-h1">{title}</h1>
-          {intro && <p className="mt-5 max-w-2xl text-lg text-muted">{intro}</p>}
+          <h1 className="text-h1">{nbsp(title)}</h1>
+          {intro && <p className="mt-5 max-w-2xl text-lg text-muted">{nbsp(intro)}</p>}
         </Reveal>
         {meta && <div className="mt-6 flex flex-wrap items-center gap-3">{meta}</div>}
         {children}

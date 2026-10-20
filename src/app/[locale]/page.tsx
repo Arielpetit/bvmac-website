@@ -264,6 +264,8 @@ const personaIcons = [TrendingUp, Briefcase, LineChart, GraduationCap];
 const countIcons = [CandlestickChart, ReceiptText, BriefcaseBusiness, Globe2];
 const COUNTRY_TONES = ["#5a3412", "#8a6614", "#c9a23a", "#ead18a", "#b38a2a", "#3a2414"];
 
+const ICS_LABEL = { fr: "Exporter l’agenda (.ics)", en: "Export the calendar (.ics)", es: "Exportar la agenda (.ics)" };
+
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale, dict } = await resolveLocale(params);
   const CONTACT = await getContact();
@@ -441,19 +443,19 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
           {/* Counts strip */}
           <Reveal delay={0.12} className="lg:col-span-2">
-            <dl className="grid grid-cols-2 overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface md:grid-cols-4">
+            <dl className="grid grid-cols-2 overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface lg:grid-cols-4">
               {counts.map((c, k) => {
                 const Icon = countIcons[k];
                 return (
-                  <Link key={c.href} href={p(c.href)} className={`group/c flex flex-col items-start gap-3 p-5 sm:flex-row sm:items-center sm:gap-4 transition-colors hover:bg-surface-alt md:p-6 border-line ${k % 2 ? "border-l" : ""} ${k > 0 ? "md:border-l" : ""} ${k > 1 ? "max-md:border-t" : ""}`}>
+                  <Link key={c.href} href={p(c.href)} className={`group/c flex flex-col items-start gap-3 p-5 sm:flex-row sm:items-center sm:gap-4 lg:flex-col lg:items-start lg:gap-3 xl:flex-row xl:items-center xl:gap-4 transition-colors hover:bg-surface-alt md:p-6 border-line ${k % 2 ? "border-l" : ""} ${k > 0 ? "lg:border-l" : ""} ${k > 1 ? "max-lg:border-t" : ""}`}>
                     <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-line text-accent-text transition-colors group-hover/c:border-transparent group-hover/c:bg-action group-hover/c:text-action-text">
                       <Icon aria-hidden="true" className="size-5" strokeWidth={1.6} />
                     </span>
                     <span className="min-w-0">
                       <dd className="font-serif-display text-3xl leading-none text-heading"><CountUp value={c.value} /></dd>
-                      <dt className="mt-1.5 text-sm leading-snug text-muted sm:truncate">{c.label}</dt>
+                      <dt className="mt-1.5 text-sm leading-snug text-muted">{c.label}</dt>
                     </span>
-                    <ArrowUpRight aria-hidden="true" className="ml-auto hidden size-4 shrink-0 text-muted opacity-0 sm:block transition-all group-hover/c:rotate-45 group-hover/c:opacity-100" />
+                    <ArrowUpRight aria-hidden="true" className="ml-auto hidden size-4 shrink-0 text-muted opacity-0 sm:block lg:hidden xl:block transition-all group-hover/c:rotate-45 group-hover/c:opacity-100" />
                   </Link>
                 );
               })}
@@ -493,7 +495,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   </span>
                   <Art className="pointer-events-none absolute right-5 top-20 w-[48%] max-w-[340px] transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.04] max-md:w-[60%] max-md:opacity-30 max-sm:right-2 max-sm:top-2 max-sm:w-[55%] max-sm:opacity-20 md:right-8" />
                   <span className="relative max-w-[min(100%,22rem)] pt-10 sm:pt-36">
-                    <span className={`block font-serif-display text-xl leading-tight sm:text-3xl md:text-4xl ${dark ? "text-brand-ivory" : "text-heading"} ${theme === "gold" ? "!text-espresso" : ""}`}>{persona.title}</span>
+                    <span className={`block font-serif-display text-[1.0625rem] leading-tight min-[400px]:text-xl sm:text-3xl md:text-4xl ${dark ? "text-brand-ivory" : "text-heading"} ${theme === "gold" ? "!text-espresso" : ""}`}>{persona.title}</span>
                     <span className={`mt-3 hidden sm:block ${dark ? "text-brand-sand/75" : theme === "gold" ? "text-espresso/75" : "text-muted"}`}>{persona.text}</span>
                     <span className={`mt-3 inline-flex items-center gap-1 text-xs font-medium sm:mt-5 sm:gap-1.5 sm:text-sm ${dark ? "text-brand-gold-light" : theme === "gold" ? "text-espresso" : "text-link"}`}>
                       {persona.cta}
@@ -522,36 +524,36 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <caption className="sr-only">{t.marketTitle}</caption>
               <thead className="bg-surface-alt text-left text-xs uppercase tracking-[0.1em] text-muted">
                 <tr>
-                  <th scope="col" className="px-5 py-3.5 font-medium">{t.tableSecurity}</th>
-                  <th scope="col" className="px-5 py-3.5 text-right font-medium">{t.tablePrice}</th>
-                  <th scope="col" className="px-5 py-3.5 text-right font-medium">{t.tableChange}</th>
-                  <th scope="col" className="hidden px-5 py-3.5 font-medium sm:table-cell">{t.tableTrend}</th>
-                  <th scope="col" className="hidden px-5 py-3.5 text-right font-medium md:table-cell">{t.tableVolume}</th>
+                  <th scope="col" className="px-3 py-3.5 sm:px-5 font-medium">{t.tableSecurity}</th>
+                  <th scope="col" className="px-3 py-3.5 sm:px-5 text-right font-medium">{t.tablePrice}</th>
+                  <th scope="col" className="px-3 py-3.5 sm:px-5 text-right font-medium">{t.tableChange}</th>
+                  <th scope="col" className="hidden px-3 py-3.5 sm:px-5 font-medium sm:table-cell">{t.tableTrend}</th>
+                  <th scope="col" className="hidden px-3 py-3.5 sm:px-5 text-right font-medium md:table-cell">{t.tableVolume}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
                 {equities.map((e) => (
                   <tr key={e.slug} className="group transition-colors hover:bg-surface-alt/60">
-                    <th scope="row" className="px-5 py-4 text-left font-normal">
+                    <th scope="row" className="px-3 py-4 sm:px-5 text-left font-normal">
                       <Link href={p(`/marches/actions/${e.slug}`)} className="flex items-center gap-3">
-                        <CompanyMark slug={e.slug} name={e.shortName} />
+                        <CompanyMark slug={e.slug} name={e.shortName} className="max-[359px]:hidden" />
                         <span>
                           <span className="block font-medium text-heading group-hover:text-link">{e.shortName}</span>
                           <span className="flex items-center gap-1.5 text-xs text-muted"><Flag code={e.country} className="h-2.5 w-[15px]" />{sectorLabel(e.sector, locale)}</span>
                         </span>
                       </Link>
                     </th>
-                    <td className="figure px-5 py-4 text-right text-heading">{formatNumber(e.closePrice, locale)}</td>
-                    <td className="px-5 py-4 text-right"><PriceChange value={e.change} locale={locale} /></td>
-                    <td className="hidden px-5 py-4 sm:table-cell"><Sparkline points={sparks[e.slug]} className="h-8 w-28 text-[color:var(--chart-price)]" /></td>
-                    <td className="figure hidden px-5 py-4 text-right text-muted md:table-cell">{formatNumber(e.qtyTraded, locale)}</td>
+                    <td className="figure px-3 py-4 sm:px-5 text-right text-heading">{formatNumber(e.closePrice, locale)}</td>
+                    <td className="px-3 py-4 sm:px-5 text-right"><PriceChange value={e.change} locale={locale} /></td>
+                    <td className="hidden px-3 py-4 sm:px-5 sm:table-cell"><Sparkline points={sparks[e.slug]} className="h-8 w-28 text-[color:var(--chart-price)]" /></td>
+                    <td className="figure hidden px-3 py-4 sm:px-5 text-right text-muted md:table-cell">{formatNumber(e.qtyTraded, locale)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <div className="flex items-center justify-between border-t border-line bg-surface px-5 py-3.5 text-sm">
+            <div className="flex items-center justify-between gap-4 border-t border-line bg-surface px-4 py-3.5 text-sm sm:px-5">
               <span className="text-muted">{dict.session.closingOf} {formatDate(summary.date, locale)} · {dict.session.delayed}</span>
-              <Link href={p("/marches/actions")} className="link">{t.seeAll}</Link>
+              <Link href={p("/marches/actions")} className="link shrink-0 whitespace-nowrap">{t.seeAll}</Link>
             </div>
           </Reveal>
 
@@ -597,10 +599,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <h2 id="story-title" className="text-h1 mt-6 text-brand-ivory!">{t.storyTitle}</h2>
             </Reveal>
             <Reveal delay={0.2}><p className="mt-6 max-w-xl text-lg text-brand-sand/80">{t.storyText}</p></Reveal>
-            <Stagger as="dl" className="mt-10 grid grid-cols-3 gap-6 border-t border-white/15 pt-8">
+            <Stagger as="dl" className="mt-10 grid grid-cols-3 gap-4 border-t sm:gap-6 border-white/15 pt-8">
               {t.storyStats.map(([value, label]) => (
                 <StaggerItem key={label}>
-                  <dd className="font-serif-display text-2xl text-brand-ivory md:text-3xl">{value}</dd>
+                  <dd className="font-serif-display text-lg text-brand-ivory sm:text-2xl md:text-3xl">{value}</dd>
                   <dt className="mt-1 text-sm text-brand-sand/65">{label}</dt>
                 </StaggerItem>
               ))}
@@ -618,14 +620,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <ParallaxImage src="/photos/bgfi-ipo-signing.webp" alt={t.mock.ipoAlt} className="absolute inset-0" strength={40} sizes="(min-width:1024px) 640px, 100vw" />
               <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-tr from-espresso/60 via-transparent to-transparent" />
             </div>
-            <div className="absolute -bottom-6 left-5 flex items-center gap-3 rounded-2xl bg-espresso-2 px-4 py-3 shadow-2xl ring-1 ring-brand-gold/30 md:-left-8">
+            <div className="absolute -bottom-6 left-5 flex items-center gap-3 rounded-2xl bg-espresso-2 px-4 py-3 shadow-2xl ring-1 ring-brand-gold/30 lg:-left-8">
               <CalendarDays aria-hidden="true" className="size-5 text-brand-gold-light" strokeWidth={1.6} />
               <span className="text-sm">
                 <span className="block font-medium text-brand-ivory">{t.storyStats[0][0]}</span>
                 <span className="block text-xs text-brand-sand/65">{t.mock.hq}</span>
               </span>
             </div>
-            <div className="absolute -top-5 right-5 flex items-center gap-2.5 rounded-full bg-brand-ivory py-2 pl-2 pr-4 text-espresso shadow-2xl md:-right-6">
+            <div className="absolute -top-5 right-5 flex items-center gap-2.5 rounded-full bg-brand-ivory py-2 pl-2 pr-4 text-espresso shadow-2xl lg:-right-6">
               <span className="flex size-7 items-center justify-center rounded-full bg-brand-gold text-espresso"><TrendingUp aria-hidden="true" className="size-4" /></span>
               <span className="text-sm font-medium">{t.storyStats[1][0]}</span>
             </div>
@@ -659,7 +661,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                     <div className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-4 transition-colors hover:border-line-strong">
                       <time dateTime={a.date} className="flex size-14 shrink-0 flex-col items-center justify-center rounded-xl bg-accent-soft text-accent-text">
                         <span className="font-serif-display text-xl leading-none">{dm.day}</span>
-                        <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider">{dm.month}</span>
+                        <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider">{dm.month}</span>
                       </time>
                       <div className="min-w-0">
                         <p className="text-xs font-medium uppercase tracking-[0.1em] text-muted">{t.agendaTypes[a.type]}</p>
@@ -672,7 +674,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               })}
             </Stagger>
             <Link href={p("/marches/agenda")} className="mt-4 inline-flex items-center gap-2 text-sm text-link hover:underline">
-              <CalendarDays aria-hidden="true" className="size-4" strokeWidth={1.6} /> .ics
+              <CalendarDays aria-hidden="true" className="size-4" strokeWidth={1.6} /> {ICS_LABEL[locale]}
             </Link>
           </div>
         </div>
@@ -688,12 +690,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <LearnArt className="relative mx-auto w-full max-w-md opacity-90" />
               <div className="relative mt-6 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-brand-sand backdrop-blur">
-                  <p className="text-[10px] uppercase tracking-[0.14em] text-brand-gold-light">{t.mock.lesson}</p>
+                  <p className="text-[11px] uppercase tracking-[0.14em] text-brand-gold-light">{t.mock.lesson}</p>
                   <p className="mt-1.5 font-medium text-brand-ivory">{t.mock.lessonTitle}</p>
                   <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full w-2/3 rounded-full bg-brand-gold" /></div>
                 </div>
                 <div className="rounded-2xl bg-brand-ivory p-4 text-espresso shadow-2xl">
-                  <p className="text-[10px] uppercase tracking-[0.14em] text-[#8a6614]">Quiz</p>
+                  <p className="text-[11px] uppercase tracking-[0.14em] text-[#8a6614]">Quiz</p>
                   <p className="mt-1.5 text-sm font-medium">{t.mock.quizQ}</p>
                   <p className="mt-2 flex items-center gap-2 rounded-lg bg-[#e4f3ea] px-2.5 py-1.5 text-xs text-[#157a43]"><Check aria-hidden="true" className="size-3.5" />{t.mock.quizA}</p>
                 </div>

@@ -12,13 +12,28 @@ const L = {
 export function FeeTable({ locale, caption, rows, effective }: { locale: Locale; caption: string; rows: { item: string; basis: string; value?: string }[]; effective?: string }) {
   const l = L[locale];
   return (
-    <div>
-      <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
+    <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface">
+      <div className="px-5 pt-5 sm:px-6">
+        <p className="text-h3">{caption}</p>
+        {effective && <p className="mt-1 text-xs text-muted">{l.since} : {effective}</p>}
+      </div>
+      {/* Phones: one block per line, label above value, so nothing is cut or scrolled. */}
+      <ul className="mt-4 divide-y divide-line border-t border-line sm:hidden">
+        {rows.map((r) => (
+          <li key={r.item} className="px-5 py-4">
+            <p className="font-medium text-heading">{r.item}</p>
+            <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+              <dt className="text-xs uppercase tracking-[0.08em] text-muted">{l.basis}</dt>
+              <dd className="text-right text-muted">{r.basis}</dd>
+              <dt className="text-xs uppercase tracking-[0.08em] text-muted">{l.rate}</dt>
+              <dd className="figure text-right text-heading">{r.value ?? l.grid}</dd>
+            </dl>
+          </li>
+        ))}
+      </ul>
+      <div className="relative hidden overflow-x-auto sm:block" data-lenis-prevent>
         <table className="w-full min-w-[560px] text-sm">
-          <caption className="px-6 pt-5 text-left">
-            <span className="text-h3 block">{caption}</span>
-            {effective && <span className="mt-1 block text-xs text-muted">{l.since} : {effective}</span>}
-          </caption>
+          <caption className="sr-only">{caption}</caption>
           <thead>
             <tr className="border-b border-line text-xs uppercase tracking-[0.1em] text-muted">
               <th scope="col" className="px-6 py-3 text-left font-medium">{l.item}</th>

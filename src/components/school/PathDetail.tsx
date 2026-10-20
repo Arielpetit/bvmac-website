@@ -1,5 +1,6 @@
 "use client";
 
+import { nbsp } from "@/lib/format";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowUpRight, Award, Check, Clock } from "lucide-react";
@@ -36,7 +37,7 @@ export function PathDetail({ path, lessons }: { path: Path; lessons: Lesson[] })
                 {isDone(l.slug) ? <Check aria-label={t.done} className="size-5" /> : String(i + 1).padStart(2, "0")}
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block font-medium text-heading group-hover:text-link">{l.title}</span>
+                <span className="block font-medium text-heading group-hover:text-link">{nbsp(l.title)}</span>
                 <span className="mt-1 flex items-center gap-3 text-xs text-muted">
                   <span className="inline-flex items-center gap-1"><Clock aria-hidden="true" className="size-3.5" />{l.minutes} min</span>
                   <span>{l.quiz.length} {t.questions}</span>

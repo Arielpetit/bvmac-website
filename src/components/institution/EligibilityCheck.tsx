@@ -147,7 +147,7 @@ export function EligibilityCheck() {
             <p className="mt-4 text-sm text-muted">{l.others}</p>
           </div>
         ) : (
-          <div className="rounded-[var(--radius-card)] border border-dashed border-line p-6 text-sm text-muted">{l.empty}</div>
+          <div className="rounded-[var(--radius-card)] border border-dashed border-line p-6 text-sm text-muted lg:self-start">{l.empty}</div>
         )}
       </div>
     </div>

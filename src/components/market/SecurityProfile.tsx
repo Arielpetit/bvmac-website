@@ -8,7 +8,7 @@ import type { Point } from "@/data/series";
 import { COUNTRIES } from "@/lib/navigation";
 import { LAST_SESSION } from "@/data/market";
 import { localePath } from "@/lib/paths";
-import { formatDate, formatFcfa, formatNumber } from "@/lib/format";
+import { formatDate, formatFcfa, formatNumber, ucfirst } from "@/lib/format";
 import { STATUS_LABEL, formatListedOn, sectorLabel } from "@/lib/market-labels";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { CompanyMark } from "@/components/brand/CompanyMark";
@@ -17,11 +17,12 @@ import { CountryChip, Tag } from "@/components/ui/Chip";
 import { PriceChange } from "@/components/ui/PriceChange";
 import { TimeSeriesChart } from "./LazyCharts";
 import { NoticeRow } from "@/components/content/NoticeRow";
+import { ISSUER_DOCUMENTS } from "@/data/issuer-documents";
 
 const T = {
-  fr: { overview: "Aperçu", prices: "Cours", figures: "Chiffres clés", documents: "Documents", notices: "Avis", about: "À propos", contact: "Contact", key: "Données de marché", sector: "Secteur", country: "Pays", compartment: "Compartiment", listed: "Introduction en bourse", nominal: "Valeur nominale", dividend: "Dernier dividende", ref: "Cours de référence", close: "Cours de clôture", traded: "Quantité transigée", demanded: "Quantité demandée", offered: "Quantité offerte", status: "Statut", history: "Historique des cours", last: "20 dernières séances", noNotice: "Aucun avis récent pour cette valeur.", founded: "Création", hq: "Siège", docsText: "Les états financiers (OHADA et IFRS), fiches signalétiques et rapports d’activité sont publiés sur la page émetteur officielle.", docsCta: "Documents de l’émetteur sur bvm-ac.org", ohada: "États financiers OHADA", ifrs: "États financiers IFRS", report: "Rapport d’activité", sheet: "Fiche signalétique", contactText: "Pour toute question relative à cette valeur, contactez votre société de bourse ou le service Émetteurs de la BVMAC.", brokers: "Trouver une société de bourse", issuer: "Profil de l’émetteur", market: "Fiche de marché", share: "Partager", illustrative: "Historique illustratif ; dernier cours officiel.", na: "Non communiqué" },
-  en: { overview: "Overview", prices: "Prices", figures: "Key figures", documents: "Documents", notices: "Notices", about: "About", contact: "Contact", key: "Market data", sector: "Sector", country: "Country", compartment: "Compartment", listed: "Listing", nominal: "Nominal value", dividend: "Last dividend", ref: "Reference price", close: "Closing price", traded: "Quantity traded", demanded: "Quantity bid", offered: "Quantity offered", status: "Status", history: "Price history", last: "Last 20 sessions", noNotice: "No recent notice for this security.", founded: "Founded", hq: "Head office", docsText: "Financial statements (OHADA and IFRS), fact sheets and activity reports are published on the official issuer page.", docsCta: "Issuer documents on bvm-ac.org", ohada: "OHADA financial statements", ifrs: "IFRS financial statements", report: "Activity report", sheet: "Fact sheet", contactText: "For any question about this security, contact your broker or BVMAC’s Issuers department.", brokers: "Find a broker", issuer: "Issuer profile", market: "Market page", share: "Share", illustrative: "Illustrative history; last price official.", na: "Not disclosed" },
-  es: { overview: "Resumen", prices: "Cotizaciones", figures: "Cifras clave", documents: "Documentos", notices: "Avisos", about: "Acerca de", contact: "Contacto", key: "Datos de mercado", sector: "Sector", country: "País", compartment: "Compartimento", listed: "Salida a bolsa", nominal: "Valor nominal", dividend: "Último dividendo", ref: "Precio de referencia", close: "Precio de cierre", traded: "Cantidad negociada", demanded: "Cantidad demandada", offered: "Cantidad ofrecida", status: "Estado", history: "Histórico de cotizaciones", last: "Últimas 20 sesiones", noNotice: "Ningún aviso reciente.", founded: "Creación", hq: "Sede", docsText: "Los estados financieros (OHADA y NIIF), fichas y memorias se publican en la página oficial del emisor.", docsCta: "Documentos del emisor en bvm-ac.org", ohada: "Estados financieros OHADA", ifrs: "Estados financieros NIIF", report: "Informe de actividad", sheet: "Ficha descriptiva", contactText: "Para cualquier pregunta sobre este valor, contacte con su sociedad de bolsa o con el servicio de Emisores de la BVMAC.", brokers: "Encontrar una sociedad de bolsa", issuer: "Perfil del emisor", market: "Ficha de mercado", share: "Compartir", illustrative: "Histórico ilustrativo; último precio oficial.", na: "No comunicado" },
+  fr: { statements: "États financiers", noDocs: "Aucun document publié pour le moment.", overview: "Aperçu", prices: "Cours", figures: "Chiffres clés", documents: "Documents", notices: "Avis", about: "À propos", contact: "Contact", key: "Données de marché", sector: "Secteur", country: "Pays", compartment: "Compartiment", listed: "Introduction en bourse", nominal: "Valeur nominale", dividend: "Dernier dividende", ref: "Cours de référence", close: "Cours de clôture", traded: "Quantité transigée", demanded: "Quantité demandée", offered: "Quantité offerte", status: "Statut", history: "Historique des cours", last: "20 dernières séances", noNotice: "Aucun avis récent pour cette valeur.", founded: "Création", hq: "Siège", docsText: "Les états financiers (OHADA et IFRS), fiches signalétiques et rapports d’activité sont publiés sur la page émetteur officielle.", docsCta: "Documents de l’émetteur sur bvm-ac.org", ohada: "États financiers OHADA", ifrs: "États financiers IFRS", report: "Rapport d’activité", sheet: "Fiche signalétique", contactText: "Pour toute question relative à cette valeur, contactez votre société de bourse ou le service Émetteurs de la BVMAC.", brokers: "Trouver une société de bourse", issuer: "Profil de l’émetteur", market: "Fiche de marché", share: "Partager", illustrative: "Historique illustratif ; dernier cours officiel.", na: "Non communiqué" },
+  en: { statements: "Financial statements", noDocs: "No documents published yet.", overview: "Overview", prices: "Prices", figures: "Key figures", documents: "Documents", notices: "Notices", about: "About", contact: "Contact", key: "Market data", sector: "Sector", country: "Country", compartment: "Compartment", listed: "Listing", nominal: "Nominal value", dividend: "Last dividend", ref: "Reference price", close: "Closing price", traded: "Quantity traded", demanded: "Quantity bid", offered: "Quantity offered", status: "Status", history: "Price history", last: "Last 20 sessions", noNotice: "No recent notice for this security.", founded: "Founded", hq: "Head office", docsText: "Financial statements (OHADA and IFRS), fact sheets and activity reports are published on the official issuer page.", docsCta: "Issuer documents on bvm-ac.org", ohada: "OHADA financial statements", ifrs: "IFRS financial statements", report: "Activity report", sheet: "Fact sheet", contactText: "For any question about this security, contact your broker or BVMAC’s Issuers department.", brokers: "Find a broker", issuer: "Issuer profile", market: "Market page", share: "Share", illustrative: "Illustrative history; last price official.", na: "Not disclosed" },
+  es: { statements: "Estados financieros", noDocs: "Aún no hay documentos publicados.", overview: "Resumen", prices: "Cotizaciones", figures: "Cifras clave", documents: "Documentos", notices: "Avisos", about: "Acerca de", contact: "Contacto", key: "Datos de mercado", sector: "Sector", country: "País", compartment: "Compartimento", listed: "Salida a bolsa", nominal: "Valor nominal", dividend: "Último dividendo", ref: "Precio de referencia", close: "Precio de cierre", traded: "Cantidad negociada", demanded: "Cantidad demandada", offered: "Cantidad ofrecida", status: "Estado", history: "Histórico de cotizaciones", last: "Últimas 20 sesiones", noNotice: "Ningún aviso reciente.", founded: "Creación", hq: "Sede", docsText: "Los estados financieros (OHADA y NIIF), fichas y memorias se publican en la página oficial del emisor.", docsCta: "Documentos del emisor en bvm-ac.org", ohada: "Estados financieros OHADA", ifrs: "Estados financieros NIIF", report: "Informe de actividad", sheet: "Ficha descriptiva", contactText: "Para cualquier pregunta sobre este valor, contacte con su sociedad de bolsa o con el servicio de Emisores de la BVMAC.", brokers: "Encontrar una sociedad de bolsa", issuer: "Perfil del emisor", market: "Ficha de mercado", share: "Compartir", illustrative: "Histórico ilustrativo; último precio oficial.", na: "No comunicado" },
 };
 
 const ISSUER_PAGE = "https://www.bvm-ac.org/espace-emetteurs/emetteurs-actions/";
@@ -44,7 +45,9 @@ export function SecurityProfile({
 }) {
   const t = T[locale];
   const country = COUNTRIES.find((c) => c.code === e.country)!;
-  const years = [2025, 2024, 2023, 2022, 2021, 2020, 2019];
+  const docs = ISSUER_DOCUMENTS[e.slug];
+  const years = [...new Set([...Object.keys(docs?.ohada ?? {}), ...Object.keys(docs?.ifrs ?? {})].map(Number))].sort((a, b) => b - a);
+  const pdf = "rounded-full border border-line px-3 py-1 text-xs hover:border-line-strong";
 
   const keyData: [string, string][] = [
     [t.close, formatFcfa(e.closePrice, locale)],
@@ -106,7 +109,7 @@ export function SecurityProfile({
             const prev = arr[i + 1]?.value ?? p.value;
             return (
               <tr key={p.date}>
-                <td className="px-5 py-3 capitalize">{formatDate(p.date, locale)}</td>
+                <td className="px-5 py-3">{ucfirst(formatDate(p.date, locale))}</td>
                 <td className="figure px-5 py-3 text-right">{formatNumber(p.value, locale)}</td>
                 <td className="px-5 py-3 text-right"><PriceChange value={((p.value - prev) / prev) * 100} locale={locale} /></td>
               </tr>
@@ -129,22 +132,35 @@ export function SecurityProfile({
         </a>
       </div>
       <div className="grid gap-2">
+        {docs?.factsheet && (
+          <div className="flex items-center justify-between gap-3 rounded-2xl border border-line bg-surface px-5 py-3.5 text-sm">
+            <span className="flex items-center gap-2.5"><FileText aria-hidden="true" className="size-4 text-accent-text" strokeWidth={1.6} />{t.sheet}</span>
+            <a href={docs.factsheet} target="_blank" rel="noopener noreferrer" className={pdf}>PDF<span className="sr-only"> {dict.a11y.external}</span></a>
+          </div>
+        )}
         {years.map((year, i) => (
           <details key={year} open={i === 0} className="group rounded-2xl border border-line bg-surface">
             <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between px-5 font-serif-display text-xl text-heading">
-              {year}
+              {t.statements} {year}
               <span aria-hidden="true" className="text-muted transition-transform group-open:rotate-45">+</span>
             </summary>
             <ul className="divide-y divide-line border-t border-line">
-              {[t.ohada, t.ifrs, t.report, t.sheet].map((doc) => (
+              {([[t.ohada, docs?.ohada[year]], [t.ifrs, docs?.ifrs[year]]] as const).filter(([, url]) => url).map(([doc, url]) => (
                 <li key={doc} className="flex items-center justify-between gap-3 px-5 py-3 text-sm">
-                  <span className="flex items-center gap-2.5"><FileText aria-hidden="true" className="size-4 text-accent-text" strokeWidth={1.6} />{doc} {year}</span>
-                  <a href={ISSUER_PAGE} target="_blank" rel="noopener noreferrer" className="rounded-full border border-line px-3 py-1 text-xs hover:border-line-strong">PDF</a>
+                  <span className="flex items-center gap-2.5"><FileText aria-hidden="true" className="size-4 shrink-0 text-accent-text" strokeWidth={1.6} />{doc} {year}</span>
+                  <a href={url} target="_blank" rel="noopener noreferrer" className={pdf}>PDF<span className="sr-only"> {dict.a11y.external}</span></a>
                 </li>
               ))}
             </ul>
           </details>
         ))}
+        {docs?.reports.map((r) => (
+          <div key={r.url} className="flex items-center justify-between gap-3 rounded-2xl border border-line bg-surface px-5 py-3.5 text-sm">
+            <span lang="fr" className="flex items-center gap-2.5"><FileText aria-hidden="true" className="size-4 shrink-0 text-accent-text" strokeWidth={1.6} />{r.title}</span>
+            <a href={r.url} target="_blank" rel="noopener noreferrer" className={pdf}>PDF<span className="sr-only"> {dict.a11y.external}</span></a>
+          </div>
+        ))}
+        {!docs && <p className="text-sm text-muted">{t.noDocs}</p>}
       </div>
     </div>
   );
@@ -202,7 +218,7 @@ export function SecurityProfile({
         overline={`${e.ticker} · ${e.isin}`}
         meta={
           <>
-            <a href={`mailto:?subject=${encodeURIComponent(`BVMAC – ${e.shortName}`)}`} className="inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm text-muted hover:bg-surface-alt hover:text-heading">
+            <a href={`mailto:?subject=${encodeURIComponent(`BVMAC – ${e.shortName}`)}`} className="inline-flex h-10 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm text-heading hover:border-line-strong">
               <Share2 aria-hidden="true" className="size-4" strokeWidth={1.6} /> {t.share}
             </a>
             <Link href={localePath(locale, mode === "market" ? `/emetteurs/societes-cotees/${e.slug}` : `/marches/actions/${e.slug}`)} className="link text-sm">

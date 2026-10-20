@@ -62,8 +62,8 @@ export function GlossaryBrowser({ terms: raw }: { terms: Term[] }) {
             <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted" />
             <input id="g-q" type="search" value={q} onChange={(e) => setTyped(e.target.value)} placeholder={t.ph} className="h-11 w-full rounded-full border border-line bg-surface pl-11 pr-4 text-sm" />
           </div>
-          <nav aria-label={t.index}>
-            <ul className="flex flex-wrap gap-1">
+          <nav aria-label={t.index} className="-mx-5 w-[calc(100%+2.5rem)] overflow-x-auto px-5 [scrollbar-width:none] md:mx-0 md:w-auto md:overflow-visible md:px-0">
+            <ul className="flex w-max gap-1 md:w-auto md:flex-wrap">
               {letters.map((l) => (
                 <li key={l}>
                   {groups.has(l) ? (

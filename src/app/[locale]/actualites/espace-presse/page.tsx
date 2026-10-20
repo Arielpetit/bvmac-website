@@ -127,7 +127,7 @@ export default async function PressPage({ params }: PageProps<"/[locale]/actuali
             <h2 className="text-h2">{t.factsheet}</h2>
             <dl className="mt-6 divide-y divide-line rounded-[var(--radius-card)] border border-line bg-surface px-5">
               {facts.map(([k, v]) => (
-                <div key={k} className="flex justify-between gap-6 py-3.5 text-sm"><dt className="text-muted">{k}</dt><dd className="figure text-right text-heading">{v}</dd></div>
+                <div key={k} className="flex flex-wrap justify-between gap-x-6 gap-y-1 py-3.5 text-sm"><dt className="text-muted">{k}</dt><dd className="figure ml-auto text-right text-heading">{v}</dd></div>
               ))}
             </dl>
           </Reveal>

@@ -1,5 +1,6 @@
 "use client";
 
+import { nbsp } from "@/lib/format";
 import Link from "next/link";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
@@ -67,7 +68,7 @@ export function LessonQuiz({ slug, quiz, nextSlug, pathLessons, badge, pathSlug 
               <fieldset>
                 <legend className="text-[1.0625rem] font-medium text-heading">
                   <span className="figure mr-2 text-accent-text">{String(qi + 1).padStart(2, "0")}</span>
-                  {q.q}
+                  {nbsp(q.q)}
                 </legend>
                 <div className="mt-4 grid gap-2">
                   {q.options.map((opt, oi) => {

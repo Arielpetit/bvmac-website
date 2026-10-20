@@ -35,13 +35,13 @@ export default async function ShareholdingPage({ params }: PageProps<"/[locale]/
         </Card>
         <div>
           <div className="relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
-          <table className="w-full min-w-[440px] text-sm">
+          <table className="w-full text-sm sm:min-w-[440px]">
             <caption className="px-4 pt-4 text-left text-sm text-muted">{t.caption}</caption>
             <thead className="bg-surface-alt">
               <tr className="text-xs uppercase tracking-[0.1em] text-muted">
                 <th scope="col" className="px-4 py-3 text-left font-medium">{t.category}</th>
                 <th scope="col" className="px-4 py-3 text-right font-medium">{t.share}</th>
-                <th scope="col" className="px-4 py-3 text-right font-medium">{t.amount}</th>
+                <th scope="col" className="hidden px-4 py-3 text-right font-medium sm:table-cell">{t.amount}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-line">
@@ -49,20 +49,26 @@ export default async function ShareholdingPage({ params }: PageProps<"/[locale]/
                 <tr key={part.label}>
                   <th scope="row" className="px-4 py-3 text-left font-normal">
                     <span className="flex items-center gap-2">
-                      <span aria-hidden="true" className="size-3 rounded-[3px]" style={{ background: COLORS[i] }} />
-                      {part.label}
+                      <span aria-hidden="true" className="size-3 shrink-0 rounded-[3px]" style={{ background: COLORS[i] }} />
+                      <span>
+                        {part.label}
+                        <span className="figure block text-xs text-muted sm:hidden">{formatFcfa((SHAREHOLDING.capital * part.value) / 100, locale)}</span>
+                      </span>
                     </span>
                   </th>
-                  <td className="figure px-4 py-3 text-right">{formatNumber(part.value, locale)} %</td>
-                  <td className="figure px-4 py-3 text-right">{formatFcfa((SHAREHOLDING.capital * part.value) / 100, locale)}</td>
+                  <td className="figure whitespace-nowrap px-4 py-3 text-right align-top">{formatNumber(part.value, locale)} %</td>
+                  <td className="figure hidden whitespace-nowrap px-4 py-3 text-right align-top sm:table-cell">{formatFcfa((SHAREHOLDING.capital * part.value) / 100, locale)}</td>
                 </tr>
               ))}
             </tbody>
             <tfoot className="border-t-2 border-line bg-surface-alt">
               <tr>
-                <th scope="row" className="px-4 py-3 text-left">Total</th>
-                <td className="figure px-4 py-3 text-right">100 %</td>
-                <td className="figure px-4 py-3 text-right">{formatFcfa(SHAREHOLDING.capital, locale)}</td>
+                <th scope="row" className="px-4 py-3 text-left">
+                  Total
+                  <span className="figure block text-xs font-normal text-muted sm:hidden">{formatFcfa(SHAREHOLDING.capital, locale)}</span>
+                </th>
+                <td className="figure whitespace-nowrap px-4 py-3 text-right align-top">100 %</td>
+                <td className="figure hidden whitespace-nowrap px-4 py-3 text-right align-top sm:table-cell">{formatFcfa(SHAREHOLDING.capital, locale)}</td>
               </tr>
             </tfoot>
           </table>

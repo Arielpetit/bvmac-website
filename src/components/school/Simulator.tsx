@@ -203,9 +203,9 @@ export function Simulator({ quotes }: { quotes: Quote[] }) {
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
-          <div className="flex gap-2">
-            <button type="button" onClick={() => { save(initial); setMessage(t.resetDone); }} className="inline-flex h-10 items-center gap-1.5 rounded-full border border-line px-4 text-sm hover:border-line-strong"><RotateCcw aria-hidden="true" className="size-4" /> {t.reset}</button>
-            <button type="button" onClick={() => { writeStorage(KEY, null); setMessage(t.erased); }} className="inline-flex h-10 items-center gap-1.5 rounded-full border border-line px-4 text-sm hover:border-line-strong"><Trash2 aria-hidden="true" className="size-4" /> {t.erase}</button>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" onClick={() => { save(initial); setMessage(t.resetDone); }} className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-full border border-line px-4 text-sm hover:border-line-strong"><RotateCcw aria-hidden="true" className="size-4" /> {t.reset}</button>
+            <button type="button" onClick={() => { writeStorage(KEY, null); setMessage(t.erased); }} className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-full border border-line px-4 text-sm hover:border-line-strong"><Trash2 aria-hidden="true" className="size-4" /> {t.erase}</button>
           </div>
         </div>
       </div>

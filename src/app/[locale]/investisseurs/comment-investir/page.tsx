@@ -223,7 +223,7 @@ export default async function HowToPage({ params }: PageProps<"/[locale]/investi
           <div className="relative grid gap-6 md:grid-cols-[1.5fr_1fr] md:items-center">
             <div>
               <p className="eyebrow text-brand-gold-light!">{t.simEyebrow}</p>
-              <h2 className="font-serif-display mt-3 text-[clamp(1.8rem,3.4vw,2.8rem)] leading-tight text-brand-ivory">{t.simTitle}</h2>
+              <h2 className="font-serif-display mt-3 text-[clamp(1.6rem,3.4vw,2.8rem)] leading-tight text-brand-ivory">{t.simTitle}</h2>
               <p className="mt-3 text-brand-sand/75">{t.simText}</p>
             </div>
             <ButtonLink href={p("/ecole-de-bourse/portefeuille-virtuel")} variant="gold" className="md:justify-self-end">{t.simCta}</ButtonLink>

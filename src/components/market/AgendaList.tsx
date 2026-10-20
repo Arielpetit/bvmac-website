@@ -57,7 +57,7 @@ export function AgendaList({ events, today }: { events: CorporateAction[]; today
           <option value="">{t.allIssuers}</option>
           {issuers.map((i) => <option key={i} value={i}>{tc(i, locale)}</option>)}
         </select>
-        <div className="ml-auto flex gap-2">
+        <div className="flex w-full flex-wrap justify-between gap-2 sm:ml-auto sm:w-auto sm:justify-end">
           <div role="group" aria-label="Vue" className="inline-flex rounded-full border border-line bg-surface p-1">
             {([["list", t.list, List], ["grid", t.grid, LayoutGrid]] as const).map(([key, label, Icon]) => (
               <button key={key} type="button" aria-pressed={view === key} onClick={() => setView(key)} className={cn("inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-sm", view === key ? "bg-action text-action-text" : "text-muted")}>
@@ -102,7 +102,7 @@ export function AgendaList({ events, today }: { events: CorporateAction[]; today
       <li className="flex flex-wrap items-center gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-4 transition-colors hover:border-line-strong">
         <time dateTime={e.date} className="flex size-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-accent-soft text-accent-text">
           <span className="font-serif-display text-2xl leading-none">{dm.day}</span>
-          <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider">{dm.month}</span>
+          <span className="mt-0.5 text-[11px] font-medium uppercase tracking-wider">{dm.month}</span>
         </time>
         <div className="min-w-0 flex-1 basis-48">
           <p className="text-xs font-medium uppercase tracking-[0.1em] text-muted">{t[e.type]}</p>
@@ -114,7 +114,7 @@ export function AgendaList({ events, today }: { events: CorporateAction[]; today
         </div>
         <div className="flex w-full gap-2 pl-20 sm:w-auto sm:pl-0">
           {e.notice && <Link href={`/${locale}/avis-et-communiques/${e.notice}`} className="inline-flex h-9 items-center rounded-full border border-line px-3 text-sm hover:border-line-strong">{t.notice}</Link>}
-          <button type="button" onClick={() => ics([e])} className="inline-flex h-9 items-center gap-1 rounded-full px-3 text-sm text-link hover:bg-surface-alt">
+          <button type="button" onClick={() => ics([e])} className={cn("inline-flex h-9 items-center gap-1 rounded-full px-3 text-sm text-link hover:bg-surface-alt", !e.notice && "-ml-3 sm:ml-0")}>
             <CalendarPlus aria-hidden="true" className="size-4" strokeWidth={1.6} /> {t.add}
           </button>
         </div>

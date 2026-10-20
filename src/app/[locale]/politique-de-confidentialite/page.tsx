@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { StackTable } from "@/components/ui/StackTable";
 import Link from "next/link";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
@@ -109,17 +110,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/polit
       <h2 id="responsable" className="text-h2">{t.controllerTitle}</h2>
       <p>{t.controller}</p>
       <h2 id="registre" className="text-h2">{t.registerTitle}</h2>
-      <div className="not-prose my-6 relative overflow-x-auto rounded-[var(--radius-card)] border border-line bg-surface" data-lenis-prevent>
-        <table className="w-full min-w-[720px] text-sm">
-          <caption className="sr-only">{t.caption}</caption>
-          <thead>
-            <tr className="border-b border-line">{t.head.map((h) => <th key={h} scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-[0.1em] text-muted">{h}</th>)}</tr>
-          </thead>
-          <tbody className="divide-y divide-line">
-            {t.rows.map((r) => <tr key={r[0]}>{r.map((c, i) => i === 0 ? <th key={i} scope="row" className="px-4 py-3 text-left font-medium text-heading">{c}</th> : <td key={i} className="px-4 py-3 text-muted">{c}</td>)}</tr>)}
-          </tbody>
-        </table>
-      </div>
+      <StackTable alwaysStack className="not-prose my-6 [overflow-wrap:normal]" caption={t.caption} head={t.head} rows={t.rows} minWidth={760} />
       <h2 id="transferts" className="text-h2">{t.transfersTitle}</h2>
       <p>{t.transfers}</p>
       <h2 id="mineurs" className="text-h2">{t.minorsTitle}</h2>

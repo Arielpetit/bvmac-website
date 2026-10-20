@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { breakable } from "@/lib/format";
 import { ArrowUpRight, FileText, Search } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
 import type { DocItem } from "@/data/content";
@@ -52,18 +53,18 @@ export function DocumentLibrary({ docs }: { docs: DocItem[] }) {
           <ul className="grid gap-3">
             {filtered.map((d) => (
               <li key={d.id}>
-                <a href={d.url} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-5 transition-colors hover:border-line-strong">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-text"><FileText aria-hidden="true" className="size-5" strokeWidth={1.5} /></span>
+                <a href={d.url} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-3 rounded-[var(--radius-card)] border border-line bg-surface p-4 transition-colors hover:border-line-strong sm:gap-4 sm:p-5">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-text sm:size-11"><FileText aria-hidden="true" className="size-5" strokeWidth={1.5} /></span>
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-center gap-2 text-xs text-muted">
                       <span className="rounded-full border border-line px-2 py-0.5 font-medium text-heading">{d.body}</span>
-                      <span className="figure">{d.year}</span>
-                      <span>· {L.lang} : {d.language}</span>
+                      <span className="whitespace-nowrap"><span className="figure">{d.year}</span> · {L.lang} : {d.language}</span>
+                      <ArrowUpRight aria-hidden="true" className="ml-auto size-4 shrink-0 group-hover:text-link sm:hidden" /><span className="sr-only sm:hidden">{L.open} {dict.a11y.external}</span>
                     </span>
                     <span lang="fr" className="mt-1.5 block font-medium text-heading group-hover:text-link">{d.title}</span>
-                    {d.ref && <span lang="fr" className="block break-words text-sm text-muted">{d.ref}</span>}
+                    {d.ref && <span lang="fr" className="block text-sm text-muted">{breakable(d.ref)}</span>}
                   </span>
-                  <span className="inline-flex shrink-0 items-center gap-1 text-sm text-muted group-hover:text-link">{L.open}<ArrowUpRight aria-hidden="true" className="size-4" /><span className="sr-only">{dict.a11y.external}</span></span>
+                  <span className="hidden shrink-0 items-center gap-1 text-sm text-muted group-hover:text-link sm:inline-flex">{L.open}<ArrowUpRight aria-hidden="true" className="size-4" /><span className="sr-only">{dict.a11y.external}</span></span>
                 </a>
               </li>
             ))}
