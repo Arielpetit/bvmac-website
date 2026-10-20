@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { MapPin, Search, X } from "lucide-react";
+import { Globe, Mail, MapPin, Phone, Search, X } from "lucide-react";
 import { setUrlParam, useUrlParam } from "@/lib/client-store";
 import { useI18n } from "@/i18n/provider";
 import { COUNTRIES, type CountryCode } from "@/lib/navigation";
@@ -12,6 +12,7 @@ import { Flag } from "@/components/ui/Flag";
 import { EmptyState } from "@/components/ui/States";
 import { cn } from "@/lib/cn";
 import { RealMap } from "@/components/ui/RealMap";
+import { BROKER_CONTACTS } from "@/data/broker-contacts";
 
 // City positions for the broker map (lon, lat).
 const CITIES: Record<string, [number, number]> = {
@@ -120,15 +121,24 @@ export function BrokerDirectory({ brokers, totals }: { brokers: Broker[]; totals
                       onMouseLeave={() => setHovered(null)}
                       className={cn("flex h-full flex-col rounded-[var(--radius-card)] border bg-surface p-5 transition-all duration-300", city === b.city || hovered === b.name ? "border-brand-gold shadow-soft" : "border-line")}
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <h2 className="font-medium text-heading">{b.name}</h2>
+                      <div className="mb-4 flex h-14 items-center justify-between gap-3">
+                        {BROKER_CONTACTS[b.name]?.logo ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={BROKER_CONTACTS[b.name].logo} alt={b.name} loading="lazy" className="max-h-14 min-w-0 max-w-[55%] object-contain object-left" />
+                        ) : (
+                          <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-xl bg-accent-soft font-serif-display text-lg text-accent-text">{initials(b.name)}</span>
+                        )}
                         <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line px-2.5 py-0.5 text-xs">
                           <Flag code={b.country} />{b.city}
                         </span>
                       </div>
+                      <div className="flex items-start justify-between gap-3">
+                        <h2 className="font-medium text-heading">{b.name}</h2>
+                      </div>
                       <p className="mt-3 flex gap-2 text-sm text-muted">
                         <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0" strokeWidth={1.6} />{b.address}
                       </p>
+                      <Contacts c={BROKER_CONTACTS[b.name]} />
                       <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Services">
                         {SERVICES.map((s) => <li key={s} className="rounded-full bg-surface-alt px-2.5 py-0.5 text-[0.7rem] text-muted">{s}</li>)}
                       </ul>
@@ -145,5 +155,22 @@ export function BrokerDirectory({ brokers, totals }: { brokers: Broker[]; totals
         </div>
       </div>
     </div>
+  );
+}
+
+const initials = (name: string) => name.replace(/\(.*?\)|S\.A\.?/g, "").split(/\s+/).filter((w) => /^[A-Za-zÀ-ÿ]/.test(w)).slice(0, 2).map((w) => w[0].toUpperCase()).join("");
+
+// Email, phone and website as links. Only the first phone number is dialled; the full text stays in the tooltip.
+function Contacts({ c }: { c?: { email?: string; phone?: string; website?: string } }) {
+  if (!c || !(c.email || c.phone || c.website)) return null;
+  const firstPhone = c.phone?.match(/\+?\(?\d[\d\s()]{6,}\d/)?.[0].trim();
+  const row = "flex min-w-0 items-center gap-2 text-sm text-muted";
+  const icon = "size-4 shrink-0";
+  return (
+    <ul className="mt-3 grid gap-1.5">
+      {c.email && <li className={row}><Mail aria-hidden="true" className={icon} strokeWidth={1.6} /><a href={`mailto:${c.email}`} className="link truncate">{c.email}</a></li>}
+      {firstPhone && <li className={row}><Phone aria-hidden="true" className={icon} strokeWidth={1.6} /><a href={`tel:${firstPhone.replace(/[^\d+]/g, "")}`} title={c.phone} className="link">{firstPhone}</a></li>}
+      {c.website && <li className={row}><Globe aria-hidden="true" className={icon} strokeWidth={1.6} /><a href={`https://${c.website}`} target="_blank" rel="noopener noreferrer" className="link truncate">{c.website}</a></li>}
+    </ul>
   );
 }

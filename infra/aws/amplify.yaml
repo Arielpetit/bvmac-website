@@ -1,0 +1,230 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  BVMAC hosting on AWS Amplify: the website (Next.js, server-rendered) and the web version of the
+  mobile app (static), each with a production branch (main) and a staging branch (develop),
+  plus a monthly cost budget. Deploy in Europe (Paris), eu-west-3.
+
+Parameters:
+  WebRepository:
+    Type: String
+    Default: https://github.com/skyengpro/bvmac-website
+    Description: GitHub repository of the website.
+  AppRepository:
+    Type: String
+    Default: https://github.com/skyengpro/bvmac-mobile
+    Description: GitHub repository of the mobile app.
+  GitHubAccessToken:
+    Type: String
+    NoEcho: true
+    Default: ""
+    Description: >-
+      Optional. Fine-grained GitHub token with read-only access to the two repositories. Leave empty
+      to connect the repositories afterwards in the Amplify console with the Amplify GitHub App.
+  ProductionBranch:
+    Type: String
+    Default: main
+  StagingBranch:
+    Type: String
+    Default: develop
+  PreviewUsername:
+    Type: String
+    Default: ""
+    Description: Optional. Password-protects both apps (preview). Leave empty for a public site.
+  PreviewPassword:
+    Type: String
+    NoEcho: true
+    Default: ""
+    MinLength: 0
+  WebDomain:
+    Type: String
+    Default: ""
+    Description: Optional. Root domain for the website, for example example.org.
+  AppDomain:
+    Type: String
+    Default: ""
+    Description: Optional. Domain for the app's web version, for example app.example.org.
+  SiteUrl:
+    Type: String
+    Default: ""
+    Description: Public address of the website (used for canonical links and the sitemap).
+  SupabaseUrl:
+    Type: String
+    Default: ""
+  SupabasePublishableKey:
+    Type: String
+    Default: ""
+  SupabaseSecretKey:
+    Type: String
+    NoEcho: true
+    Default: ""
+    Description: Server-only key used by the team admin. Never expose it in the browser.
+  GroqApiKey:
+    Type: String
+    NoEcho: true
+    Default: ""
+    Description: Key of the AI assistant model provider.
+  BudgetEmail:
+    Type: String
+    Description: Email address that receives the budget alerts.
+  MonthlyBudgetUsd:
+    Type: Number
+    Default: 10
+    MinValue: 1
+    Description: Monthly AWS cost budget in US dollars. Alerts at 80 % and 100 %.
+
+Conditions:
+  HasToken: !Not [!Equals [!Ref GitHubAccessToken, ""]]
+  HasPassword: !And
+    - !Not [!Equals [!Ref PreviewUsername, ""]]
+    - !Not [!Equals [!Ref PreviewPassword, ""]]
+  HasWebDomain: !Not [!Equals [!Ref WebDomain, ""]]
+  HasAppDomain: !Not [!Equals [!Ref AppDomain, ""]]
+
+Resources:
+  WebApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: bvmac-website
+      Platform: WEB_COMPUTE
+      Repository: !Ref WebRepository
+      AccessToken: !If [HasToken, !Ref GitHubAccessToken, !Ref "AWS::NoValue"]
+      BasicAuthConfig: !If
+        - HasPassword
+        - EnableBasicAuth: true
+          Username: !Ref PreviewUsername
+          Password: !Ref PreviewPassword
+        - !Ref "AWS::NoValue"
+      EnvironmentVariables:
+        - { Name: NEXT_PUBLIC_SUPABASE_URL, Value: !Ref SupabaseUrl }
+        - { Name: NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, Value: !Ref SupabasePublishableKey }
+        - { Name: SUPABASE_SECRET_KEY, Value: !Ref SupabaseSecretKey }
+        - { Name: GROQ_API_KEY, Value: !Ref GroqApiKey }
+        - { Name: SITE_URL, Value: !Ref SiteUrl }
+      Tags:
+        - { Key: project, Value: bvmac }
+        - { Key: component, Value: website }
+
+  WebProduction:
+    Type: AWS::Amplify::Branch
+    Properties:
+      AppId: !GetAtt WebApp.AppId
+      BranchName: !Ref ProductionBranch
+      Stage: PRODUCTION
+      Framework: Next.js - SSR
+      EnableAutoBuild: true
+      Tags:
+        - { Key: env, Value: prod }
+
+  WebStaging:
+    Type: AWS::Amplify::Branch
+    Properties:
+      AppId: !GetAtt WebApp.AppId
+      BranchName: !Ref StagingBranch
+      Stage: DEVELOPMENT
+      Framework: Next.js - SSR
+      EnableAutoBuild: true
+      Tags:
+        - { Key: env, Value: staging }
+
+  WebDomainAssociation:
+    Type: AWS::Amplify::Domain
+    Condition: HasWebDomain
+    Properties:
+      AppId: !GetAtt WebApp.AppId
+      DomainName: !Ref WebDomain
+      SubDomainSettings:
+        - { Prefix: "", BranchName: !GetAtt WebProduction.BranchName }
+        - { Prefix: www, BranchName: !GetAtt WebProduction.BranchName }
+        - { Prefix: staging, BranchName: !GetAtt WebStaging.BranchName }
+
+  AppWeb:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: bvmac-app-web
+      Platform: WEB
+      Repository: !Ref AppRepository
+      AccessToken: !If [HasToken, !Ref GitHubAccessToken, !Ref "AWS::NoValue"]
+      BasicAuthConfig: !If
+        - HasPassword
+        - EnableBasicAuth: true
+          Username: !Ref PreviewUsername
+          Password: !Ref PreviewPassword
+        - !Ref "AWS::NoValue"
+      # Single-page app: any path that is not a file returns the app's home page, so links open.
+      CustomRules:
+        - Source: "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json|webp)$)([^.]+$)/>"
+          Target: /index.html
+          Status: "200"
+      Tags:
+        - { Key: project, Value: bvmac }
+        - { Key: component, Value: app-web }
+
+  AppProduction:
+    Type: AWS::Amplify::Branch
+    Properties:
+      AppId: !GetAtt AppWeb.AppId
+      BranchName: !Ref ProductionBranch
+      Stage: PRODUCTION
+      Framework: Web
+      EnableAutoBuild: true
+      Tags:
+        - { Key: env, Value: prod }
+
+  AppStaging:
+    Type: AWS::Amplify::Branch
+    Properties:
+      AppId: !GetAtt AppWeb.AppId
+      BranchName: !Ref StagingBranch
+      Stage: DEVELOPMENT
+      Framework: Web
+      EnableAutoBuild: true
+      Tags:
+        - { Key: env, Value: staging }
+
+  AppDomainAssociation:
+    Type: AWS::Amplify::Domain
+    Condition: HasAppDomain
+    Properties:
+      AppId: !GetAtt AppWeb.AppId
+      DomainName: !Ref AppDomain
+      SubDomainSettings:
+        - { Prefix: "", BranchName: !GetAtt AppProduction.BranchName }
+
+  MonthlyBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: bvmac-monthly
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: !Ref MonthlyBudgetUsd
+          Unit: USD
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 80
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - { SubscriptionType: EMAIL, Address: !Ref BudgetEmail }
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 100
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - { SubscriptionType: EMAIL, Address: !Ref BudgetEmail }
+
+Outputs:
+  WebAppId:
+    Value: !GetAtt WebApp.AppId
+  WebDefaultDomain:
+    Value: !GetAtt WebApp.DefaultDomain
+    Description: Address of the website before the custom domain is attached.
+  AppWebAppId:
+    Value: !GetAtt AppWeb.AppId
+  AppWebDefaultDomain:
+    Value: !GetAtt AppWeb.DefaultDomain
+  Console:
+    Value: !Sub https://${AWS::Region}.console.aws.amazon.com/amplify/apps

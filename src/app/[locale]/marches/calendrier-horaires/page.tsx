@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
-import { formatDate, formatDayMonth } from "@/lib/format";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SessionTimeline } from "@/components/market/SessionTimeline";
-import { tc } from "@/i18n/content";
+import { HolidayList } from "@/components/market/HolidayList";
 
 // 2026 Cameroon public holidays. Movable religious dates are indicative and
 // announced by an avis de la BVMAC.
@@ -21,9 +20,33 @@ const HOLIDAYS_2026 = [
 ];
 
 const T = {
-  fr: { intro: "Les séances de cotation ont lieu du lundi au vendredi. Les jours fériés au Cameroun font l'objet d'un avis de la BVMAC.", phases: "Phases de la séance (heure de Douala, UTC+1)", holidays: "Jours fériés 2026", day: "Jour férié", date: "Date", note: "* Date susceptible d'être modifiée. Horaires et calendrier à confirmer par la BVMAC avant publication." },
-  en: { intro: "Trading sessions take place Monday to Friday. Public holidays in Cameroon are announced by a BVMAC notice.", phases: "Session phases (Douala time, UTC+1)", holidays: "2026 public holidays", day: "Holiday", date: "Date", note: "* Date may change. Hours and calendar to be confirmed by BVMAC before publication." },
-  es: { intro: "Las sesiones tienen lugar de lunes a viernes. Los festivos en Camerún se anuncian mediante un aviso de la BVMAC.", phases: "Fases de la sesión (hora de Duala, UTC+1)", holidays: "Festivos 2026", day: "Festivo", date: "Fecha", note: "* Fecha sujeta a cambios. Horarios y calendario por confirmar por la BVMAC antes de su publicación." },
+  fr: {
+    intro: "Les séances de cotation ont lieu du lundi au vendredi. Les jours fériés au Cameroun font l'objet d'un avis de la BVMAC.",
+    phases: "Déroulement d'une séance", phasesSub: "Heure de Douala (UTC+1), du lundi au vendredi.",
+    glance: "En bref",
+    facts: [["Jours de cotation", "Lundi au vendredi"], ["Fuseau horaire", "Douala, UTC+1"], ["Fixing", "11:00"], ["Fin de séance", "15:30"], ["Jours fériés", "Annoncés par avis de la BVMAC"]],
+    nextHoliday: "Prochain jour férié",
+    holidays: "Jours fériés 2026",
+    note: "* Fête religieuse : la date dépend du calendrier lunaire et est confirmée par un avis de la BVMAC.",
+  },
+  en: {
+    intro: "Trading sessions take place Monday to Friday. Public holidays in Cameroon are announced by a BVMAC notice.",
+    phases: "Course of a session", phasesSub: "Douala time (UTC+1), Monday to Friday.",
+    glance: "At a glance",
+    facts: [["Trading days", "Monday to Friday"], ["Time zone", "Douala, UTC+1"], ["Fixing", "11:00"], ["Session ends", "15:30"], ["Public holidays", "Announced by a BVMAC notice"]],
+    nextHoliday: "Next public holiday",
+    holidays: "Public holidays 2026",
+    note: "* Religious holiday: the date depends on the lunar calendar and is confirmed by a BVMAC notice.",
+  },
+  es: {
+    intro: "Las sesiones tienen lugar de lunes a viernes. Los festivos en Camerún se anuncian mediante un aviso de la BVMAC.",
+    phases: "Desarrollo de una sesión", phasesSub: "Hora de Duala (UTC+1), de lunes a viernes.",
+    glance: "En resumen",
+    facts: [["Días de sesión", "De lunes a viernes"], ["Huso horario", "Duala, UTC+1"], ["Fixing", "11:00"], ["Fin de la sesión", "15:30"], ["Festivos", "Anunciados por aviso de la BVMAC"]],
+    nextHoliday: "Próximo festivo",
+    holidays: "Festivos 2026",
+    note: "* Fiesta religiosa: la fecha depende del calendario lunar y se confirma mediante un aviso de la BVMAC.",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/marches/calendrier-horaires">): Promise<Metadata> {
@@ -39,28 +62,29 @@ export default async function HoursPage({ params }: PageProps<"/[locale]/marches
       <PageHeader title={dict.nav.items.hours} intro={t.intro} />
       <div className="container-site grid gap-16 pt-10 pb-14 md:pt-12 md:pb-20">
         <section aria-labelledby="phases">
-          <h2 id="phases" className="text-h2 mb-6">{t.phases}</h2>
-          <SessionTimeline />
+          <h2 id="phases" className="text-h2">{t.phases}</h2>
+          <p className="mb-6 mt-2 text-muted">{t.phasesSub}</p>
+          <div className="grid items-start gap-6 lg:grid-cols-[1.6fr_1fr] lg:gap-10">
+            <div className="rounded-[var(--radius-card)] border border-line bg-surface p-2 sm:p-3">
+              <SessionTimeline vertical />
+            </div>
+            <aside aria-label={t.glance} className="rounded-[var(--radius-card)] bg-espresso p-6 text-brand-sand md:p-7">
+              <p className="eyebrow text-brand-gold-light!">{t.glance}</p>
+              <dl className="mt-4 divide-y divide-white/10">
+                {t.facts.map(([k, v]) => (
+                  <div key={k} className="flex items-baseline justify-between gap-4 py-3 text-sm">
+                    <dt className="shrink-0 text-brand-sand/70">{k}</dt>
+                    <dd className="text-right font-medium text-brand-ivory">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </aside>
+          </div>
         </section>
         <section aria-labelledby="holidays">
-          <h2 id="holidays" className="text-h2 mb-6">{t.holidays}</h2>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {HOLIDAYS_2026.map((h) => {
-              const dm = formatDayMonth(h.date, locale);
-              return (
-                <li key={h.date} className="flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-4">
-                  <time dateTime={h.date} className="flex size-14 shrink-0 flex-col items-center justify-center rounded-2xl bg-accent-soft text-accent-text">
-                    <span className="font-serif-display text-xl leading-none">{dm.day}</span>
-                    <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider">{dm.month}</span>
-                  </time>
-                  <span className="min-w-0">
-                    <span className="block font-medium text-heading">{tc(h.fr, locale)}</span>
-                    <span className="block text-xs capitalize text-muted">{formatDate(h.date, locale)}</span>
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
+          <h2 id="holidays" className="text-h2 mb-4">{t.holidays}</h2>
+          <HolidayList holidays={HOLIDAYS_2026} />
+          <p className="mt-4 text-xs text-muted">{t.note}</p>
         </section>
       </div>
     </>
