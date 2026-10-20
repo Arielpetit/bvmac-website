@@ -4,20 +4,16 @@ import Link from "next/link";
 import {
   ArrowRight,
   ArrowUpRight,
-  BookOpen,
   Briefcase,
   BriefcaseBusiness,
   CandlestickChart,
   ReceiptText,
   CalendarDays,
-  Check,
-  Flame,
   Globe2,
   FileDown,
   GraduationCap,
   LineChart,
   PieChart,
-  Sparkles,
   Play,
   TrendingUp,
 } from "lucide-react";
@@ -100,12 +96,7 @@ const copy = {
     agendaTitle: "Opérations sur titres",
     agendaAll: "Tout l’agenda",
     agendaTypes: { dividende: "Dividende", coupon: "Coupon", remboursement: "Remboursement", ag: "Assemblée", introduction: "Introduction", souscription: "Souscription" },
-    schoolEyebrow: "École de bourse",
-    schoolTitle: "Apprendre la bourse, pas à pas.",
-    schoolText: "Un espace gratuit pour comprendre le marché financier régional avant d’investir : 14 leçons, des quiz expliqués et un portefeuille virtuel.",
-    schoolPoints: [["Leçons de 5 minutes", "Des notions claires, du BOC aux obligations."], ["Quiz et badges", "Une progression enregistrée sur votre appareil."], ["Portefeuille virtuel", "5 000 000 FCFA fictifs, cours réels différés."]],
-    mock: { lesson: "Leçon 2 · 5 min", lessonTitle: "Actions et obligations", quizQ: "Qu’est-ce qu’une obligation ?", quizA: "Un prêt à un émetteur", streak: "Série de 4 jours", badge: "badge « Premier pas » obtenu", ipoAlt: "Signature lors de l’introduction en bourse de BGFI Holding Corporation", hq: "Siège BVMAC, Douala" },
-    schoolCta: "Commencer un parcours",
+    mock: { ipoAlt: "Signature lors de l’introduction en bourse de BGFI Holding Corporation", hq: "Siège BVMAC, Douala" },
     newsEyebrow: "Actualités",
     newsTitle: "La vie du marché",
     newsAll: "Toutes les actualités",
@@ -169,12 +160,7 @@ const copy = {
     agendaTitle: "Corporate actions",
     agendaAll: "Full calendar",
     agendaTypes: { dividende: "Dividend", coupon: "Coupon", remboursement: "Redemption", ag: "Meeting", introduction: "Listing", souscription: "Subscription" },
-    schoolEyebrow: "Stock Market School",
-    schoolTitle: "Learn the market, step by step.",
-    schoolText: "A free space to understand the regional financial market before investing: 14 lessons, explained quizzes and a virtual portfolio.",
-    schoolPoints: [["5-minute lessons", "Clear concepts, from the BOC to bonds."], ["Quizzes and badges", "Progress saved on your device."], ["Virtual portfolio", "5,000,000 virtual FCFA, real delayed prices."]],
-    mock: { lesson: "Lesson 2 · 5 min", lessonTitle: "Shares and bonds", quizQ: "What is a bond?", quizA: "A loan to an issuer", streak: "4-day streak", badge: "“First step” badge earned", ipoAlt: "Signing ceremony for the BGFI Holding Corporation IPO", hq: "BVMAC headquarters, Douala" },
-    schoolCta: "Start a learning path",
+    mock: { ipoAlt: "Signing ceremony for the BGFI Holding Corporation IPO", hq: "BVMAC headquarters, Douala" },
     newsEyebrow: "News",
     newsTitle: "Life of the market",
     newsAll: "All news",
@@ -238,12 +224,7 @@ const copy = {
     agendaTitle: "Operaciones sobre valores",
     agendaAll: "Toda la agenda",
     agendaTypes: { dividende: "Dividendo", coupon: "Cupón", remboursement: "Amortización", ag: "Junta", introduction: "Salida a bolsa", souscription: "Suscripción" },
-    schoolEyebrow: "Escuela de bolsa",
-    schoolTitle: "Aprender la bolsa, paso a paso.",
-    schoolText: "Un espacio gratuito para comprender el mercado financiero regional antes de invertir: 14 lecciones, cuestionarios explicados y una cartera virtual.",
-    schoolPoints: [["Lecciones de 5 minutos", "Conceptos claros, del BOC a las obligaciones."], ["Cuestionarios e insignias", "Progreso guardado en su dispositivo."], ["Cartera virtual", "5.000.000 FCFA ficticios, cotizaciones reales diferidas."]],
-    mock: { lesson: "Lección 2 · 5 min", lessonTitle: "Acciones y obligaciones", quizQ: "¿Qué es una obligación?", quizA: "Un préstamo a un emisor", streak: "Racha de 4 días", badge: "insignia «Primer paso» obtenida", ipoAlt: "Firma durante la salida a bolsa de BGFI Holding Corporation", hq: "Sede de la BVMAC, Duala" },
-    schoolCta: "Empezar un itinerario",
+    mock: { ipoAlt: "Firma durante la salida a bolsa de BGFI Holding Corporation", hq: "Sede de la BVMAC, Duala" },
     newsEyebrow: "Actualidad",
     newsTitle: "La vida del mercado",
     newsAll: "Todas las noticias",
@@ -680,61 +661,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </Section>
 
-      {/* SCHOOL */}
-      <Section tone="alt" labelledBy="school-title">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          <Reveal className="relative">
-            <div className="relative overflow-hidden rounded-[var(--radius-panel)] bg-espresso p-6 md:p-10">
-              <span aria-hidden="true" className="grid-lines absolute inset-0" />
-              <span aria-hidden="true" className="absolute -left-20 -top-20 size-72 rounded-full bg-brand-gold/25 blur-[90px]" />
-              <LearnArt className="relative mx-auto w-full max-w-md opacity-90" />
-              <div className="relative mt-6 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-brand-sand backdrop-blur">
-                  <p className="text-[11px] uppercase tracking-[0.14em] text-brand-gold-light">{t.mock.lesson}</p>
-                  <p className="mt-1.5 font-medium text-brand-ivory">{t.mock.lessonTitle}</p>
-                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full w-2/3 rounded-full bg-brand-gold" /></div>
-                </div>
-                <div className="rounded-2xl bg-brand-ivory p-4 text-espresso shadow-2xl">
-                  <p className="text-[11px] uppercase tracking-[0.14em] text-[#8a6614]">Quiz</p>
-                  <p className="mt-1.5 text-sm font-medium">{t.mock.quizQ}</p>
-                  <p className="mt-2 flex items-center gap-2 rounded-lg bg-[#e4f3ea] px-2.5 py-1.5 text-xs text-[#157a43]"><Check aria-hidden="true" className="size-3.5" />{t.mock.quizA}</p>
-                </div>
-              </div>
-              <div className="relative mt-3 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-3 text-sm text-brand-sand">
-                <span className="flex size-9 items-center justify-center rounded-full bg-brand-gold text-espresso"><Flame aria-hidden="true" className="size-4" /></span>
-                <span><span className="font-medium text-brand-ivory">{t.mock.streak}</span> · {t.mock.badge}</span>
-              </div>
-            </div>
-          </Reveal>
-          <div>
-            <Reveal><p className="eyebrow">{t.schoolEyebrow}</p></Reveal>
-            <Reveal delay={0.1}><h2 id="school-title" className="text-h2 mt-4">{t.schoolTitle}</h2></Reveal>
-            <Reveal delay={0.15}><p className="mt-5 text-lg text-muted">{t.schoolText}</p></Reveal>
-            <Stagger as="ul" className="mt-8 grid gap-4">
-              {t.schoolPoints.map(([title, text], i) => {
-                const Icon = [BookOpen, Sparkles, LineChart][i];
-                return (
-                  <StaggerItem key={title} as="li" className="flex gap-4">
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-accent-text">
-                      <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
-                    </span>
-                    <span>
-                      <span className="block font-medium text-heading">{title}</span>
-                      <span className="block text-sm text-muted">{text}</span>
-                    </span>
-                  </StaggerItem>
-                );
-              })}
-            </Stagger>
-            <Reveal delay={0.2} className="mt-9">
-              <ButtonLink href={p("/ecole-de-bourse")}>{t.schoolCta} <ArrowRight aria-hidden="true" className="size-4" /></ButtonLink>
-            </Reveal>
-          </div>
-        </div>
-      </Section>
-
       {/* NEWS */}
-      <Section labelledBy="news-title">
+      <Section tone="alt" labelledBy="news-title">
         <SectionHeading id="news-title" overline={t.newsEyebrow} title={t.newsTitle} action={<Link href={p("/actualites")} className="link text-sm">{t.newsAll}</Link>} />
         {marketNews.length >= 3 && (
           <Reveal className="grid grid-cols-2 gap-3 sm:hidden">
