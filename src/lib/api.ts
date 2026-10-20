@@ -118,8 +118,11 @@ export async function getBrokers() {
   return (await fetchBrokers()) ?? BROKERS;
 }
 
+// Links to a listing page of the old site are dropped once the real PDFs are known.
+const LISTING_PAGES = ["https://www.bvm-ac.org/documentations-rapports-boursiers/", "https://www.bvm-ac.org/donnees-economiques/"];
+
 export async function getDocuments() {
-  return (await fetchDocuments()) ?? DOCUMENTS;
+  return withArchive(await fetchDocuments(), DOCUMENTS, (d) => d.url).filter((d) => !LISTING_PAGES.includes(d.url));
 }
 
 export async function getVideos() {

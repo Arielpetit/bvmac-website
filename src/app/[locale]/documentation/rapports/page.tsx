@@ -3,7 +3,7 @@ import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
 import { getDocuments } from "@/lib/api";
 import { ContentPage } from "@/components/content/ContentPage";
-import { DocumentLibrary } from "@/components/content/DocumentLibrary";
+import { ReportsShowcase } from "@/components/content/ReportsShowcase";
 
 const INTRO = {
   fr: "Rapports annuels et bilans boursiers de la BVMAC.",
@@ -20,7 +20,7 @@ export default async function DocsPage({ params }: PageProps<"/[locale]/document
   const documents = await getDocuments();
   return (
     <ContentPage locale={locale} dict={dict} title={dict.nav.items.reports} intro={INTRO[locale]}>
-      <DocumentLibrary docs={documents.filter((d) => d.category === "report")} />
+      <ReportsShowcase docs={documents.filter((d) => d.category === "report")} locale={locale} />
     </ContentPage>
   );
 }

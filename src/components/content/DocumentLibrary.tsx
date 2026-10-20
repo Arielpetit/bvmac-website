@@ -21,9 +21,12 @@ export function DocumentLibrary({ docs }: { docs: DocItem[] }) {
   );
   const L = { fr: { body: "Organisme", year: "Année", all: "Tous", open: "Ouvrir", lang: "Langue" }, en: { body: "Body", year: "Year", all: "All", open: "Open", lang: "Language" }, es: { body: "Organismo", year: "Año", all: "Todos", open: "Abrir", lang: "Idioma" } }[locale];
 
+  // Filters only help when there is something to filter: several bodies or a long list.
+  const showFilters = bodies.length > 1 || docs.length > 6;
+
   return (
-    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[260px_minmax(0,1fr)]">
-      <aside className="grid h-fit gap-6 rounded-[var(--radius-card)] border border-line bg-surface p-5 lg:sticky lg:top-40">
+    <div className={cn("grid grid-cols-1 gap-10", showFilters && "lg:grid-cols-[260px_minmax(0,1fr)]")}>
+      {showFilters && <aside className="grid h-fit gap-6 rounded-[var(--radius-card)] border border-line bg-surface p-5 lg:sticky lg:top-40">
         <div className="relative">
           <label htmlFor="doc-q" className="sr-only">{dict.common.search}</label>
           <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted" strokeWidth={1.6} />
@@ -44,9 +47,9 @@ export function DocumentLibrary({ docs }: { docs: DocItem[] }) {
             {years.map((y) => <option key={y}>{y}</option>)}
           </select>
         </div>
-      </aside>
+      </aside>}
       <div>
-        <p role="status" className="mb-3 text-sm text-muted">{filtered.length} {dict.common.results}</p>
+        <p role="status" className={cn("mb-3 text-sm text-muted", !showFilters && "sr-only")}>{filtered.length} {dict.common.results}</p>
         {filtered.length === 0 ? (
           <EmptyState message={dict.common.noResults} />
         ) : (
