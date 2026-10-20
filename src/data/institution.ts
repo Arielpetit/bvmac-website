@@ -1,3 +1,5 @@
+import { ARCHIVE_TENDERS } from "./real-archive";
+
 // Institutional content. Facts come from the current BVMAC website (presentation,
 // history, organisation pages). Items marked "à confirmer" need BVMAC validation;
 // names of board members and directors are placeholders.
@@ -94,7 +96,7 @@ export const ORG_CHART: OrgUnit = {
 export type Tender = { ref: string; title: string; type: "Appel d’offres" | "Manifestation d’intérêt" | "Appel à candidatures" | "Recrutement"; published: string; deadline?: string; open: boolean; url: string };
 
 // From www.bvm-ac.org news and tenders (2025-2026).
-export const TENDERS: Tender[] = [
+const RECENT_TENDERS: Tender[] = [
   { ref: "Ingénieur Support", title: "Rejoignez l’équipe des Ressources Humaines de la BVMAC : recrutement d’un Ingénieur Support", type: "Recrutement", published: "2026-10-09", open: true, url: "https://www.bvm-ac.org/actualites-bvmac-en/rejoignez-lequipe-des-ressources-humaines-de-la-bvmac-en-postulant-a-loffre-ci-apres/" },
   { ref: "N°031/06/BVMAC/DSI/09-26", title: "Consultation pour la fourniture d’un accès Internet professionnel", type: "Appel d’offres", published: "2026-09-25", open: true, url: "https://www.bvm-ac.org/actualite/appel-doffres-restreint-n031-06-bvmac-dsi-09-26/" },
   { ref: "AMI N°002/BEAC/SG/UGRIF/PASFIC/SQC/2026", title: "Recrutement d’un cabinet pour la feuille de route de l’introduction en bourse des institutions financières (BEAC)", type: "Manifestation d’intérêt", published: "2026-09-16", open: true, url: "https://www.bvm-ac.org/actualite/avis-a-manifestation-dinteret-n002-beac-sg-ugrif-pasfic-sqc-2026-du-09-09-2026-portant-sur-le-recrutement-dun-cabinet-pour-letablissement-dune-feuille-de-route-pour-lintroduction-en-bo/" },
@@ -105,3 +107,8 @@ export const TENDERS: Tender[] = [
   { ref: "N°024/17/BVMAC/DSI/10-25", title: "Solution professionnelle et sécurisée de bureau à distance", type: "Appel d’offres", published: "2025-10-10", open: false, url: "https://www.bvm-ac.org/actualite/appel-doffres-n-024-17-bvmac-dsi-10-25/" },
   { ref: "N°001/01/BVMAC/DG/05-25", title: "Sélection de commissaires aux comptes à compter de l’exercice 2025", type: "Appel à candidatures", published: "2025-05-14", open: false, url: "https://www.bvm-ac.org/actualites-bvmac-en/appel-a-candidatures-n001-01-bvmac-dg-05-25/" },
 ];
+
+export const TENDERS: Tender[] = (() => {
+  const urls = new Set(RECENT_TENDERS.map((t) => t.url));
+  return [...RECENT_TENDERS, ...ARCHIVE_TENDERS.filter((t) => !urls.has(t.url))].sort((a, b) => b.published.localeCompare(a.published));
+})();

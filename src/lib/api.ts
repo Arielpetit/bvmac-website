@@ -83,8 +83,15 @@ export async function getAgenda() {
 
 // Notices, news, bulletins and tenders come from the admin (Supabase) and fall
 // back to the static data when it is unavailable.
+// Items entered in the admin win; the archive of the official site fills in everything else.
+function withArchive<T>(db: T[] | null, archive: T[], key: (x: T) => string): T[] {
+  if (!db) return archive;
+  const keys = new Set(db.map(key));
+  return [...db, ...archive.filter((x) => !keys.has(key(x)))];
+}
+
 export async function getNotices() {
-  return ((await fetchNotices()) ?? NOTICES).slice().sort((a, b) => b.date.localeCompare(a.date));
+  return withArchive(await fetchNotices(), NOTICES, (n) => n.id).sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export async function getNotice(id: string) {
@@ -92,7 +99,7 @@ export async function getNotice(id: string) {
 }
 
 export async function getNews() {
-  return ((await fetchNews()) ?? NEWS).slice().sort((a, b) => b.date.localeCompare(a.date));
+  return withArchive(await fetchNews(), NEWS, (n) => n.slug).sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export async function getNewsItem(slug: string) {
@@ -100,11 +107,11 @@ export async function getNewsItem(slug: string) {
 }
 
 export async function getBocArchive() {
-  return ((await fetchBulletins()) ?? BOC_ARCHIVE).slice().sort((a, b) => b.date.localeCompare(a.date));
+  return withArchive(await fetchBulletins(), BOC_ARCHIVE, (b) => b.date).sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export async function getTenders() {
-  return (await fetchTenders()) ?? TENDERS;
+  return withArchive(await fetchTenders(), TENDERS, (t) => t.url).sort((a, b) => b.published.localeCompare(a.published));
 }
 
 export async function getBrokers() {
