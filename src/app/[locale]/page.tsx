@@ -366,45 +366,45 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* KEY FIGURES */}
       <section aria-label={t.figures.join(", ")} className="relative bg-background pb-12 pt-12 md:pb-16 md:pt-14">
         <div aria-hidden="true" className="dots absolute inset-x-0 top-0 h-72 opacity-50" />
-        <div className="container-site relative grid gap-4 lg:grid-cols-2">
+        <div className="container-site relative grid gap-3 sm:gap-4 lg:grid-cols-2">
           {/* Equity capitalisation */}
-          <Reveal className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] border border-line bg-surface shadow-soft">
-            <div className="flex items-start justify-between gap-4 p-7 pb-0 md:p-8 md:pb-0">
+          <Reveal className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] sm:rounded-[var(--radius-panel)] border border-line bg-surface shadow-soft">
+            <div className="flex items-start justify-between gap-4 p-5 pb-0 sm:p-7 sm:pb-0 md:p-8 md:pb-0">
               <div>
                 <p className="text-sm text-muted">{t.figures[0]}</p>
-                <p className="mt-3 flex items-baseline gap-2">
-                  <span className="font-serif-display text-[2.75rem] leading-none sm:text-[3.25rem] text-heading md:text-6xl"><CountUp value={summary.equityCapitalisation} kind="billions" /></span>
+                <p className="mt-2 flex items-baseline gap-2 sm:mt-3">
+                  <span className="font-serif-display text-[2.1rem] leading-none sm:text-[3.25rem] text-heading md:text-6xl"><CountUp value={summary.equityCapitalisation} kind="billions" /></span>
                   <span className="whitespace-nowrap text-sm font-medium text-accent-text">{t.figUnit}</span>
                 </p>
               </div>
-              <span className="flex size-11 items-center justify-center rounded-2xl bg-accent-soft text-accent-text"><PieChart aria-hidden="true" className="size-5" strokeWidth={1.6} /></span>
+              <span className="flex size-9 items-center justify-center rounded-xl sm:size-11 sm:rounded-2xl bg-accent-soft text-accent-text"><PieChart aria-hidden="true" className="size-5" strokeWidth={1.6} /></span>
             </div>
-            <figure className="relative mt-4 h-28 px-2" aria-label={t.figCapNote}>
+            <figure className="relative mt-3 h-16 px-2 sm:mt-4 sm:h-28" aria-label={t.figCapNote}>
               <MiniArea points={capHistory.map((pt) => pt.value)} id="cap-area" />
             </figure>
-            <Link href={p("/marches/actions")} className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-line px-7 py-4 text-sm md:px-8">
+            <Link href={p("/marches/actions")} className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-line px-5 py-3 text-sm sm:px-7 sm:py-4 md:px-8">
               <span className="text-muted">{t.figSession} {formatDate(summary.date, locale, "short")}<span className="hidden sm:inline"> · {t.figCapNote}</span></span>
               <span className="inline-flex shrink-0 items-center gap-1.5 font-medium text-link">{t.figCapCta}<ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" /></span>
             </Link>
           </Reveal>
 
           {/* Bonds outstanding */}
-          <Reveal delay={0.08} className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] bg-espresso text-brand-sand shadow-soft">
+          <Reveal delay={0.08} className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] sm:rounded-[var(--radius-panel)] bg-espresso text-brand-sand shadow-soft">
             <span aria-hidden="true" className="grid-lines absolute inset-0 opacity-70" />
             <span aria-hidden="true" className="absolute -right-24 -top-24 size-72 rounded-full bg-brand-gold/20 blur-[80px]" />
-            <div className="relative flex items-start justify-between gap-4 p-7 pb-0 md:p-8 md:pb-0">
+            <div className="relative flex items-start justify-between gap-4 p-5 pb-0 sm:p-7 sm:pb-0 md:p-8 md:pb-0">
               <div>
                 <p className="text-sm text-brand-sand/70">{t.figures[1]}</p>
-                <p className="mt-3 flex items-baseline gap-2">
-                  <span className="font-serif-display text-[2.75rem] leading-none sm:text-[3.25rem] text-brand-ivory md:text-6xl"><CountUp value={summary.bondOutstanding} kind="billions" /></span>
+                <p className="mt-2 flex items-baseline gap-2 sm:mt-3">
+                  <span className="font-serif-display text-[2.1rem] leading-none sm:text-[3.25rem] text-brand-ivory md:text-6xl"><CountUp value={summary.bondOutstanding} kind="billions" /></span>
                   <span className="whitespace-nowrap text-sm font-medium text-brand-gold-light">{t.figUnit}</span>
                 </p>
               </div>
-              <span className="flex size-11 items-center justify-center rounded-2xl bg-white/10 text-brand-gold-light"><ReceiptText aria-hidden="true" className="size-5" strokeWidth={1.6} /></span>
+              <span className="flex size-9 items-center justify-center rounded-xl sm:size-11 sm:rounded-2xl bg-white/10 text-brand-gold-light"><ReceiptText aria-hidden="true" className="size-5" strokeWidth={1.6} /></span>
             </div>
-            <div className="relative mt-6 px-7 pb-6 md:px-8">
+            <div className="relative mt-4 px-5 pb-4 sm:mt-6 sm:px-7 sm:pb-6 md:px-8">
               <p className="text-xs uppercase tracking-[0.12em] text-brand-sand/55">{t.figBondSplit}</p>
-              <div className="mt-3 flex h-2.5 overflow-hidden rounded-full bg-white/10">
+              <div className="mt-2.5 flex h-2 overflow-hidden sm:mt-3 sm:h-2.5 rounded-full bg-white/10">
                 {bondSplit.map((b, k) => (
                   <span key={b.code} className="h-full first:rounded-l-full last:rounded-r-full" style={{ width: `${(b.count / bonds.length) * 100}%`, background: COUNTRY_TONES[k % COUNTRY_TONES.length], marginRight: 2 }} />
                 ))}
@@ -415,7 +415,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 ))}
               </ul>
             </div>
-            <Link href={p("/marches/obligations")} className="relative mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 px-7 py-4 text-sm md:px-8">
+            <Link href={p("/marches/obligations")} className="relative mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 px-5 py-3 text-sm sm:px-7 sm:py-4 md:px-8">
               <span className="text-brand-sand/60">{t.figSession} {formatDate(summary.date, locale, "short")}</span>
               <span className="inline-flex shrink-0 items-center gap-1.5 font-medium text-brand-gold-light">{t.figBondCta}<ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" /></span>
             </Link>
@@ -427,12 +427,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               {counts.map((c, k) => {
                 const Icon = countIcons[k];
                 return (
-                  <Link key={c.href} href={p(c.href)} className={`group/c flex flex-col items-start gap-3 p-5 sm:flex-row sm:items-center sm:gap-4 lg:flex-col lg:items-start lg:gap-3 xl:flex-row xl:items-center xl:gap-4 transition-colors hover:bg-surface-alt md:p-6 border-line ${k % 2 ? "border-l" : ""} ${k > 0 ? "lg:border-l" : ""} ${k > 1 ? "max-lg:border-t" : ""}`}>
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-line text-accent-text transition-colors group-hover/c:border-transparent group-hover/c:bg-action group-hover/c:text-action-text">
+                  <Link key={c.href} href={p(c.href)} className={`group/c flex flex-row items-center gap-3 p-4 sm:p-5 sm:items-center sm:gap-4 lg:flex-col lg:items-start lg:gap-3 xl:flex-row xl:items-center xl:gap-4 transition-colors hover:bg-surface-alt md:p-6 border-line ${k % 2 ? "border-l" : ""} ${k > 0 ? "lg:border-l" : ""} ${k > 1 ? "max-lg:border-t" : ""}`}>
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-line text-accent-text sm:size-11 transition-colors group-hover/c:border-transparent group-hover/c:bg-action group-hover/c:text-action-text">
                       <Icon aria-hidden="true" className="size-5" strokeWidth={1.6} />
                     </span>
                     <span className="min-w-0">
-                      <dd className="font-serif-display text-3xl leading-none text-heading"><CountUp value={c.value} /></dd>
+                      <dd className="font-serif-display text-2xl leading-none text-heading sm:text-3xl"><CountUp value={c.value} /></dd>
                       <dt className="mt-1.5 text-sm leading-snug text-muted">{c.label}</dt>
                     </span>
                     <ArrowUpRight aria-hidden="true" className="ml-auto hidden size-4 shrink-0 text-muted opacity-0 sm:block lg:hidden xl:block transition-all group-hover/c:rotate-45 group-hover/c:opacity-100" />
