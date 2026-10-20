@@ -686,12 +686,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         )}
         {marketNews.length >= 3 ? (
           // Staggered mosaic: tall and short tiles alternate between the two columns.
-          <Reveal className="hidden grid-cols-2 gap-4 auto-rows-[170px] sm:grid lg:auto-rows-[210px] lg:gap-6">
+          <Reveal className="hidden grid-cols-2 gap-4 auto-rows-[200px] sm:grid lg:auto-rows-[250px] lg:gap-6 xl:auto-rows-[270px]">
             <NewsMosaicTile item={marketNews[0]} locale={locale} tall className="col-start-1 row-span-2 row-start-1" />
             <NewsMosaicTile item={marketNews[1]} locale={locale} className="col-start-2 row-start-1" />
             <NewsMosaicTile item={marketNews[2]} locale={locale} tall className="col-start-2 row-span-2 row-start-2" />
             <a href={CONTACT.social.youtube} target="_blank" rel="noopener noreferrer" className="group relative col-start-1 row-start-3 overflow-hidden rounded-[var(--radius-card)] bg-espresso">
-              <Image src="/photos/ceremony-trading-floor-2.webp" alt="" fill sizes="(min-width:1024px) 640px, 50vw" className="object-cover opacity-70 transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />
+              <Image src="/photos/ceremony-trading-floor-2.webp" alt="" fill sizes="(min-width:1024px) 640px, 50vw" className="object-cover object-[center_30%] opacity-70 transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />
               <span className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/40 to-transparent" />
               <span className="absolute left-4 top-4 rounded-full bg-brand-gold px-3 py-1 text-xs font-medium text-espresso">BVMAC TV</span>
               <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 lg:p-7">

@@ -33,7 +33,7 @@ export function NewsMosaicTile({ item: raw, locale, tall = false, className }: {
   const item = localizeNews(raw, locale);
   return (
     <article className={cn("group relative overflow-hidden rounded-[var(--radius-card)] bg-espresso", className)}>
-      <Image src={item.image} alt="" fill sizes="(min-width:1024px) 640px, 50vw" className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />
+      <Image src={item.image} alt="" fill sizes="(min-width:1024px) 640px, 50vw" className="object-cover object-[center_30%] transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />
       <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/40 to-transparent" />
       <span className="absolute left-4 top-4 rounded-full bg-surface/90 px-3 py-1 text-xs font-medium text-heading backdrop-blur">{item.category}</span>
       <div className="absolute inset-x-0 bottom-0 p-5 lg:p-7">
