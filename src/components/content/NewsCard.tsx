@@ -28,6 +28,27 @@ export function NewsCard({ item: raw, locale, large = false }: { item: NewsItem;
   );
 }
 
+// Larger photo tile for the staggered news mosaic on tablets and desktops.
+export function NewsMosaicTile({ item: raw, locale, tall = false, className }: { item: NewsItem; locale: Locale; tall?: boolean; className?: string }) {
+  const item = localizeNews(raw, locale);
+  return (
+    <article className={cn("group relative overflow-hidden rounded-[var(--radius-card)] bg-espresso", className)}>
+      <Image src={item.image} alt="" fill sizes="(min-width:1024px) 640px, 50vw" className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />
+      <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/40 to-transparent" />
+      <span className="absolute left-4 top-4 rounded-full bg-surface/90 px-3 py-1 text-xs font-medium text-heading backdrop-blur">{item.category}</span>
+      <div className="absolute inset-x-0 bottom-0 p-5 lg:p-7">
+        <time dateTime={item.date} className="text-xs text-brand-sand/75">{formatDate(item.date, locale, "short")}</time>
+        <h3 className={cn("mt-1.5 max-w-xl font-serif-display leading-tight text-brand-ivory", tall ? "line-clamp-3 text-2xl lg:text-[1.75rem]" : "line-clamp-2 text-lg lg:text-xl")}>
+          <Link href={localePath(locale, `/actualites/${item.slug}`)} className="after:absolute after:inset-0">
+            {item.title}
+          </Link>
+        </h3>
+        {tall && <p className="mt-2 line-clamp-2 max-w-lg text-sm text-brand-sand/75">{item.excerpt}</p>}
+      </div>
+    </article>
+  );
+}
+
 // Photo tile with the headline over the image, for compact mobile bento layouts.
 export function NewsTile({ item: raw, locale, tall = false, className }: { item: NewsItem; locale: Locale; tall?: boolean; className?: string }) {
   const item = localizeNews(raw, locale);

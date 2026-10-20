@@ -31,8 +31,7 @@ import { AfricaCemac } from "@/components/brand/AfricaCemac";
 import { Flag } from "@/components/ui/Flag";
 import { Sparkline } from "@/components/market/Sparkline";
 import { NoticeRow } from "@/components/content/NoticeRow";
-import { NewsCard, NewsTile } from "@/components/content/NewsCard";
-import { VideoCard } from "@/components/content/VideoCard";
+import { NewsCard, NewsMosaicTile, NewsTile } from "@/components/content/NewsCard";
 import { SessionChip } from "@/components/layout/SessionChip";
 import { HeroMarketCard } from "@/components/home/HeroMarketCard";
 import { InvestArt, LearnArt, NoticesArt, RaiseArt } from "@/components/home/Illustrations";
@@ -685,19 +684,40 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </a>
           </Reveal>
         )}
-        <div className={marketNews.length >= 3 ? "hidden gap-10 sm:grid lg:grid-cols-[1.4fr_1fr]" : "grid gap-10 lg:grid-cols-[1.4fr_1fr]"}>
-          <Reveal className="h-full">{marketNews[0] && <NewsCard item={marketNews[0]} locale={locale} large />}</Reveal>
-          <Stagger className="grid gap-10 sm:grid-cols-2 lg:grid-cols-1">
-            {marketNews.slice(1, 3).map((n) => (
-              <StaggerItem key={n.slug}>
-                <NewsCard item={n} locale={locale} />
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-        <Reveal className={marketNews.length >= 3 ? "mt-14 hidden sm:block" : "mt-14"}>
-          <VideoCard title={t.tvTitle} caption={t.tvCaption} channelUrl={CONTACT.social.youtube} poster="/photos/ceremony-trading-floor-2.webp" />
-        </Reveal>
+        {marketNews.length >= 3 ? (
+          // Staggered mosaic: tall and short tiles alternate between the two columns.
+          <Reveal className="hidden grid-cols-2 gap-4 auto-rows-[170px] sm:grid lg:auto-rows-[210px] lg:gap-6">
+            <NewsMosaicTile item={marketNews[0]} locale={locale} tall className="col-start-1 row-span-2 row-start-1" />
+            <NewsMosaicTile item={marketNews[1]} locale={locale} className="col-start-2 row-start-1" />
+            <NewsMosaicTile item={marketNews[2]} locale={locale} tall className="col-start-2 row-span-2 row-start-2" />
+            <a href={CONTACT.social.youtube} target="_blank" rel="noopener noreferrer" className="group relative col-start-1 row-start-3 overflow-hidden rounded-[var(--radius-card)] bg-espresso">
+              <Image src="/photos/ceremony-trading-floor-2.webp" alt="" fill sizes="(min-width:1024px) 640px, 50vw" className="object-cover opacity-70 transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />
+              <span className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/40 to-transparent" />
+              <span className="absolute left-4 top-4 rounded-full bg-brand-gold px-3 py-1 text-xs font-medium text-espresso">BVMAC TV</span>
+              <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 lg:p-7">
+                <span className="min-w-0">
+                  <span className="block font-serif-display text-lg leading-tight text-brand-ivory lg:text-xl">{t.tvTitle}</span>
+                  <span className="mt-1 block text-xs text-brand-sand/70">{t.tvCaption}</span>
+                </span>
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-gold text-espresso transition-transform duration-300 group-hover:scale-110">
+                  <Play aria-hidden="true" className="size-5 translate-x-px fill-current" />
+                </span>
+              </span>
+              <span className="sr-only">{dict.a11y.external}</span>
+            </a>
+          </Reveal>
+        ) : (
+          <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+            <Reveal className="h-full">{marketNews[0] && <NewsCard item={marketNews[0]} locale={locale} large />}</Reveal>
+            <Stagger className="grid gap-10 sm:grid-cols-2 lg:grid-cols-1">
+              {marketNews.slice(1, 3).map((n) => (
+                <StaggerItem key={n.slug}>
+                  <NewsCard item={n} locale={locale} />
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
+        )}
       </Section>
 
       {/* APP */}
