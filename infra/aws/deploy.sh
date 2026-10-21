@@ -7,12 +7,21 @@
 #   chmod 600 secrets.env                  # the script refuses a file that others can read
 #   ./deploy.sh                            # reads ./secrets.env
 #   ./deploy.sh /path/to/my-secrets.env    # or any other file (keep it outside the repository)
+#   ./deploy.sh --builds-only              # code changed, hosting did not: just rebuild and publish
 #
 # A variable already exported in your shell wins over the file.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-FILE="${1:-${SECRETS_FILE:-$HERE/secrets.env}}"
+BUILDS_ONLY=0
+FILE="${SECRETS_FILE:-$HERE/secrets.env}"
+for arg in "$@"; do
+  case "$arg" in
+    --builds-only) BUILDS_ONLY=1 ;;   # skip the AWS setup, only rebuild and publish the current code
+    -*) echo "Unknown option $arg" >&2; exit 1 ;;
+    *) FILE="$arg" ;;
+  esac
+done
 
 KEYS=(BUDGET_EMAIL MONTHLY_BUDGET_USD GITHUB_TOKEN WEB_REPO APP_REPO WEB_BRANCH APP_BRANCH
       PREVIEW_USERNAME PREVIEW_PASSWORD WEB_DOMAIN APP_DOMAIN SITE_URL
@@ -46,47 +55,63 @@ REGION="${AWS_REGION:-eu-west-3}"
 WEB_BRANCH="${WEB_BRANCH:-main}"
 APP_BRANCH="${APP_BRANCH:-master}"
 
-aws cloudformation deploy \
-  --region "$REGION" \
-  --stack-name "$STACK" \
-  --template-file "$HERE/amplify.yaml" \
-  --no-fail-on-empty-changeset \
-  --parameter-overrides \
-    "BudgetEmail=$BUDGET_EMAIL" \
-    "MonthlyBudgetUsd=${MONTHLY_BUDGET_USD:-10}" \
-    "GitHubAccessToken=${GITHUB_TOKEN:-}" \
-    "WebBranch=$WEB_BRANCH" \
-    "AppBranch=$APP_BRANCH" \
-    ${WEB_REPO:+"WebRepository=$WEB_REPO"} \
-    ${APP_REPO:+"AppRepository=$APP_REPO"} \
-    "PreviewUsername=${PREVIEW_USERNAME:-}" \
-    "PreviewPassword=${PREVIEW_PASSWORD:-}" \
-    "WebDomain=${WEB_DOMAIN:-}" \
-    "AppDomain=${APP_DOMAIN:-}" \
-    "SiteUrl=${SITE_URL:-}" \
-    "SupabaseUrl=${SUPABASE_URL:-}" \
-    "SupabasePublishableKey=${SUPABASE_PUBLISHABLE_KEY:-}" \
-    "SupabaseSecretKey=${SUPABASE_SECRET_KEY:-}" \
-    "GroqApiKey=${GROQ_API_KEY:-}"
+if [[ "$BUILDS_ONLY" == "0" ]]; then
+  aws cloudformation deploy \
+    --region "$REGION" \
+    --stack-name "$STACK" \
+    --template-file "$HERE/amplify.yaml" \
+    --no-fail-on-empty-changeset \
+    --parameter-overrides \
+      "BudgetEmail=$BUDGET_EMAIL" \
+      "MonthlyBudgetUsd=${MONTHLY_BUDGET_USD:-10}" \
+      "GitHubAccessToken=${GITHUB_TOKEN:-}" \
+      "WebBranch=$WEB_BRANCH" \
+      "AppBranch=$APP_BRANCH" \
+      ${WEB_REPO:+"WebRepository=$WEB_REPO"} \
+      ${APP_REPO:+"AppRepository=$APP_REPO"} \
+      "PreviewUsername=${PREVIEW_USERNAME:-}" \
+      "PreviewPassword=${PREVIEW_PASSWORD:-}" \
+      "WebDomain=${WEB_DOMAIN:-}" \
+      "AppDomain=${APP_DOMAIN:-}" \
+      "SiteUrl=${SITE_URL:-}" \
+      "SupabaseUrl=${SUPABASE_URL:-}" \
+      "SupabasePublishableKey=${SUPABASE_PUBLISHABLE_KEY:-}" \
+      "SupabaseSecretKey=${SUPABASE_SECRET_KEY:-}" \
+      "GroqApiKey=${GROQ_API_KEY:-}"
 
-echo
-aws cloudformation describe-stacks --region "$REGION" --stack-name "$STACK" \
-  --query 'Stacks[0].Outputs[].[OutputKey,OutputValue]' --output table
+  echo
+  aws cloudformation describe-stacks --region "$REGION" --stack-name "$STACK" \
+    --query 'Stacks[0].Outputs[].[OutputKey,OutputValue]' --output table
+fi
 
-# With a GitHub token the apps can already read the repositories, so start the first build of each
-# app now instead of waiting for the next push.
-if [[ -n "${GITHUB_TOKEN:-}" ]]; then
-  out() { aws cloudformation describe-stacks --region "$REGION" --stack-name "$STACK" \
-    --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" --output text; }
-  start() {
-    echo "Starting build: app $1, branch $2"
-    aws amplify start-job --region "$REGION" --app-id "$1" --branch-name "$2" --job-type RELEASE \
-      --query 'jobSummary.[jobId,status]' --output text \
-      || echo "  could not start (does branch '$2' exist on GitHub?)"
-  }
-  start "$(out WebAppId)" "$WEB_BRANCH"
-  start "$(out AppWebAppId)" "$APP_BRANCH"
-  echo "Follow the builds in the Amplify console: $(out Console)"
+out() { aws cloudformation describe-stacks --region "$REGION" --stack-name "$STACK" \
+  --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" --output text; }
+
+# Builds an app's branch and waits until it is published, then prints the address.
+publish() {   # name appId branch domain
+  local name="$1" id="$2" branch="$3" domain="$4" job status
+  echo
+  echo "== $name: building branch '$branch' =="
+  job="$(aws amplify start-job --region "$REGION" --app-id "$id" --branch-name "$branch" --job-type RELEASE \
+    --query 'jobSummary.jobId' --output text 2>&1)" || { echo "  could not start the build: $job"; echo "  (does branch '$branch' exist on GitHub, and is the repository connected in Amplify?)"; return 1; }
+  while :; do
+    status="$(aws amplify get-job --region "$REGION" --app-id "$id" --branch-name "$branch" --job-id "$job" --query 'job.summary.status' --output text)"
+    case "$status" in
+      SUCCEED) echo "  $name is live:  https://${branch//\//-}.${domain}"; return 0 ;;
+      FAILED|CANCELLED) echo "  build $status. Open the build log: https://${REGION}.console.aws.amazon.com/amplify/apps/${id}/branches/${branch//\//%2F}/deployments/${job}"; return 1 ;;
+      *) printf '  %s...\r' "$status"; sleep 15 ;;
+    esac
+  done
+}
+
+if [[ -n "${GITHUB_TOKEN:-}" || "$BUILDS_ONLY" == "1" ]]; then
+  fail=0
+  publish "website" "$(out WebAppId)" "$WEB_BRANCH" "$(out WebDefaultDomain)" || fail=1
+  publish "app (web version)" "$(out AppWebAppId)" "$APP_BRANCH" "$(out AppWebDefaultDomain)" || fail=1
+  echo
+  [[ -n "${PREVIEW_USERNAME:-}" ]] && echo "Both addresses ask for the preview login (user: $PREVIEW_USERNAME, password: PREVIEW_PASSWORD in $FILE)."
+  [[ -n "${WEB_DOMAIN:-}" ]] && echo "Custom domain: add the DNS records shown in the Amplify console (Hosting > Custom domains)."
+  exit $fail
 else
   echo "No GITHUB_TOKEN: connect each repository in the Amplify console, then push to start the first build."
 fi

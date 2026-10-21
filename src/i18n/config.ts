@@ -4,7 +4,7 @@ export const defaultLocale: Locale = "fr";
 
 // Languages whose pages are built ahead of time. The others render the first time they are opened,
 // which keeps the deployed build small (hosting limits the size of the build output).
-export const prebuiltLocales: readonly Locale[] = [defaultLocale];
+export const prebuiltLocales: readonly Locale[] = [defaultLocale, "en"];
 
 export function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && (locales as readonly string[]).includes(value);
