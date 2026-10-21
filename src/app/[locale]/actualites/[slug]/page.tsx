@@ -17,7 +17,7 @@ import { ParallaxImage } from "@/components/motion/Parallax";
 
 
 // Only the newest articles are built ahead of time; older ones from the archive render on first visit.
-const PREBUILT = 12;
+const PREBUILT = 4;
 
 export function generateStaticParams() {
   const recent = [...NEWS].sort((a, b) => b.date.localeCompare(a.date)).slice(0, PREBUILT);

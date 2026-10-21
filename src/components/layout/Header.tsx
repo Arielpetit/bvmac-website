@@ -32,7 +32,7 @@ function useActiveGroup() {
   );
 }
 
-export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
+export function Header() {
   const { locale, dict } = useI18n();
   const pathname = usePathname();
   const isActive = useActiveGroup();
@@ -40,6 +40,7 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
   const [open, setOpen] = useState<string | null>(null);
   const [drawer, setDrawer] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchIndex, setSearchIndex] = useState<SearchEntry[]>([]);
   const [scrolled, setScrolled] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { scrollY } = useScroll();
@@ -52,6 +53,17 @@ export function Header({ searchIndex }: { searchIndex: SearchEntry[] }) {
     setOpen(null);
     setDrawer(false);
   }
+
+  // The index is a separate file: fetched once, the first time the search box opens.
+  useEffect(() => {
+    if (!searchOpen || searchIndex.length) return;
+    let cancelled = false;
+    fetch(`/${locale}/search-index`)
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data: SearchEntry[]) => { if (!cancelled) setSearchIndex(data); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [searchOpen, searchIndex.length, locale]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

@@ -18,7 +18,7 @@ import { tc } from "@/i18n/content";
 
 
 // Only the newest notices are built ahead of time; older ones from the archive render on first visit.
-const PREBUILT = 30;
+const PREBUILT = 8;
 
 export function generateStaticParams() {
   const recent = [...NOTICES].sort((a, b) => b.date.localeCompare(a.date)).slice(0, PREBUILT);

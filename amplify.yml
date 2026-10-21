@@ -13,6 +13,8 @@ frontend:
       commands:
         - env | grep -E '^(NEXT_PUBLIC_|SUPABASE_|GROQ_|SITE_URL|GATE_)' >> .env.production || true
         - npm run build
+        # Amplify refuses a build output above 220 MiB. The build cache is not needed to serve the site.
+        - rm -rf .next/cache
   artifacts:
     baseDirectory: .next
     files:
@@ -20,4 +22,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - .next/cache/**/*

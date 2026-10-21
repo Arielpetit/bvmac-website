@@ -4,7 +4,6 @@ import "../globals.css";
 import { locales } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/provider";
 import { resolveLocale } from "@/lib/i18n-server";
-import { buildSearchIndex } from "@/lib/search-index";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ConsentProvider } from "@/components/layout/ConsentProvider";
@@ -80,7 +79,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[lo
               </a>
               <ScrollProgress />
               <NavigationProgress />
-              <Header searchIndex={buildSearchIndex(dict)} />
+              <Header />
               <main id="contenu" tabIndex={-1} className="flex-1 outline-none">
                 {children}
               </main>
