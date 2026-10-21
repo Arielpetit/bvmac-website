@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import { locales } from "@/i18n/config";
+import { locales, prebuiltLocales } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/provider";
 import { resolveLocale } from "@/lib/i18n-server";
 import { Header } from "@/components/layout/Header";
@@ -23,7 +23,7 @@ const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist",
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return prebuiltLocales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {

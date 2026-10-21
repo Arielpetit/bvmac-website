@@ -9,7 +9,7 @@ import { localePath } from "@/lib/paths";
 import { formatDate } from "@/lib/format";
 import { getNews } from "@/lib/api";
 import { NEWS } from "@/data/content";
-import { locales } from "@/i18n/config";
+import { prebuiltLocales } from "@/i18n/config";
 import { NewsCard } from "@/components/content/NewsCard";
 import { ShareButtons } from "@/components/content/ShareButtons";
 import { Reveal } from "@/components/motion/Reveal";
@@ -21,7 +21,7 @@ const PREBUILT = 4;
 
 export function generateStaticParams() {
   const recent = [...NEWS].sort((a, b) => b.date.localeCompare(a.date)).slice(0, PREBUILT);
-  return locales.flatMap((locale) => recent.map((n) => ({ locale, slug: n.slug })));
+  return prebuiltLocales.flatMap((locale) => recent.map((n) => ({ locale, slug: n.slug })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/actualites/[slug]">): Promise<Metadata> {

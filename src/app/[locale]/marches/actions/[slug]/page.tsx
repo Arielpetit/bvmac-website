@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import { resolveLocale } from "@/lib/i18n-server";
 import { getEquity, getNotices, getPriceHistory } from "@/lib/api";
 import { EQUITIES } from "@/data/market";
-import { locales } from "@/i18n/config";
+import { prebuiltLocales } from "@/i18n/config";
 import { SecurityProfile } from "@/components/market/SecurityProfile";
 
 // Every variant is prerendered from generateStaticParams.
 
 export function generateStaticParams() {
-  return locales.flatMap((locale) => EQUITIES.map((e) => ({ locale, slug: e.slug })));
+  return prebuiltLocales.flatMap((locale) => EQUITIES.map((e) => ({ locale, slug: e.slug })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/marches/actions/[slug]">): Promise<Metadata> {

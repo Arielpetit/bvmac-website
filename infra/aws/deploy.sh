@@ -88,11 +88,5 @@ if [[ -n "${GITHUB_TOKEN:-}" ]]; then
   start "$(out AppWebAppId)" "$APP_BRANCH"
   echo "Follow the builds in the Amplify console: $(out Console)"
 else
-  cat <<MSG
-
-Done. The apps exist, nothing has been built yet. Next, in the Amplify console ($(aws cloudformation describe-stacks --region "$REGION" --stack-name "$STACK" --query "Stacks[0].Outputs[?OutputKey=='Console'].OutputValue" --output text)):
-  1. Open each app (bvmac-website, bvmac-app-web).
-  2. Click "Start migration" (or "Connect repository") and authorise the AWS Amplify GitHub App on the repository.
-  3. Open the branch ($WEB_BRANCH for the website, $APP_BRANCH for the app) and click "Redeploy this version", or push a commit.
-MSG
+  echo "No GITHUB_TOKEN: connect each repository in the Amplify console, then push to start the first build."
 fi

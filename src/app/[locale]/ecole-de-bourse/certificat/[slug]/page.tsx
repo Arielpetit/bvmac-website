@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { resolveLocale } from "@/lib/i18n-server";
 import { PATHS, schoolContent } from "@/data/school";
-import { locales } from "@/i18n/config";
+import { prebuiltLocales } from "@/i18n/config";
 import { ContentPage } from "@/components/content/ContentPage";
 import { Certificate } from "@/components/school/Certificate";
 
 
 export function generateStaticParams() {
-  return locales.flatMap((locale) => PATHS.map((p) => ({ locale, slug: p.slug })));
+  return prebuiltLocales.flatMap((locale) => PATHS.map((p) => ({ locale, slug: p.slug })));
 }
 
 export const metadata: Metadata = { title: "Certificat", robots: { index: false } };

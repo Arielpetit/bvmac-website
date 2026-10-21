@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Clock, Lightbulb } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { localePath } from "@/lib/paths";
 import { LESSONS, schoolContent } from "@/data/school";
-import { locales } from "@/i18n/config";
+import { prebuiltLocales } from "@/i18n/config";
 import { ContentPage } from "@/components/content/ContentPage";
 import { LessonQuiz } from "@/components/school/LessonQuiz";
 import { LessonDiagram } from "@/components/school/LessonDiagram";
@@ -21,7 +21,7 @@ const L = {
 };
 
 export function generateStaticParams() {
-  return locales.flatMap((locale) => LESSONS.map((l) => ({ locale, slug: l.slug })));
+  return prebuiltLocales.flatMap((locale) => LESSONS.map((l) => ({ locale, slug: l.slug })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/ecole-de-bourse/lecon/[slug]">): Promise<Metadata> {

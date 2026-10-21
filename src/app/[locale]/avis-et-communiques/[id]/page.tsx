@@ -9,7 +9,7 @@ import { getNotice, getNotices } from "@/lib/api";
 import { NOTICES, NOTICE_TYPES } from "@/data/content";
 import { EQUITIES } from "@/data/market";
 import { COUNTRIES } from "@/lib/navigation";
-import { locales } from "@/i18n/config";
+import { prebuiltLocales } from "@/i18n/config";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { NoticeRow, NoticeTypeTag } from "@/components/content/NoticeRow";
 import { SubscribeForm } from "@/components/content/SubscribeForm";
@@ -22,7 +22,7 @@ const PREBUILT = 8;
 
 export function generateStaticParams() {
   const recent = [...NOTICES].sort((a, b) => b.date.localeCompare(a.date)).slice(0, PREBUILT);
-  return locales.flatMap((locale) => recent.map((n) => ({ locale, id: n.id })));
+  return prebuiltLocales.flatMap((locale) => recent.map((n) => ({ locale, id: n.id })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/avis-et-communiques/[id]">): Promise<Metadata> {
