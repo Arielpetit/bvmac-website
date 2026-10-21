@@ -34,10 +34,11 @@ attached and its DNS zone is in the same AWS account, `route53:ChangeResourceRec
    file outside the repository: `./deploy.sh ~/secrets/bvmac.env`. A variable already exported in your shell
    wins over the file.
 3. Run `./deploy.sh`. It prints the Amplify addresses when it finishes.
-4. **GitHub.** With `GITHUB_TOKEN` in the file (fine-grained, read-only, the two repositories only: Contents and
-   Webhooks), the script connects both apps to the branches named by `WEB_BRANCH` and `APP_BRANCH` and starts the
-   first builds. The branches must already exist on GitHub. Without a token, open each app in the Amplify console
-   and connect the repository with the AWS Amplify GitHub App (an organisation owner must approve it).
+4. **GitHub (you, in the console).** With no `GITHUB_TOKEN` (the default), the script only creates the apps and starts
+   no build. In the Amplify console, open each app, click "Start migration" (or "Connect repository"), and authorise
+   the AWS Amplify GitHub App on the repository (an organisation owner may have to approve it). Then open the branch
+   and click "Redeploy this version", or push a commit. Optional: put a read-only `GITHUB_TOKEN` in the file and the
+   script connects GitHub and starts the first builds itself. The branches must already exist on GitHub.
 5. **DNS (once).** If you set `WEB_DOMAIN` or `APP_DOMAIN`, Amplify shows the records to add. If the zone is in
    Route 53 in the same account, they are added for you.
 6. Push to the branch. Amplify builds and deploys each push.
