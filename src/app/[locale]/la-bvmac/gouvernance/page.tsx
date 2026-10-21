@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, FileText, Network, UserRound } from "lucide-react";
+import { ArrowUpRight, FileText, Network } from "lucide-react";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
 import { localePath } from "@/lib/paths";
@@ -107,10 +107,30 @@ const DL = {
   es: { code: "Descargar el código (PDF)", brochure: "Folleto de presentación (PDF, francés)" },
 };
 
+type Member = { name: string; role: string; entity: string; photo?: string };
+
+// Portrait photo, or the member's initials when no photo was provided.
+function Portrait({ m, sizes, className }: { m: Member; sizes: string; className: string }) {
+  const initials = m.name.split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join("");
+  return (
+    <div className={`relative overflow-hidden bg-surface-alt ${className}`}>
+      {m.photo ? (
+        <Image src={m.photo} alt="" fill sizes={sizes} unoptimized={m.photo.startsWith("http")} className="object-cover object-top" />
+      ) : (
+        <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center font-serif-display text-4xl text-accent-text">{initials}</span>
+      )}
+    </div>
+  );
+}
+
 export default async function GovernancePage({ params }: PageProps<"/[locale]/la-bvmac/gouvernance">) {
   const { locale, dict } = await resolveLocale(params);
   const t = T[locale];
-  const board = (await getBoard()).map((m) => ({ ...m, name: m.name.replace(/^Administrateur (\d+)$/, `${t.director} $1`), role: tc(m.role, locale), entity: tc(m.entity, locale) }));
+  const board = (await getBoard()).map((m) => ({ ...m, role: tc(m.role, locale), entity: tc(m.entity, locale) }));
+  // The chairman leads the board; everyone else follows in the published order.
+  const chairIndex = board.findIndex((m) => m.role === t.pca.role || /^(Président|Chairman|Presidente)/.test(m.role));
+  const chair = chairIndex >= 0 ? board[chairIndex] : undefined;
+  const members = board.filter((_, i) => i !== chairIndex);
   const p = (path: string) => localePath(locale, path);
   const messages = [
     { href: p("/la-bvmac/gouvernance/message-du-pca"), role: t.pca.role, title: t.pca.title, photo: "/photos/governance-officials.webp" },
@@ -144,15 +164,28 @@ export default async function GovernancePage({ params }: PageProps<"/[locale]/la
               content: (
                 <div>
                   <p className="max-w-2xl text-muted">{t.boardText}</p>
-                  <Stagger className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
-                    {board.map((m) => (
-                      <StaggerItem key={m.name} className="rounded-[var(--radius-card)] border border-line bg-surface p-4 text-center sm:p-5">
-                        <div className="mx-auto flex size-12 items-center sm:size-16 justify-center rounded-full bg-gradient-to-br from-accent-soft to-surface-alt">
-                          <UserRound aria-hidden="true" className="size-7 text-accent-text" strokeWidth={1.3} />
+                  {chair && (
+                    <div className="mt-8 grid overflow-hidden rounded-[var(--radius-panel)] bg-espresso-3 text-brand-sand sm:grid-cols-[minmax(0,240px)_1fr] md:grid-cols-[minmax(0,300px)_1fr]">
+                      <Portrait m={chair} sizes="(min-width: 768px) 300px, (min-width: 640px) 240px, 100vw" className="aspect-[4/3] sm:aspect-auto sm:h-full sm:min-h-[260px]" />
+                      <div className="flex flex-col justify-center p-6 sm:p-8 md:p-10">
+                        <p className="eyebrow text-brand-gold-light!">{chair.role}</p>
+                        <p className="font-serif-display mt-3 text-3xl leading-tight text-brand-ivory md:text-4xl">{chair.name}</p>
+                        <Link href={messages[0].href} className="mt-6 inline-flex w-fit items-center gap-2 text-sm font-medium text-brand-gold-light hover:text-brand-ivory">
+                          {t.pca.title}
+                          <ArrowUpRight aria-hidden="true" className="size-4" />
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                  <Stagger as="ul" className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+                    {members.map((m) => (
+                      <StaggerItem as="li" key={m.name} className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface">
+                        <Portrait m={m} sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-[4/5] lg:aspect-square" />
+                        <div className="p-3 sm:p-4">
+                          <p className="font-medium leading-snug text-heading">{m.name}</p>
+                          <p className="mt-1 text-xs text-accent-text">{m.role}</p>
+                          <p className="mt-0.5 text-xs leading-snug text-muted">{m.entity}</p>
                         </div>
-                        <p className="mt-4 font-medium text-heading">{m.name}</p>
-                        <p className="mt-1 text-xs text-accent-text">{m.role}</p>
-                        <p className="mt-1 text-xs text-muted">{m.entity}</p>
                       </StaggerItem>
                     ))}
                   </Stagger>

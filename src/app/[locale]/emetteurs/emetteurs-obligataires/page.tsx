@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Landmark } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import { resolveLocale } from "@/lib/i18n-server";
 import { pageTitle } from "@/lib/page-helpers";
@@ -9,13 +9,19 @@ import { localePath } from "@/lib/paths";
 import { ContentPage } from "@/components/content/ContentPage";
 import { Flag } from "@/components/ui/Flag";
 import { Reveal } from "@/components/motion/Reveal";
+import { CountUp } from "@/components/motion/CountUp";
+import { StackTable } from "@/components/ui/StackTable";
+import { COUNTRIES } from "@/lib/navigation";
 
 type L3 = Record<Locale, string>;
 type Issuer = {
   id: string;
   bondIssuer: string;
+  // Other names the same issuer has in the bond data (e.g. its market code).
+  aliases?: string[];
   name: string;
   country: "CG" | "CM" | "GA" | "TD";
+  kind: "institution" | "bank" | "state";
   text: L3[];
   rows?: [string, string, string, string][];
 };
@@ -24,6 +30,7 @@ type Issuer = {
 const ISSUERS: Issuer[] = [
   {
     id: "snpc",
+    kind: "institution",
     bondIssuer: "SNPC",
     name: "SNPC",
     country: "CG",
@@ -42,6 +49,7 @@ const ISSUERS: Issuer[] = [
   },
   {
     id: "acep",
+    kind: "institution",
     bondIssuer: "ACEP Cameroun",
     name: "ACEP Cameroun",
     country: "CM",
@@ -60,7 +68,9 @@ const ISSUERS: Issuer[] = [
   },
   {
     id: "alios",
+    kind: "institution",
     bondIssuer: "Alios Finance Cameroun",
+    aliases: ["AFCMR"],
     name: "Alios Finance Cameroun",
     country: "CM",
     text: [
@@ -78,6 +88,7 @@ const ISSUERS: Issuer[] = [
   },
   {
     id: "bdeac",
+    kind: "bank",
     bondIssuer: "BDEAC",
     name: "BDEAC",
     country: "CG",
@@ -94,13 +105,29 @@ const ISSUERS: Issuer[] = [
       },
     ],
     rows: [
-      ["BDEAC 5,48 % NET 2020-2027", "2021-02-03", "100 000 000 000", "106 791 920 000"],
-      ["BDEAC 5,60 % NET 2021-2028", "2022-03-11", "100 000 000 000", "114 873 410 000"],
-      ["BDEAC 6,00 % NET 2022-2029", "2023-02-15", "78 000 000 000", "110 856 330 000"],
+      [
+        "BDEAC 5,48 % NET 2020-2027",
+        "2021-02-03",
+        "100 000 000 000",
+        "106 791 920 000",
+      ],
+      [
+        "BDEAC 5,60 % NET 2021-2028",
+        "2022-03-11",
+        "100 000 000 000",
+        "114 873 410 000",
+      ],
+      [
+        "BDEAC 6,00 % NET 2022-2029",
+        "2023-02-15",
+        "78 000 000 000",
+        "110 856 330 000",
+      ],
     ],
   },
   {
     id: "cameroun",
+    kind: "state",
     bondIssuer: "État du Cameroun",
     name: "État du Cameroun",
     country: "CM",
@@ -114,6 +141,7 @@ const ISSUERS: Issuer[] = [
   },
   {
     id: "gabon",
+    kind: "state",
     bondIssuer: "État du Gabon",
     name: "État du Gabon",
     country: "GA",
@@ -127,6 +155,7 @@ const ISSUERS: Issuer[] = [
   },
   {
     id: "tchad",
+    kind: "state",
     bondIssuer: "État du Tchad",
     name: "État du Tchad",
     country: "TD",
@@ -142,7 +171,22 @@ const ISSUERS: Issuer[] = [
 
 const T = {
   fr: {
-    intro: "Les émetteurs dont les obligations sont cotées à la BVMAC : établissements, banques de développement et États de la sous-région.",
+    issuersLabel: "Émetteurs",
+    linesLabel: "Lignes cotées",
+    countriesLabel: "Pays",
+    kinds: {
+      institution: "Société",
+      bank: "Banque de développement",
+      state: "État",
+    },
+    lineWord: "ligne",
+    linesWord: "lignes",
+    about: "Présentation",
+    listedLines: "Lignes cotées",
+    maturityLabel: "Échéance",
+    seeLine: "Voir sur le marché des obligations",
+    intro:
+      "Les émetteurs dont les obligations sont cotées à la BVMAC : établissements, banques de développement et États de la sous-région.",
     lines: "Lignes cotées",
     line: "Ligne",
     isin: "Code ISIN",
@@ -157,7 +201,18 @@ const T = {
     table: "Emprunts obligataires de la BDEAC",
   },
   en: {
-    intro: "Issuers whose bonds are listed on the BVMAC: institutions, development banks and States of the region.",
+    issuersLabel: "Issuers",
+    linesLabel: "Listed lines",
+    countriesLabel: "Countries",
+    kinds: { institution: "Company", bank: "Development bank", state: "State" },
+    lineWord: "line",
+    linesWord: "lines",
+    about: "About",
+    listedLines: "Listed lines",
+    maturityLabel: "Maturity",
+    seeLine: "See on the bond market",
+    intro:
+      "Issuers whose bonds are listed on the BVMAC: institutions, development banks and States of the region.",
     lines: "Listed lines",
     line: "Line",
     isin: "ISIN code",
@@ -172,7 +227,22 @@ const T = {
     table: "BDEAC bond loans",
   },
   es: {
-    intro: "Emisores cuyas obligaciones cotizan en la BVMAC: instituciones, bancos de desarrollo y Estados de la subregión.",
+    issuersLabel: "Emisores",
+    linesLabel: "Líneas admitidas",
+    countriesLabel: "Países",
+    kinds: {
+      institution: "Sociedad",
+      bank: "Banco de desarrollo",
+      state: "Estado",
+    },
+    lineWord: "línea",
+    linesWord: "líneas",
+    about: "Presentación",
+    listedLines: "Líneas admitidas",
+    maturityLabel: "Vencimiento",
+    seeLine: "Ver en el mercado de obligaciones",
+    intro:
+      "Emisores cuyas obligaciones cotizan en la BVMAC: instituciones, bancos de desarrollo y Estados de la subregión.",
     lines: "Líneas admitidas",
     line: "Línea",
     isin: "Código ISIN",
@@ -188,98 +258,233 @@ const T = {
   },
 };
 
-export async function generateMetadata({ params }: PageProps<"/[locale]/emetteurs/emetteurs-obligataires">): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]/emetteurs/emetteurs-obligataires">): Promise<Metadata> {
   return pageTitle(params, (d) => d.nav.items.bondIssuers);
 }
 
-export default async function BondIssuersPage({ params }: PageProps<"/[locale]/emetteurs/emetteurs-obligataires">) {
+export default async function BondIssuersPage({
+  params,
+}: PageProps<"/[locale]/emetteurs/emetteurs-obligataires">) {
   const { locale, dict } = await resolveLocale(params);
   const t = T[locale];
   const bonds = await getBonds();
-  const dateFmt = new Intl.DateTimeFormat({ fr: "fr-FR", en: "en-GB", es: "es-ES" }[locale], { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+  const dateFmt = new Intl.DateTimeFormat(
+    { fr: "fr-FR", en: "en-GB", es: "es-ES" }[locale],
+    { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" },
+  );
+  const linesOf = (i: Issuer) =>
+    bonds.filter(
+      (b) => b.issuer === i.bondIssuer || i.aliases?.includes(b.issuer),
+    );
+  const countryName = (code: Issuer["country"]) =>
+    COUNTRIES.find((c) => c.code === code)?.[locale] ?? code;
+  const totalLines = ISSUERS.reduce((n, i) => n + linesOf(i).length, 0);
+  const countries = new Set(ISSUERS.map((i) => i.country)).size;
+  const initials = (i: Issuer) =>
+    i.name
+      .replace(/^État du /, "")
+      .slice(0, 2)
+      .toUpperCase();
 
   return (
-    <ContentPage locale={locale} dict={dict} title={dict.nav.items.bondIssuers} intro={t.intro}>
-      <nav aria-label={t.jump} className="mb-10 flex flex-wrap gap-2">
-        {ISSUERS.map((i) => (
-          <a key={i.id} href={`#${i.id}`} className="inline-flex h-10 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm hover:border-line-strong">
-            <Flag code={i.country} />
-            {i.name}
-          </a>
-        ))}
-      </nav>
+    <ContentPage
+      locale={locale}
+      dict={dict}
+      title={dict.nav.items.bondIssuers}
+      intro={t.intro}
+    >
+      <div className="grid gap-12 md:gap-16">
+        {/* Figures and issuer navigator share one grid: the summary tile fills the 8th slot */}
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="flex h-full flex-col justify-center rounded-[var(--radius-card)] bg-espresso-3 p-3 text-brand-sand sm:p-4">
+            <p className="flex flex-wrap items-baseline gap-x-2">
+              <span className="font-serif-display text-3xl leading-none text-brand-ivory sm:text-4xl">
+                <CountUp value={totalLines} />
+              </span>
+              <span className="text-sm text-brand-sand/80">{t.linesLabel}</span>
+            </p>
+            <p className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-brand-sand/70">
+              <span>
+                <span className="font-medium text-brand-gold-light">
+                  {ISSUERS.length}
+                </span>{" "}
+                {t.issuersLabel.toLowerCase()}
+              </span>
+              <span>
+                <span className="font-medium text-brand-gold-light">
+                  {countries}
+                </span>{" "}
+                {t.countriesLabel.toLowerCase()}
+              </span>
+            </p>
+          </div>
 
-      <div className="grid gap-6">
-        {ISSUERS.map((i) => {
-          const lines = bonds.filter((b) => b.issuer === i.bondIssuer);
-          return (
-            <Reveal key={i.id}>
-              <section id={i.id} aria-labelledby={`${i.id}-t`} className="scroll-mt-28 rounded-[var(--radius-card)] border border-line bg-surface p-5 sm:p-7">
-                <div className="flex items-center gap-3">
-                  <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-accent-soft font-serif-display text-lg text-accent-text" aria-hidden="true">
-                    {i.name.replace(/^État du /, "").slice(0, 2).toUpperCase()}
-                  </span>
-                  <h2 id={`${i.id}-t`} className="text-h2 !text-[clamp(1.5rem,2.6vw,2rem)]">
-                    {i.name}
-                  </h2>
-                  <Flag code={i.country} className="ml-auto h-3.5 w-5" />
-                </div>
-                <div className="mt-5 grid max-w-3xl gap-3 text-muted">
-                  {i.text.map((p, k) => (
-                    <p key={k} lang={locale}>{p[locale]}</p>
-                  ))}
-                </div>
+          <nav aria-label={t.jump} className="contents">
+            <ul className="contents">
+              {ISSUERS.map((i) => {
+                const n = linesOf(i).length;
+                return (
+                  <li key={i.id}>
+                    <a
+                      href={`#${i.id}`}
+                      className="card-lift group flex h-full items-center gap-2.5 rounded-[var(--radius-card)] border border-line bg-surface p-3 sm:gap-3 sm:p-4"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft font-serif-display text-base text-accent-text transition-colors group-hover:bg-action group-hover:text-action-text sm:size-11 sm:text-lg"
+                      >
+                        {initials(i)}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-sm font-medium leading-snug text-heading sm:text-base">
+                          {i.name}
+                        </span>
+                        <span className="mt-0.5 flex items-center gap-1.5 text-xs text-muted">
+                          <Flag code={i.country} className="h-2.5 w-[15px]" />
+                          {n} {n === 1 ? t.lineWord : t.linesWord}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </div>
 
-                {i.rows && (
-                  <div className="mt-6 overflow-x-auto rounded-2xl border border-line" data-lenis-prevent>
-                    <table className="w-full min-w-[560px] text-sm">
-                      <caption className="sr-only">{t.table}</caption>
-                      <thead className="bg-surface-alt text-xs uppercase tracking-[0.08em] text-muted">
-                        <tr>
-                          <th scope="col" className="px-4 py-3 text-left font-medium">{t.name}</th>
-                          <th scope="col" className="px-4 py-3 text-left font-medium">{t.listed}</th>
-                          <th scope="col" className="px-4 py-3 text-right font-medium">{t.wanted}</th>
-                          <th scope="col" className="px-4 py-3 text-right font-medium">{t.raised}</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-line">
-                        {i.rows.map(([name, date, wanted, raised]) => (
-                          <tr key={name}>
-                            <th scope="row" className="px-4 py-3 text-left font-medium text-heading">{name}</th>
-                            <td className="px-4 py-3 text-muted">{dateFmt.format(new Date(`${date}T00:00:00Z`))}</td>
-                            <td className="figure px-4 py-3 text-right">{wanted}</td>
-                            <td className="figure px-4 py-3 text-right">{raised}</td>
-                          </tr>
+        {/* One panel per issuer */}
+        <div className="grid gap-8 sm:gap-10">
+          {ISSUERS.map((i) => {
+            const lines = linesOf(i);
+            return (
+              <Reveal key={i.id}>
+                <section
+                  id={i.id}
+                  aria-labelledby={`${i.id}-t`}
+                  className="scroll-mt-28 overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface sm:rounded-[var(--radius-panel)]"
+                >
+                  <header className="flex items-center gap-4 border-b border-line bg-surface-alt/50 px-5 py-5 sm:px-8 sm:py-6">
+                    <span
+                      aria-hidden="true"
+                      className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-espresso-3 font-serif-display text-lg text-brand-gold-light sm:size-14 sm:text-xl"
+                    >
+                      {initials(i)}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="eyebrow">{t.kinds[i.kind]}</p>
+                      <h2
+                        id={`${i.id}-t`}
+                        className="mt-1 font-serif-display text-[1.5rem] leading-tight text-heading sm:text-3xl"
+                      >
+                        {i.name}
+                      </h2>
+                      <span className="mt-2 inline-flex items-center gap-2 text-sm text-muted sm:hidden">
+                        <Flag code={i.country} />
+                        {countryName(i.country)}
+                      </span>
+                    </div>
+                    <span className="hidden items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-sm sm:inline-flex">
+                      <Flag code={i.country} />
+                      {countryName(i.country)}
+                    </span>
+                  </header>
+
+                  <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[1.45fr_1fr] lg:gap-12">
+                    <div>
+                      <h3 className="text-xs font-medium uppercase tracking-[0.12em] text-muted">
+                        {t.about}
+                      </h3>
+                      <div className="mt-3 grid max-w-2xl gap-3.5 leading-relaxed text-muted">
+                        {i.text.map((p, k) => (
+                          <p key={k} lang={locale}>
+                            {p[locale]}
+                          </p>
                         ))}
-                      </tbody>
-                    </table>
+                      </div>
+                    </div>
+
+                    <aside
+                      aria-label={t.listedLines}
+                      className="h-fit rounded-[var(--radius-card)] bg-surface-alt/70 p-4 sm:p-5"
+                    >
+                      <h3 className="flex items-center justify-between text-xs font-medium uppercase tracking-[0.12em] text-muted">
+                        {t.listedLines}
+                        <span className="figure rounded-full bg-accent-soft px-2.5 py-0.5 text-sm normal-case tracking-normal text-accent-text">
+                          {lines.length}
+                        </span>
+                      </h3>
+                      {lines.length ? (
+                        <ul className="mt-3 grid gap-2">
+                          {lines.map((b) => (
+                            <li
+                              key={b.isin}
+                              className="rounded-xl border border-line bg-surface px-3.5 py-3"
+                            >
+                              <span className="flex items-baseline justify-between gap-3">
+                                <span className="font-medium text-heading">
+                                  {b.name}
+                                </span>
+                                {b.maturity && (
+                                  <span className="figure shrink-0 text-xs text-muted">
+                                    {t.maturity} {b.maturity}
+                                  </span>
+                                )}
+                              </span>
+                              <span className="code mt-0.5 block text-muted">
+                                {b.isin}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="mt-3 text-sm text-muted">{t.noLines}</p>
+                      )}
+                    </aside>
                   </div>
-                )}
 
-                <h3 className="mt-6 text-xs font-medium uppercase tracking-[0.12em] text-muted">{t.lines} ({lines.length})</h3>
-                {lines.length ? (
-                  <ul className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                    {lines.map((b) => (
-                      <li key={b.isin} className="rounded-xl border border-line px-4 py-3 text-sm">
-                        <span className="block font-medium text-heading">{b.name}</span>
-                        <span className="code block text-muted">{b.isin}</span>
-                        {b.maturity && <span className="block text-xs text-muted">{t.maturity} {b.maturity}</span>}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="mt-3 text-sm text-muted">{t.noLines}</p>
-                )}
-              </section>
-            </Reveal>
-          );
-        })}
+                  {i.rows && (
+                    <div className="border-t border-line p-5 sm:p-8">
+                      <h3 className="text-xs font-medium uppercase tracking-[0.12em] text-muted">
+                        {t.table}
+                      </h3>
+                      <StackTable
+                        className="mt-4"
+                        caption={t.table}
+                        head={[t.name, t.listed, t.wanted, t.raised]}
+                        rows={i.rows.map(([name, date, wanted, raised]) => [
+                          name,
+                          dateFmt.format(new Date(`${date}T00:00:00Z`)),
+                          <span key="w" className="figure">
+                            {wanted}
+                          </span>,
+                          <span
+                            key="r"
+                            className="figure font-medium text-heading"
+                          >
+                            {raised}
+                          </span>,
+                        ])}
+                        minWidth={560}
+                      />
+                    </div>
+                  )}
+                </section>
+              </Reveal>
+            );
+          })}
+        </div>
+
+        <Link
+          href={localePath(locale, "/marches/obligations")}
+          className="link inline-flex items-center gap-1 text-sm"
+        >
+          <Landmark aria-hidden="true" className="size-4" />
+          {t.all}
+          <ArrowUpRight aria-hidden="true" className="size-4" />
+        </Link>
       </div>
-
-      <Link href={localePath(locale, "/marches/obligations")} className="link mt-8 inline-flex items-center gap-1 text-sm">
-        {t.all}
-        <ArrowUpRight aria-hidden="true" className="size-4" />
-      </Link>
     </ContentPage>
   );
 }

@@ -138,7 +138,10 @@ export async function getTimeline() {
 }
 
 export async function getBoard(): Promise<{ name: string; role: string; entity: string; photo?: string }[]> {
-  return (await fetchBoard()) ?? BOARD;
+  const saved = await fetchBoard();
+  // The admin table was seeded with "Administrateur N" stand-ins: ignore them until real members are entered.
+  const real = saved?.filter((m) => !/^Administrateur \d+$/.test(m.name));
+  return real?.length ? real : BOARD;
 }
 
 export async function getPartners() {

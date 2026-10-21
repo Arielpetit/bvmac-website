@@ -389,7 +389,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </Reveal>
 
           {/* Bonds outstanding */}
-          <Reveal delay={0.08} className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] sm:rounded-[var(--radius-panel)] bg-espresso text-brand-sand shadow-soft">
+          <Reveal delay={0.08} className="card-lift group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] sm:rounded-[var(--radius-panel)] bg-espresso-3 text-brand-sand shadow-soft">
             <span aria-hidden="true" className="grid-lines absolute inset-0 opacity-70" />
             <span aria-hidden="true" className="absolute -right-24 -top-24 size-72 rounded-full bg-brand-gold/20 blur-[80px]" />
             <div className="relative flex items-start justify-between gap-4 p-5 pb-0 sm:p-7 sm:pb-0 md:p-8 md:pb-0">
@@ -458,8 +458,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <StaggerItem key={persona.title} className={span}>
                 <Link
                   href={p(persona.href)}
-                  className={`card-lift group relative flex h-full min-h-[200px] flex-col justify-between overflow-hidden rounded-[var(--radius-card)] border p-4 sm:min-h-[320px] sm:p-7 md:min-h-[400px] md:rounded-[var(--radius-panel)] md:p-9 ${
-                    theme === "dark" ? "border-transparent bg-espresso text-brand-sand" : theme === "gold" ? "border-transparent bg-gradient-to-br from-[#f3e2b0] via-[#e9cf86] to-[#d4b25a] text-espresso" : "border-line bg-surface"
+                  className={`card-lift group relative flex h-full min-h-[200px] flex-col justify-between overflow-hidden rounded-[var(--radius-card)] border p-4 sm:min-h-[260px] sm:p-6 md:min-h-[290px] md:rounded-[var(--radius-panel)] md:p-8 ${
+                    theme === "dark" ? "border-transparent bg-espresso-3 text-brand-sand" : theme === "gold" ? "border-transparent bg-gradient-to-br from-[#f3e2b0] via-[#e9cf86] to-[#d4b25a] text-espresso" : "border-line bg-surface"
                   }`}
                 >
                   {dark && <span aria-hidden="true" className="grid-lines absolute inset-0 opacity-70" />}
@@ -473,9 +473,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                       <ArrowUpRight aria-hidden="true" className="size-5" />
                     </span>
                   </span>
-                  <Art className="pointer-events-none absolute right-5 top-20 w-[48%] max-w-[340px] transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.04] max-md:w-[60%] max-md:opacity-30 max-sm:right-2 max-sm:top-2 max-sm:w-[55%] max-sm:opacity-20 md:right-8" />
-                  <span className="relative max-w-[min(100%,22rem)] pt-10 sm:pt-36">
-                    <span className={`block font-serif-display text-[1.0625rem] leading-tight min-[400px]:text-xl sm:text-3xl md:text-4xl ${dark ? "text-brand-ivory" : "text-heading"} ${theme === "gold" ? "!text-espresso" : ""}`}>{persona.title}</span>
+                  <Art className="pointer-events-none absolute right-5 top-14 w-[40%] max-w-[260px] transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.04] max-md:w-[60%] max-md:opacity-30 max-sm:right-2 max-sm:top-2 max-sm:w-[55%] max-sm:opacity-20 md:right-8" />
+                  <span className="relative max-w-[min(100%,22rem)] pt-10 sm:pt-20">
+                    <span className={`block font-serif-display text-[1.0625rem] leading-tight min-[400px]:text-xl sm:text-2xl md:text-3xl ${dark ? "text-brand-ivory" : "text-heading"} ${theme === "gold" ? "!text-espresso" : ""}`}>{persona.title}</span>
                     <span className={`mt-3 hidden sm:block ${dark ? "text-brand-sand/75" : theme === "gold" ? "text-espresso/75" : "text-muted"}`}>{persona.text}</span>
                     <span className={`mt-3 inline-flex items-center gap-1 text-xs font-medium sm:mt-5 sm:gap-1.5 sm:text-sm ${dark ? "text-brand-gold-light" : theme === "gold" ? "text-espresso" : "text-link"}`}>
                       {persona.cta}

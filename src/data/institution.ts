@@ -72,11 +72,19 @@ export const SHAREHOLDING = {
   ],
 };
 
-export const BOARD = Array.from({ length: 10 }, (_, i) => ({
-  name: `Administrateur ${i + 1}`,
-  role: i === 0 ? "Président du Conseil d'Administration" : "Administrateur",
-  entity: ["Entité publique", "Banque", "Société de bourse", "Assurance", "Autre actionnaire"][i % 5],
-}));
+// Board of Directors as published on https://www.bvm-ac.org/gouvernance-conseil-dadministration/
+// (the chairman first). Photos are cropped from the official portraits.
+export const BOARD: { name: string; role: string; entity: string; photo?: string }[] = [
+  { name: "Henri-Claude OYIMA", role: "Président du Conseil d'Administration", entity: "BVMAC", photo: "/board/oyima.webp" },
+  { name: "Aline ANDZE", role: "Représentant permanent", entity: "Société Nationale d'Investissement (SNI)", photo: "/board/andze.webp" },
+  { name: "Olivier MEKULU MVONDO", role: "Représentant permanent", entity: "Caisse Nationale de Prévoyance Sociale (CNPS)", photo: "/board/mekulu-mvondo.webp" },
+  { name: "Alfred MOYANGAR BEINGAR", role: "Représentant permanent", entity: "Commercial Bank Tchad (CBT SA)", photo: "/board/moyangar-beingar.webp" },
+  { name: "Edouard Célestin BOBOUA", role: "Représentant permanent", entity: "BATIR CONGO", photo: "/board/boboua.webp" },
+  { name: "Célestin GUELA SIMO", role: "Représentant permanent", entity: "Afriland First Bank", photo: "/board/guela-simo.webp" },
+  { name: "Maxwell NDECHAM", role: "Représentant permanent", entity: "Zenithe Insurance", photo: "/board/ndecham.webp" },
+  { name: "Ulrich GAMBIGHA", role: "Représentant permanent", entity: "ASBAC (BGFI Bourse)", photo: "/board/gambigha.webp" },
+  { name: "Ismael Omar LIBIZANGOMO", role: "Représentant permanent", entity: "BGFI Capital", photo: "/board/libizangomo.webp" },
+];
 
 export type OrgUnit = { title: string; text?: string; children?: OrgUnit[] };
 

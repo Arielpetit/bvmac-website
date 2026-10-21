@@ -77,6 +77,9 @@ Edit `secrets.env`, then run `./deploy.sh` again. It updates the same stack.
 ./teardown.sh
 ```
 
+It reads `STACK_NAME` and the region from `secrets.env`, the same file `deploy.sh` uses, shows what will be deleted
+and asks you to type the stack name. If it says the stack was not found, check `STACK_NAME` in that file.
+
 ## If a build fails
 
 Open the build in the Amplify console, scroll to the end of the "Build" step and find the line starting with

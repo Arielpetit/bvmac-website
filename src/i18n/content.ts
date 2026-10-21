@@ -98,6 +98,7 @@ const CONTENT: Record<string, Entry> = {
   // Board
   "Président du Conseil d'Administration": { en: "Chairman of the Board of Directors", es: "Presidente del Consejo de Administración" },
   "Administrateur": { en: "Director", es: "Consejero" },
+  "Représentant permanent": { en: "Permanent representative", es: "Representante permanente" },
   "Entité publique": { en: "Public entity", es: "Entidad pública" },
   "Banque": { en: "Bank", es: "Banco" },
   "Société de bourse": { en: "Broker", es: "Sociedad de bolsa" },

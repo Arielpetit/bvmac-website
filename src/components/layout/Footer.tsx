@@ -39,15 +39,15 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
       <AfricaCemac className="pointer-events-none absolute -right-28 top-10 hidden w-[620px] text-brand-gold/[0.05] lg:block" cemacClassName="fill-brand-gold-light/[0.13]" borderClassName="stroke-espresso" />
       <Guilloche className="absolute inset-x-0 top-0 h-80 w-full text-brand-gold-light opacity-[0.09] [mask-image:linear-gradient(90deg,transparent,black_35%,black_100%)]" />
       <div className="container-site relative">
-        <Reveal className="grid gap-8 border-b border-white/10 py-16 md:grid-cols-[1.4fr_1fr] md:items-end md:py-20">
+        <Reveal className="grid gap-8 border-b border-white/10 py-16 md:grid-cols-[1.15fr_1fr] md:items-center md:gap-12 md:py-20">
           <h2 className="text-h1 max-w-2xl text-brand-ivory!">{c.title}</h2>
           <div>
             <p className="text-brand-sand/80">{c.text}</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href={p("/participants/societes-de-bourse")} className="inline-flex h-12 items-center gap-2 rounded-full bg-brand-gold px-6 font-medium text-espresso transition-colors hover:bg-brand-gold-light">
+              <Link href={p("/participants/societes-de-bourse")} className="inline-flex h-12 items-center gap-2 whitespace-nowrap rounded-full bg-brand-gold px-5 font-medium text-espresso transition-colors hover:bg-brand-gold-light">
                 {c.a} <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
-              <Link href={p("/ecole-de-bourse")} className="inline-flex h-12 items-center rounded-full border border-white/20 px-6 font-medium text-brand-ivory transition-colors hover:border-white/50">
+              <Link href={p("/ecole-de-bourse")} className="inline-flex h-12 items-center whitespace-nowrap rounded-full border border-white/20 px-5 font-medium text-brand-ivory transition-colors hover:border-white/50">
                 {c.b}
               </Link>
             </div>
