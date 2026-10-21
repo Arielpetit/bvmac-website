@@ -30,8 +30,8 @@ export function NewsletterForm() {
               {t.newsletterSubmit} <ArrowRight className="size-4" aria-hidden="true" />
             </button>
           </div>
-          <label className="flex items-start gap-2.5 text-xs text-brand-sand/70">
-            <input type="checkbox" required className="mt-0.5 size-4 shrink-0 accent-[#c9a23a]" />
+          <label className="flex items-start gap-2.5 text-xs leading-relaxed text-brand-sand/70 sm:px-5">
+            <input type="checkbox" required className="m-0 mt-[calc((1lh-1rem)/2)] size-4 shrink-0 accent-[#c9a23a]" />
             <span>
               {t.newsletterConsent}{" "}
               <a href={localePath(locale, "/politique-de-confidentialite")} className="underline underline-offset-2 hover:text-brand-ivory">{t.privacy}</a>

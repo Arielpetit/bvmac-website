@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 
-// "Bémac", the BVMAC assistant mascot: a gold coin with the Bourse pediment as
+// The BVMAC assistant mascot: a gold coin with the Bourse pediment as
 // a cap and a friendly face. Eyes blink; they bounce while the assistant thinks.
 export function BvmacAvatar({ className, thinking = false }: { className?: string; thinking?: boolean }) {
   return (

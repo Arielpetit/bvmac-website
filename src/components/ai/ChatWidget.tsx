@@ -14,9 +14,9 @@ type Msg = { role: "user" | "assistant"; text: string; sources?: Source[]; error
 const EASE = [0.16, 1, 0.3, 1] as const;
 const SUGGESTION_ICONS = [Building2, LineChart, TrendingUp, BookOpen];
 const UI = {
-  fr: { online: "En ligne · répond en quelques secondes", reset: "Nouvelle conversation", hint: "Une question sur la bourse ?", copy: "Copier", copied: "Copié", start: "Suggestions", name: "Bémac" },
-  en: { online: "Online · replies in seconds", reset: "New conversation", hint: "A question about the market?", copy: "Copy", copied: "Copied", start: "Suggestions", name: "Bémac" },
-  es: { online: "En línea · responde en segundos", reset: "Nueva conversación", hint: "¿Una pregunta sobre la bolsa?", copy: "Copiar", copied: "Copiado", start: "Sugerencias", name: "Bémac" },
+  fr: { online: "En ligne · répond en quelques secondes", reset: "Nouvelle conversation", hint: "Une question sur la bourse ?", copy: "Copier", copied: "Copié", start: "Suggestions" },
+  en: { online: "Online · replies in seconds", reset: "New conversation", hint: "A question about the market?", copy: "Copy", copied: "Copied", start: "Suggestions" },
+  es: { online: "En línea · responde en segundos", reset: "Nueva conversación", hint: "¿Una pregunta sobre la bolsa?", copy: "Copiar", copied: "Copiado", start: "Sugerencias" },
 };
 
 // Minimal markdown renderer: [text](url) links, **bold**, paragraphs.
@@ -262,7 +262,7 @@ export function ChatWidget() {
                   <span className="absolute bottom-0 right-0 size-3 rounded-full bg-[#2fbf71] ring-2 ring-espresso" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="font-serif-display truncate text-lg leading-tight text-brand-ivory sm:text-xl">{u.name} <span className="font-sans text-xs font-normal text-brand-sand/60">· {t.title}</span></p>
+                  <p className="font-serif-display truncate text-lg leading-tight text-brand-ivory sm:text-xl">{t.title}</p>
                   <p className="mt-0.5 truncate text-xs text-brand-sand/65">{u.online}</p>
                 </div>
                 {messages.length > 0 && (

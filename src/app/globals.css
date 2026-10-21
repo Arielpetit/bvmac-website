@@ -338,7 +338,7 @@
 
 /* Motion */
 @keyframes word-up {
-  from { transform: translateY(105%); }
+  from { transform: translateY(135%); }
   to { transform: translateY(0); }
 }
 .word-up {

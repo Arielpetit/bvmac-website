@@ -78,7 +78,7 @@ export function WordReveal({ text, className, delay = 0 }: { text: string; class
   return (
     <span className={className} aria-label={text}>
       {words.map((w, i) => (
-        <span key={i} aria-hidden="true" className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+        <span key={i} aria-hidden="true" className="-mx-[0.12em] -mb-[0.14em] -mt-[0.1em] inline-block overflow-hidden px-[0.12em] pb-[0.22em] pt-[0.1em] align-bottom">
           {/* CSS animation, not JS: the words show even before the page's script has loaded. */}
           <span className="word-up inline-block" style={{ animationDelay: `${delay + i * 0.06}s` }}>
             {w}

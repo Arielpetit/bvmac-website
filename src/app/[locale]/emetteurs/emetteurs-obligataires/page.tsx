@@ -184,6 +184,8 @@ const T = {
     about: "Présentation",
     listedLines: "Lignes cotées",
     maturityLabel: "Échéance",
+    issueLabel: "Émission",
+    priceLabel: "Cours (% du nominal)",
     seeLine: "Voir sur le marché des obligations",
     intro:
       "Les émetteurs dont les obligations sont cotées à la BVMAC : établissements, banques de développement et États de la sous-région.",
@@ -210,6 +212,8 @@ const T = {
     about: "About",
     listedLines: "Listed lines",
     maturityLabel: "Maturity",
+    issueLabel: "Issued",
+    priceLabel: "Price (% of par)",
     seeLine: "See on the bond market",
     intro:
       "Issuers whose bonds are listed on the BVMAC: institutions, development banks and States of the region.",
@@ -240,6 +244,8 @@ const T = {
     about: "Presentación",
     listedLines: "Líneas admitidas",
     maturityLabel: "Vencimiento",
+    issueLabel: "Emisión",
+    priceLabel: "Cotización (% del nominal)",
     seeLine: "Ver en el mercado de obligaciones",
     intro:
       "Emisores cuyas obligaciones cotizan en la BVMAC: instituciones, bancos de desarrollo y Estados de la subregión.",
@@ -274,10 +280,28 @@ export default async function BondIssuersPage({
     { fr: "fr-FR", en: "en-GB", es: "es-ES" }[locale],
     { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" },
   );
+  // Issue and maturity years: from the feed, else from the line name ("EOG. 10 24/29" = 2024 to 2029).
+  const years = (b: (typeof bonds)[number]) => {
+    const m = b.name.match(/(\d{2})\/(\d{2})\s*$/);
+    return {
+      start: b.start ?? (m ? `20${m[1]}` : null),
+      maturity: b.maturity ?? (m ? `20${m[2]}` : null),
+    };
+  };
+  // An issuer's listed lines, nearest maturity first (lines without a known maturity last).
   const linesOf = (i: Issuer) =>
-    bonds.filter(
-      (b) => b.issuer === i.bondIssuer || i.aliases?.includes(b.issuer),
-    );
+    bonds
+      .filter((b) => b.issuer === i.bondIssuer || i.aliases?.includes(b.issuer))
+      .map((b) => ({ ...b, ...years(b) }))
+      .sort(
+        (a, b) =>
+          (a.maturity ?? "9999").localeCompare(b.maturity ?? "9999") ||
+          a.name.localeCompare(b.name, undefined, { numeric: true }),
+      );
+  const priceFmt = new Intl.NumberFormat(
+    { fr: "fr-FR", en: "en-GB", es: "es-ES" }[locale],
+    { minimumFractionDigits: 2, maximumFractionDigits: 2 },
+  );
   const countryName = (code: Issuer["country"]) =>
     COUNTRIES.find((c) => c.code === code)?.[locale] ?? code;
   const totalLines = ISSUERS.reduce((n, i) => n + linesOf(i).length, 0);
@@ -391,57 +415,64 @@ export default async function BondIssuersPage({
                     </span>
                   </header>
 
-                  <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[1.45fr_1fr] lg:gap-12">
-                    <div>
-                      <h3 className="text-xs font-medium uppercase tracking-[0.12em] text-muted">
-                        {t.about}
-                      </h3>
-                      <div className="mt-3 grid max-w-2xl gap-3.5 leading-relaxed text-muted">
-                        {i.text.map((p, k) => (
-                          <p key={k} lang={locale}>
-                            {p[locale]}
-                          </p>
-                        ))}
-                      </div>
+                  <div className="p-5 sm:p-8">
+                    <h3 className="text-xs font-medium uppercase tracking-[0.12em] text-muted">
+                      {t.about}
+                    </h3>
+                    <div className="mt-3 grid max-w-3xl gap-3.5 leading-relaxed text-muted">
+                      {i.text.map((p, k) => (
+                        <p key={k} lang={locale}>
+                          {p[locale]}
+                        </p>
+                      ))}
                     </div>
+                  </div>
 
-                    <aside
-                      aria-label={t.listedLines}
-                      className="h-fit rounded-[var(--radius-card)] bg-surface-alt/70 p-4 sm:p-5"
-                    >
-                      <h3 className="flex items-center justify-between text-xs font-medium uppercase tracking-[0.12em] text-muted">
-                        {t.listedLines}
-                        <span className="figure rounded-full bg-accent-soft px-2.5 py-0.5 text-sm normal-case tracking-normal text-accent-text">
-                          {lines.length}
-                        </span>
-                      </h3>
-                      {lines.length ? (
-                        <ul className="mt-3 grid gap-2">
-                          {lines.map((b) => (
-                            <li
-                              key={b.isin}
-                              className="rounded-xl border border-line bg-surface px-3.5 py-3"
-                            >
-                              <span className="flex items-baseline justify-between gap-3">
-                                <span className="font-medium text-heading">
-                                  {b.name}
+                  <div className="border-t border-line p-5 sm:p-8">
+                    <h3 className="flex items-center gap-2.5 text-xs font-medium uppercase tracking-[0.12em] text-muted">
+                      {t.listedLines}
+                      <span className="figure rounded-full bg-accent-soft px-2.5 py-0.5 text-sm normal-case tracking-normal text-accent-text">
+                        {lines.length}
+                      </span>
+                    </h3>
+                    {lines.length ? (
+                      <>
+                      {/* Phones: one compact row per line */}
+                      <ul className="mt-4 divide-y divide-line rounded-[var(--radius-card)] border border-line sm:hidden">
+                        {lines.map((b) => (
+                          <li key={b.isin} className="flex items-start justify-between gap-3 px-4 py-3">
+                            <span className="min-w-0">
+                              <span className="block font-medium text-heading">{b.name}</span>
+                              <span className="code mt-0.5 block text-muted">{b.isin}</span>
+                            </span>
+                            <span className="shrink-0 text-right">
+                              <span className="figure block text-sm text-heading">{priceFmt.format(b.close)} %</span>
+                              {b.maturity && (
+                                <span className="figure mt-0.5 block text-xs text-muted">
+                                  {b.start ? `${b.start} → ` : ""}{b.maturity}
                                 </span>
-                                {b.maturity && (
-                                  <span className="figure shrink-0 text-xs text-muted">
-                                    {t.maturity} {b.maturity}
-                                  </span>
-                                )}
-                              </span>
-                              <span className="code mt-0.5 block text-muted">
-                                {b.isin}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="mt-3 text-sm text-muted">{t.noLines}</p>
-                      )}
-                    </aside>
+                              )}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      <StackTable
+                        className="mt-4 max-sm:hidden"
+                        caption={`${t.listedLines}, ${i.name}`}
+                        minWidth={560}
+                        head={[t.line, t.isin, t.issueLabel, t.maturityLabel, t.priceLabel]}
+                        rows={lines.map((b) => [
+                          b.name,
+                          <span key="i" className="code">{b.isin}</span>,
+                          <span key="s" className="figure">{b.start ?? "—"}</span>,
+                          <span key="m" className="figure">{b.maturity ?? "—"}</span>,
+                          <span key="p" className="figure">{priceFmt.format(b.close)}</span>,
+                        ])}
+                      />
+                      </>
+                    ) : (
+                      <p className="mt-3 text-sm text-muted">{t.noLines}</p>
+                    )}
                   </div>
 
                   {i.rows && (

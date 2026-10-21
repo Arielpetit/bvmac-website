@@ -54,9 +54,9 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
           </div>
         </Reveal>
 
-        <div className="grid gap-10 border-b border-white/10 py-12 lg:items-center lg:grid-cols-[1.3fr_2.7fr]">
+        <div className="grid gap-6 border-b border-white/10 py-12 lg:grid-cols-[1.3fr_2.7fr] lg:items-start lg:gap-10">
           <div>
-            <h2 className="font-serif-display text-2xl text-brand-ivory">{t.newsletter}</h2>
+            <h2 className="font-serif-display text-2xl leading-tight text-brand-ivory">{t.newsletter}</h2>
             <p className="mt-2 text-sm text-brand-sand/70">{t.app} · Google Play · App Store</p>
           </div>
           <NewsletterForm />
@@ -126,11 +126,11 @@ export async function Footer({ locale, dict }: { locale: Locale; dict: Dictionar
 
         <div className="flex flex-col gap-3 border-t border-white/10 py-6 text-xs text-brand-sand/60 md:flex-row md:items-center md:justify-between">
           <p>© <CurrentYear fallback={2026} /> BVMAC. {t.rights}</p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-1">
+          <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
             <li><Link href={p("/mentions-legales")} className="inline-block py-1 hover:text-brand-ivory">{t.legal}</Link></li>
             <li><Link href={p("/politique-de-confidentialite")} className="inline-block py-1 hover:text-brand-ivory">{t.privacy}</Link></li>
             <li><Link href={p("/politique-de-cookies")} className="inline-block py-1 hover:text-brand-ivory">Cookies</Link></li>
-            <li><CookieSettingsLink className="hover:text-brand-ivory" /></li>
+            <li><CookieSettingsLink className="inline-block py-1 text-xs leading-[inherit] hover:text-brand-ivory" /></li>
             <li><Link href={p("/accessibilite")} className="inline-block py-1 hover:text-brand-ivory">{t.accessibility}</Link></li>
             <li><Link href={p("/plan-du-site")} className="inline-block py-1 hover:text-brand-ivory">{t.sitemap}</Link></li>
           </ul>
