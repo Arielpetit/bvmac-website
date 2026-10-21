@@ -46,3 +46,7 @@ next-env.d.ts
 .open-next
 .wrangler
 .dev.vars*
+
+# deployment settings and secrets (see infra/aws/secrets.env.example)
+secrets.env
+*.secrets.env

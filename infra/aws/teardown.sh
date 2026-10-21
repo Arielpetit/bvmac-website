@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deletes everything deploy.sh created: both Amplify apps (with their branches, builds and deployed
+# Deletes everything deploy.sh created: both Amplify apps (with their environments, builds and deployed
 # files), the custom domain associations and the budget. This cannot be undone.
 #
 #   ./teardown.sh            asks you to type the stack name to confirm

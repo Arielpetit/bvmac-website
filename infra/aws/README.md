@@ -8,7 +8,7 @@ One CloudFormation template creates everything. One script deploys it.
 |---|---|
 | Amplify app `bvmac-website` | The website (Next.js, server-rendered), builds from `web/amplify.yml` |
 | Amplify app `bvmac-app-web` | The web version of the mobile app (static), builds from `mobile/amplify.yml` |
-| Branches `main` and `develop` on each app | Production and staging, built on every push |
+| One environment per app (one branch each) | Built and published on every push |
 | Optional password on both apps | For the private preview. Remove it at public launch |
 | Optional custom domains | HTTPS certificates are created and renewed by AWS |
 | AWS Budget `bvmac-monthly` | Email alert at 80 % and 100 % of the monthly amount (default $10) |
@@ -24,17 +24,25 @@ attached and its DNS zone is in the same AWS account, `route53:ChangeResourceRec
 ## Steps
 
 1. Install the AWS CLI and sign in to the account (`aws sts get-caller-identity` must work).
-2. Export the settings (see the top of `deploy.sh`). Secrets stay in your shell and are never stored in a file.
+2. Create the settings file. It holds the secrets, stays on your machine, and is git-ignored:
+   ```bash
+   cd web/infra/aws
+   cp secrets.env.example secrets.env
+   chmod 600 secrets.env      # the script refuses a file that other users can read
+   ```
+   Fill it in (editor of your choice). Keep real values out of chats, tickets and commits. You can also point to a
+   file outside the repository: `./deploy.sh ~/secrets/bvmac.env`. A variable already exported in your shell
+   wins over the file.
 3. Run `./deploy.sh`. It prints the Amplify addresses when it finishes.
-4. **Connect GitHub.** Fully from the script: export `GITHUB_TOKEN` (a fine-grained token, read-only, limited to
-   the two repositories; needs "Contents" and "Webhooks" read access, and the token owner must be able to
-   administer the repositories). The script then connects both apps, deploys the branches named by
-   `PRODUCTION_BRANCH` (default `main`) and `STAGING_BRANCH` (default `develop`), and starts their first builds.
-   The branches must already exist on GitHub. Without a token, open each app in the Amplify console and connect the
-   repository with the AWS Amplify GitHub App; a GitHub organisation owner must approve it.
+4. **GitHub.** With `GITHUB_TOKEN` in the file (fine-grained, read-only, the two repositories only: Contents and
+   Webhooks), the script connects both apps to the branches named by `WEB_BRANCH` and `APP_BRANCH` and starts the
+   first builds. The branches must already exist on GitHub. Without a token, open each app in the Amplify console
+   and connect the repository with the AWS Amplify GitHub App (an organisation owner must approve it).
 5. **DNS (once).** If you set `WEB_DOMAIN` or `APP_DOMAIN`, Amplify shows the records to add. If the zone is in
    Route 53 in the same account, they are added for you.
-6. Push to `develop`, then `main`. Amplify builds and deploys each push.
+6. Push to the branch. Amplify builds and deploys each push.
+
+To change a value, edit the file and run `./deploy.sh` again; it updates the same stack.
 
 ## First-run checks (do these before public launch)
 

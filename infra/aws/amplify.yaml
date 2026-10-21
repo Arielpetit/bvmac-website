@@ -1,8 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: >-
   BVMAC hosting on AWS Amplify: the website (Next.js, server-rendered) and the web version of the
-  mobile app (static), each with a production branch (main) and a staging branch (develop),
-  plus a monthly cost budget. Deploy in Europe (Paris), eu-west-3.
+  mobile app (static), each with a single environment (one branch), plus a monthly cost budget. Deploy in Europe (Paris), eu-west-3.
 
 Parameters:
   WebRepository:
@@ -20,12 +19,14 @@ Parameters:
     Description: >-
       Optional. Fine-grained GitHub token with read-only access to the two repositories. Leave empty
       to connect the repositories afterwards in the Amplify console with the Amplify GitHub App.
-  ProductionBranch:
+  WebBranch:
     Type: String
     Default: main
-  StagingBranch:
+    Description: Branch of the website repository that is built and published.
+  AppBranch:
     Type: String
-    Default: develop
+    Default: master
+    Description: Branch of the mobile app repository that is built and published.
   PreviewUsername:
     Type: String
     Default: ""
@@ -104,27 +105,14 @@ Resources:
         - { Key: project, Value: bvmac }
         - { Key: component, Value: website }
 
-  WebProduction:
+  WebBranchEnv:
     Type: AWS::Amplify::Branch
     Properties:
       AppId: !GetAtt WebApp.AppId
-      BranchName: !Ref ProductionBranch
+      BranchName: !Ref WebBranch
       Stage: PRODUCTION
       Framework: Next.js - SSR
       EnableAutoBuild: true
-      Tags:
-        - { Key: env, Value: prod }
-
-  WebStaging:
-    Type: AWS::Amplify::Branch
-    Properties:
-      AppId: !GetAtt WebApp.AppId
-      BranchName: !Ref StagingBranch
-      Stage: DEVELOPMENT
-      Framework: Next.js - SSR
-      EnableAutoBuild: true
-      Tags:
-        - { Key: env, Value: staging }
 
   WebDomainAssociation:
     Type: AWS::Amplify::Domain
@@ -133,9 +121,8 @@ Resources:
       AppId: !GetAtt WebApp.AppId
       DomainName: !Ref WebDomain
       SubDomainSettings:
-        - { Prefix: "", BranchName: !GetAtt WebProduction.BranchName }
-        - { Prefix: www, BranchName: !GetAtt WebProduction.BranchName }
-        - { Prefix: staging, BranchName: !GetAtt WebStaging.BranchName }
+        - { Prefix: "", BranchName: !GetAtt WebBranchEnv.BranchName }
+        - { Prefix: www, BranchName: !GetAtt WebBranchEnv.BranchName }
 
   AppWeb:
     Type: AWS::Amplify::App
@@ -159,27 +146,14 @@ Resources:
         - { Key: project, Value: bvmac }
         - { Key: component, Value: app-web }
 
-  AppProduction:
+  AppBranchEnv:
     Type: AWS::Amplify::Branch
     Properties:
       AppId: !GetAtt AppWeb.AppId
-      BranchName: !Ref ProductionBranch
+      BranchName: !Ref AppBranch
       Stage: PRODUCTION
       Framework: Web
       EnableAutoBuild: true
-      Tags:
-        - { Key: env, Value: prod }
-
-  AppStaging:
-    Type: AWS::Amplify::Branch
-    Properties:
-      AppId: !GetAtt AppWeb.AppId
-      BranchName: !Ref StagingBranch
-      Stage: DEVELOPMENT
-      Framework: Web
-      EnableAutoBuild: true
-      Tags:
-        - { Key: env, Value: staging }
 
   AppDomainAssociation:
     Type: AWS::Amplify::Domain
@@ -188,7 +162,7 @@ Resources:
       AppId: !GetAtt AppWeb.AppId
       DomainName: !Ref AppDomain
       SubDomainSettings:
-        - { Prefix: "", BranchName: !GetAtt AppProduction.BranchName }
+        - { Prefix: "", BranchName: !GetAtt AppBranchEnv.BranchName }
 
   MonthlyBudget:
     Type: AWS::Budgets::Budget
