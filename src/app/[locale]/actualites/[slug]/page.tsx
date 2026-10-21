@@ -16,8 +16,12 @@ import { Reveal } from "@/components/motion/Reveal";
 import { ParallaxImage } from "@/components/motion/Parallax";
 
 
+// Only the newest articles are built ahead of time; older ones from the archive render on first visit.
+const PREBUILT = 12;
+
 export function generateStaticParams() {
-  return locales.flatMap((locale) => NEWS.map((n) => ({ locale, slug: n.slug })));
+  const recent = [...NEWS].sort((a, b) => b.date.localeCompare(a.date)).slice(0, PREBUILT);
+  return locales.flatMap((locale) => recent.map((n) => ({ locale, slug: n.slug })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/actualites/[slug]">): Promise<Metadata> {
