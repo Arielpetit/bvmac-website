@@ -26,9 +26,12 @@ attached and its DNS zone is in the same AWS account, `route53:ChangeResourceRec
 1. Install the AWS CLI and sign in to the account (`aws sts get-caller-identity` must work).
 2. Export the settings (see the top of `deploy.sh`). Secrets stay in your shell and are never stored in a file.
 3. Run `./deploy.sh`. It prints the Amplify addresses when it finishes.
-4. **Connect GitHub (once).** Either pass `GITHUB_TOKEN` (fine-grained, read-only, the two repositories only),
-   or leave it empty and, in the Amplify console, open each app and connect the repository with the AWS Amplify
-   GitHub App. A GitHub organisation owner must approve the app.
+4. **Connect GitHub.** Fully from the script: export `GITHUB_TOKEN` (a fine-grained token, read-only, limited to
+   the two repositories; needs "Contents" and "Webhooks" read access, and the token owner must be able to
+   administer the repositories). The script then connects both apps, deploys the branches named by
+   `PRODUCTION_BRANCH` (default `main`) and `STAGING_BRANCH` (default `develop`), and starts their first builds.
+   The branches must already exist on GitHub. Without a token, open each app in the Amplify console and connect the
+   repository with the AWS Amplify GitHub App; a GitHub organisation owner must approve it.
 5. **DNS (once).** If you set `WEB_DOMAIN` or `APP_DOMAIN`, Amplify shows the records to add. If the zone is in
    Route 53 in the same account, they are added for you.
 6. Push to `develop`, then `main`. Amplify builds and deploys each push.
