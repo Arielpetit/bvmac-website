@@ -28,9 +28,9 @@ Amplify builds with `web/amplify.yml` and `mobile/amplify.yml`. The Cloudflare f
    ```
    Fill it in. It is git-ignored; never paste it in a chat. Required: `BUDGET_EMAIL`, the repositories and branches,
    `GITHUB_TOKEN`, and the Supabase and Groq keys.
-3. **Connect GitHub with the Amplify GitHub App (once per app).** If the console shows "Update required" on an app,
-   open it and follow "Re-establish connection" (install the AWS Amplify GitHub App on the repository). Until then,
-   builds started by the script work, but automatic builds on every push may not.
+3. **GitHub connection.** With `GITHUB_TOKEN` in `secrets.env` the apps rebuild on every push to their branch.
+   The console may show "Update required" and suggest the AWS Amplify GitHub App instead; the token keeps working
+   until AWS retires it. Keep the token valid (check its expiry date) or switch to the GitHub App.
 
 ## Deploy (first time, or when hosting settings changed)
 
@@ -65,7 +65,11 @@ Edit `secrets.env`, then run `./deploy.sh` again. It updates the same stack.
 
 1. Set `WEB_DOMAIN`, `APP_DOMAIN`, `SITE_URL` in `secrets.env`.
 2. Empty `PREVIEW_USERNAME` and `PREVIEW_PASSWORD` to remove the preview password.
-3. `./deploy.sh`, then add the DNS records Amplify shows (Hosting > Custom domains).
+3. `./deploy.sh`. At the end it prints the DNS records to create at your domain provider. To print them again
+   later: `./deploy.sh --builds-only`, or look in the console under Hosting > Custom domains, or run
+   `aws amplify get-domain-association --region eu-west-3 --app-id <APP_ID> --domain-name <DOMAIN>`.
+   The records are CNAMEs: one to validate the HTTPS certificate and one per address (`www`, the app...).
+   It takes a few minutes to a few hours for the address to answer.
 
 ## Delete everything
 
